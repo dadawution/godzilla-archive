@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>哥吉拉玩具圖鑑</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+TC:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C0392B;
+    --dark: #0a0a0a;
+    --charcoal: #1a1a1a;
+    --gray: #2a2a2a;
+    --light: #888;
+    --pale: #ccc;
+    --white: #f0ede8;
+    --gold: #c9a84c;
+    --atomic: #4af0a0;
+    --font-title: 'Bebas Neue', sans-serif;
+    --font-body: 'Noto Serif TC', serif;
+    --font-mono: 'Share Tech Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--dark); color: var(--white); font-family: var(--font-body); }
+
+  /* NAV - 固定在底部，手機操作最順 */
+  nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(10,10,10,0.97);
+    border-top: 1px solid var(--gray);
+    display: flex;
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  nav a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.7rem 0.5rem;
+    text-decoration: none;
+    gap: 0.25rem;
+  }
+  nav a .nav-icon { font-size: 1.3rem; }
+  nav a .nav-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    color: var(--light);
+  }
+  nav a.active .nav-label { color: var(--red); }
+
+  /* HERO */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem 6rem;
+    position: relative;
+    background: radial-gradient(ellipse at 50% 50%, #1a0a0a 0%, #0a0a0a 70%);
+    overflow: hidden;
+  }
+  .hero-bg { position: absolute; inset: 0; opacity: 0.05; pointer-events: none; }
+  .hero-bg svg { width: 100%; height: 100%; }
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--red);
+    margin-bottom: 1.2rem;
+  }
+  .hero-title {
+    font-family: var(--font-title);
+    font-size: clamp(5rem, 28vw, 10rem);
+    line-height: 0.85;
+    color: var(--white);
+  }
+  .hero-title .red { color: var(--red); }
+  .hero-sub {
+    font-family: var(--font-title);
+    font-size: clamp(1rem, 5vw, 2rem);
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-top: 0.5rem;
+  }
+  .hero-desc {
+    font-size: 0.88rem;
+    line-height: 1.85;
+    color: var(--light);
+    margin-top: 1.5rem;
+    max-width: 320px;
+  }
+  .hero-badge {
+    margin-top: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: var(--atomic);
+    border: 1px solid var(--atomic);
+    padding: 0.35rem 1rem;
+    animation: pulse 3s ease infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* SECTION */
+  .section { padding: 2.5rem 1.25rem 2rem; }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    color: var(--red);
+    margin-bottom: 0.4rem;
+  }
+  .section-title {
+    font-family: var(--font-title);
+    font-size: 2.2rem;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-bottom: 1.25rem;
+    line-height: 1;
+  }
+
+  /* CARD LIST */
+  .card-list { display: flex; flex-direction: column; gap: 1px; background: var(--gray); border: 1px solid var(--gray); }
+  .card {
+    background: var(--dark);
+    padding: 1.5rem 3rem 1.5rem 1.25rem;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    transition: background 0.2s;
+  }
+  .card:active { background: var(--charcoal); }
+  .card-num {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    color: var(--red);
+    margin-bottom: 0.4rem;
+  }
+  .card-title {
+    font-family: var(--font-title);
+    font-size: 1.8rem;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 0.25rem;
+  }
+  .card-sub {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .card-desc { font-size: 0.83rem; line-height: 1.7; color: var(--light); }
+  .card-arrow {
+    position: absolute;
+    right: 1.25rem; top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-mono);
+    color: var(--red);
+    font-size: 1.1rem;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--gray);
+    padding: 2rem 1.25rem 7rem;
+    text-align: center;
+  }
+  .footer-title {
+    font-family: var(--font-title);
+    font-size: 1.3rem;
+    letter-spacing: 0.2em;
+    color: var(--gray);
+    margin-bottom: 0.5rem;
+  }
+  .footer-text {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    color: #444;
+    line-height: 1.9;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-bg">
+    <svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice">
+      <defs><pattern id="hex" x="0" y="0" width="40" height="46" patternUnits="userSpaceOnUse">
+        <polygon points="20,0 40,11.5 40,34.5 20,46 0,34.5 0,11.5" fill="none" stroke="white" stroke-width="0.5"/>
+      </pattern></defs>
+      <rect width="400" height="800" fill="url(#hex)"/>
+    </svg>
+  </div>
+  <p class="hero-eyebrow">ULTIMATE COLLECTOR'S GUIDE</p>
+  <h1 class="hero-title"><span class="red">哥</span>吉<span class="red">拉</span></h1>
+  <p class="hero-sub">GODZILLA TOY ARCHIVE</p>
+  <p class="hero-desc">從1954年核怪獸傳說到今日精緻收藏品，橫跨七十年的哥吉拉玩具知識庫。</p>
+  <span class="hero-badge">▼ SCROLL TO EXPLORE ▼</span>
+</div>
+
+<div class="section">
+  <p class="section-label">// NAVIGATE</p>
+  <h2 class="section-title">開始探索</h2>
+  <div class="card-list">
+    <a class="card" href="knowledge.html">
+      <div class="card-num">// 01</div>
+      <div class="card-title">知識庫</div>
+      <div class="card-sub">KNOWLEDGE BASE</div>
+      <p class="card-desc">品牌歷史、比例指南、術語解說——完整知識一站掌握。</p>
+      <span class="card-arrow">→</span>
+    </a>
+    <a class="card" href="guide.html">
+      <div class="card-num">// 02</div>
+      <div class="card-title">收藏指南</div>
+      <div class="card-sub">COLLECTOR'S GUIDE</div>
+      <p class="card-desc">入門技巧、經典系列評比、保存方式，新手老手都適用。</p>
+      <span class="card-arrow">→</span>
+    </a>
+    <a class="card" href="articles.html">
+      <div class="card-num">// 03</div>
+      <div class="card-title">收藏文章</div>
+      <div class="card-sub">ARTICLES</div>
+      <p class="card-desc">開箱評測、收藏心得、市場分析，持續更新的深度內容。</p>
+      <span class="card-arrow">→</span>
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-title">GODZILLA TOY ARCHIVE</div>
+  <p class="footer-text">© 2025 DESIGNED FOR KAIJU COLLECTORS<br>所有哥吉拉版權屬東宝株式會社所有</p>
+</footer>
+
+<nav>
+  <a class="active" href="index.html">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">首頁</span>
+  </a>
+  <a href="knowledge.html">
+    <span class="nav-icon">📖</span>
+    <span class="nav-label">知識庫</span>
+  </a>
+  <a href="guide.html">
+    <span class="nav-icon">⭐</span>
+    <span class="nav-label">收藏指南</span>
+  </a>
+  <a href="articles.html">
+    <span class="nav-icon">✏️</span>
+    <span class="nav-label">文章</span>
+  </a>
+</nav>
+
+</body>
+</html>

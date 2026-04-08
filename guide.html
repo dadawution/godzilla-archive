@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>收藏指南 — 哥吉拉玩具圖鑑</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+TC:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C0392B;
+    --dark: #0a0a0a;
+    --charcoal: #1a1a1a;
+    --gray: #2a2a2a;
+    --light: #888;
+    --pale: #ccc;
+    --white: #f0ede8;
+    --gold: #c9a84c;
+    --atomic: #4af0a0;
+    --font-title: 'Bebas Neue', sans-serif;
+    --font-body: 'Noto Serif TC', serif;
+    --font-mono: 'Share Tech Mono', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--dark); color: var(--white); font-family: var(--font-body); padding-bottom: 5rem; }
+
+  nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(10,10,10,0.97);
+    border-top: 1px solid var(--gray);
+    display: flex;
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  nav a { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.7rem 0.5rem; text-decoration: none; gap: 0.25rem; }
+  nav a .nav-icon { font-size: 1.3rem; }
+  nav a .nav-label { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.1em; color: var(--light); }
+  nav a.active .nav-label { color: var(--red); }
+
+  .page-hero { padding: 3rem 1.25rem 2rem; border-bottom: 1px solid var(--gray); }
+  .page-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.35em; color: var(--red); margin-bottom: 0.4rem; }
+  .page-title { font-family: var(--font-title); font-size: 3.5rem; letter-spacing: 0.05em; color: var(--white); line-height: 1; margin-bottom: 0.6rem; }
+  .page-desc { font-size: 0.85rem; line-height: 1.8; color: var(--light); }
+
+  .tabs { display: flex; border-bottom: 1px solid var(--gray); position: sticky; top: 0; background: var(--dark); z-index: 10; }
+  .tab-btn { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.15em; color: var(--light); background: none; border: none; border-bottom: 2px solid transparent; padding: 0.9rem 1rem; cursor: pointer; flex: 1; transition: color 0.2s, border-color 0.2s; }
+  .tab-btn.active { color: var(--white); border-bottom-color: var(--red); }
+
+  .tab-content { display: none; padding: 1.5rem 1.25rem; }
+  .tab-content.active { display: block; }
+
+  /* TIPS */
+  .tip-list { display: flex; flex-direction: column; gap: 1px; background: var(--gray); border: 1px solid var(--gray); }
+  .tip-item { background: var(--charcoal); padding: 1.25rem; display: flex; gap: 1rem; }
+  .tip-num { font-family: var(--font-title); font-size: 2.5rem; color: var(--red); flex-shrink: 0; line-height: 1; width: 2.5rem; }
+  .tip-title { font-family: var(--font-body); font-weight: 700; font-size: 0.95rem; color: var(--white); margin-bottom: 0.35rem; }
+  .tip-text { font-size: 0.83rem; line-height: 1.75; color: var(--light); }
+
+  /* CHECKLIST */
+  .checklist { display: flex; flex-direction: column; gap: 1px; background: var(--gray); border: 1px solid var(--gray); margin-top: 1.5rem; }
+  .check-item { background: var(--charcoal); padding: 1rem 1.25rem; display: flex; gap: 0.75rem; align-items: flex-start; cursor: pointer; }
+  .check-box { width: 18px; height: 18px; border: 1px solid var(--gray); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .check-item.checked .check-box { background: var(--red); border-color: var(--red); }
+  .check-item.checked .check-box::after { content: '✓'; color: white; font-size: 11px; }
+  .check-item.checked .check-label { color: var(--gray); text-decoration: line-through; }
+  .check-label { font-size: 0.85rem; color: var(--light); line-height: 1.5; }
+  .checklist-title { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.25em; color: var(--red); margin-bottom: 0.75rem; margin-top: 1.5rem; }
+
+  /* FIGURES TABLE */
+  .figure-list { display: flex; flex-direction: column; gap: 1px; background: var(--gray); border: 1px solid var(--gray); }
+  .figure-item { background: var(--charcoal); padding: 1.1rem 1.25rem; }
+  .figure-name { font-family: var(--font-body); font-weight: 700; font-size: 0.9rem; color: var(--white); margin-bottom: 0.25rem; }
+  .figure-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.4rem; align-items: center; }
+  .figure-brand { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--gold); }
+  .figure-size { font-family: var(--font-mono); font-size: 0.6rem; color: var(--light); }
+  .figure-price { font-family: var(--font-mono); font-size: 0.6rem; color: var(--atomic); }
+  .figure-desc { font-size: 0.82rem; line-height: 1.7; color: var(--light); }
+  .badge { display: inline-block; font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.08em; padding: 0.15rem 0.4rem; border-radius: 2px; }
+  .badge-ltd { background: rgba(192,57,43,0.2); color: #e88; }
+  .badge-common { background: rgba(136,136,136,0.15); color: var(--light); }
+  .badge-rare { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .badge-vintage { background: rgba(74,240,160,0.1); color: var(--atomic); }
+
+  /* FILTER */
+  .filter-bar { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .filter-btn { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--light); background: none; border: 1px solid var(--gray); padding: 0.3rem 0.7rem; cursor: pointer; transition: all 0.2s; }
+  .filter-btn.active, .filter-btn:active { color: var(--white); border-color: var(--red); background: rgba(192,57,43,0.08); }
+</style>
+</head>
+<body>
+
+<div class="page-hero">
+  <p class="page-label">// 02 — COLLECTOR'S GUIDE</p>
+  <h1 class="page-title">收藏指南</h1>
+  <p class="page-desc">入門技巧、經典系列評比，新手老手都適用。</p>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('tips', this)">收藏技巧</button>
+  <button class="tab-btn" onclick="switchTab('figures', this)">經典系列</button>
+</div>
+
+<!-- 收藏技巧 -->
+<div class="tab-content active" id="tab-tips">
+  <div class="tip-list">
+    <div class="tip-item">
+      <div class="tip-num">01</div>
+      <div>
+        <div class="tip-title">確定收藏主題</div>
+        <p class="tip-text">先選定主題——「只收昭和軟膠」、「專攻S.H.MonsterArts」——有明確方向才能避免無節制擴張。</p>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-num">02</div>
+      <div>
+        <div class="tip-title">保留原盒是保值關鍵</div>
+        <p class="tip-text">MISB（全新未開封帶原廠封膜）是二手市場最高品相。即使開封展示，保存好外盒也能大幅提升轉售價值。無盒品價格往往下滑30–60%。</p>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-num">03</div>
+      <div>
+        <div class="tip-title">軟膠正確保存方式</div>
+        <p class="tip-text">避免高溫（超過35°C會變形）、紫外線（褪色）、高濕度（發霉）。建議使用防紫外線展示櫃，維持穩定室溫。</p>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-num">04</div>
+      <div>
+        <div class="tip-title">選擇可信購買管道</div>
+        <p class="tip-text">推薦：官方網站 → AmiAmi、HobbySearch等大型電商 → 日本Yahoo拍賣代拍（FROM JAPAN、Zenmarket）→ 收藏社團二手交流。</p>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-num">05</div>
+      <div>
+        <div class="tip-title">加入社群掌握資訊</div>
+        <p class="tip-text">Facebook哥吉拉玩具收藏社團、Reddit r/MonsterArts、Twitter #GodzillaCollection。社群是新品情報與轉讓買賣的最快管道。</p>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-num">06</div>
+      <div>
+        <div class="tip-title">限定品一定要預購</div>
+        <p class="tip-text">S.H.MonsterArts魂WEB限定、X-Plus限量系列，錯過預購期後二手溢價往往50–200%以上。訂閱品牌電子報是最好的習慣。</p>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-num">07</div>
+      <div>
+        <div class="tip-title">展示規劃與燈光</div>
+        <p class="tip-text">推薦IKEA DETOLF展示櫃加裝LED燈條（色溫4000–5000K）。好的燈光能讓玩具質感倍增，是展示的關鍵投資。</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="checklist-title">// 新手查核清單</p>
+  <div class="checklist">
+    <div class="check-item" onclick="this.classList.toggle('checked')">
+      <div class="check-box"></div>
+      <div class="check-label">確定收藏主題與每月預算上限</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('checked')">
+      <div class="check-box"></div>
+      <div class="check-label">訂閱 AmiAmi、HobbySearch 預購通知</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('checked')">
+      <div class="check-box"></div>
+      <div class="check-label">加入至少一個哥吉拉收藏社群</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('checked')">
+      <div class="check-box"></div>
+      <div class="check-label">購入第一款（推薦 Bandai Movie Monster）</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('checked')">
+      <div class="check-box"></div>
+      <div class="check-label">規劃展示空間，避免陽光直射</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('checked')">
+      <div class="check-box"></div>
+      <div class="check-label">保留所有原盒與配件</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('checked')">
+      <div class="check-box"></div>
+      <div class="check-label">了解至少一個日本代拍服務</div>
+    </div>
+  </div>
+</div>
+
+<!-- 經典系列 -->
+<div class="tab-content" id="tab-figures">
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterFigures('all', this)">全部</button>
+    <button class="filter-btn" onclick="filterFigures('bandai', this)">Bandai</button>
+    <button class="filter-btn" onclick="filterFigures('xplus', this)">X-Plus</button>
+    <button class="filter-btn" onclick="filterFigures('neca', this)">NECA</button>
+    <button class="filter-btn" onclick="filterFigures('hiya', this)">Hiya</button>
+    <button class="filter-btn" onclick="filterFigures('prime1', this)">Prime 1</button>
+  </div>
+  <div class="figure-list">
+    <div class="figure-item" data-brand="bandai">
+      <div class="figure-name">S.H.MonsterArts Godzilla 2019</div>
+      <div class="figure-meta">
+        <span class="figure-brand">Bandai Tamashii</span>
+        <span class="figure-size">16cm</span>
+        <span class="figure-price">NT$ 2,800–4,500</span>
+        <span class="badge badge-common">COMMON</span>
+      </div>
+      <p class="figure-desc">MonsterVerse版本，附Atomic Breath效果件，多關節可動，入門S.H.MonsterArts的推薦首選。</p>
+    </div>
+    <div class="figure-item" data-brand="bandai">
+      <div class="figure-name">S.H.MonsterArts Shin Godzilla</div>
+      <div class="figure-meta">
+        <span class="figure-brand">Bandai Tamashii</span>
+        <span class="figure-size">18cm</span>
+        <span class="figure-price">NT$ 3,000–5,500</span>
+        <span class="badge badge-ltd">LIMITED</span>
+      </div>
+      <p class="figure-desc">第四形態+第二形態，附發光效果零件，造型獨特，是S.H.MonsterArts系列中最具話題性的款式。</p>
+    </div>
+    <div class="figure-item" data-brand="bandai">
+      <div class="figure-name">Movie Monster Godzilla 2023</div>
+      <div class="figure-meta">
+        <span class="figure-brand">Bandai</span>
+        <span class="figure-size">18cm</span>
+        <span class="figure-price">NT$ 200–350</span>
+        <span class="badge badge-common">COMMON</span>
+      </div>
+      <p class="figure-desc">入門首選，軟膠材質，各大玩具店現貨，是許多收藏家的第一隻哥吉拉。</p>
+    </div>
+    <div class="figure-item" data-brand="xplus">
+      <div class="figure-name">X-Plus 30cm Shin Godzilla 4th Form</div>
+      <div class="figure-meta">
+        <span class="figure-brand">X-Plus</span>
+        <span class="figure-size">30cm</span>
+        <span class="figure-price">NT$ 8,000–14,000</span>
+        <span class="badge badge-rare">RARE</span>
+      </div>
+      <p class="figure-desc">第四形態細節驚人，塗裝質感遠超一般玩具，已停產，二手稀有度高。</p>
+    </div>
+    <div class="figure-item" data-brand="xplus">
+      <div class="figure-name">X-Plus 25cm Godzilla 1984</div>
+      <div class="figure-meta">
+        <span class="figure-brand">X-Plus</span>
+        <span class="figure-size">25cm</span>
+        <span class="figure-price">NT$ 6,500–9,500</span>
+        <span class="badge badge-common">COMMON</span>
+      </div>
+      <p class="figure-desc">平成初代造型，塗裝精細，是入門X-Plus系列的推薦款式。</p>
+    </div>
+    <div class="figure-item" data-brand="neca">
+      <div class="figure-name">NECA Head-to-Tail Godzilla 1954</div>
+      <div class="figure-meta">
+        <span class="figure-brand">NECA</span>
+        <span class="figure-size">30cm（含尾）</span>
+        <span class="figure-price">NT$ 800–1,500</span>
+        <span class="badge badge-common">COMMON</span>
+      </div>
+      <p class="figure-desc">含尾長30cm，CP值極高，初代造型還原度佳，是NECA系列最推薦的入門款。</p>
+    </div>
+    <div class="figure-item" data-brand="hiya">
+      <div class="figure-name">Hiya Exquisite Basic Godzilla 2019</div>
+      <div class="figure-meta">
+        <span class="figure-brand">Hiya Toys</span>
+        <span class="figure-size">14cm</span>
+        <span class="figure-price">NT$ 600–900</span>
+        <span class="badge badge-common">COMMON</span>
+      </div>
+      <p class="figure-desc">多關節可動，附底座，細節精緻遠超售價應有水準，高CP值代表作。</p>
+    </div>
+    <div class="figure-item" data-brand="prime1">
+      <div class="figure-name">Prime 1 Godzilla 2019 (1/35)</div>
+      <div class="figure-meta">
+        <span class="figure-brand">Prime 1 Studio</span>
+        <span class="figure-size">約68cm</span>
+        <span class="figure-price">NT$ 35,000–55,000</span>
+        <span class="badge badge-ltd">LIMITED</span>
+      </div>
+      <p class="figure-desc">LED口中光效，城市場景底座，終極展示品，是收藏家的夢想等級。</p>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">首頁</span>
+  </a>
+  <a href="knowledge.html">
+    <span class="nav-icon">📖</span>
+    <span class="nav-label">知識庫</span>
+  </a>
+  <a class="active" href="guide.html">
+    <span class="nav-icon">⭐</span>
+    <span class="nav-label">收藏指南</span>
+  </a>
+  <a href="articles.html">
+    <span class="nav-icon">✏️</span>
+    <span class="nav-label">文章</span>
+  </a>
+</nav>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+function filterFigures(brand, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.figure-item').forEach(item => {
+    item.style.display = (brand === 'all' || item.dataset.brand === brand) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
