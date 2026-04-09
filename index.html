@@ -6,43 +6,45 @@
 <title>怪獸誌 KAIJUZINE</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-:root{--red:#C0392B;--dark:#0a0a0a;--charcoal:#111;--gray:#1a1a1a;--border:#222;--light:#666;--pale:#999;--white:#f0ede8;--gold:#c9a84c;--font-body:'Noto Serif TC',serif;--font-mono:'Share Tech Mono',monospace;--max-w:1100px}
+:root{--red:#C0392B;--dark:#0a0a0a;--charcoal:#111;--gray:#1a1a1a;--border:#1e1e1e;--light:#666;--pale:#999;--white:#f0ede8;--gold:#c9a84c;--font-body:'Noto Serif TC',serif;--font-mono:'Share Tech Mono',monospace;--max-w:1100px}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--dark);color:var(--white);font-family:var(--font-body)}
-.logo{display:flex;align-items:center;gap:0.5rem;text-decoration:none}
-.logo-kz{font-family:'Arial Black',sans-serif;font-size:1.8rem;color:#C0392B;line-height:1;font-weight:900;border-right:2px solid #C0392B;padding-right:0.5rem;letter-spacing:0.02em}
-.logo-text{display:flex;flex-direction:column;gap:0.1rem;padding-left:0.05rem}
-.logo-zh{font-family:'Arial Black',sans-serif;font-size:0.92rem;color:var(--white);letter-spacing:0.12em;font-weight:900;line-height:1}
-.logo-en{font-family:var(--font-mono);font-size:0.36rem;letter-spacing:0.06em;color:#555}
+
+/* ── DESKTOP NAV ── */
 .top-nav{display:none;position:sticky;top:0;z-index:200;background:rgba(10,10,10,0.97);border-bottom:1px solid var(--border);backdrop-filter:blur(10px)}
 .top-nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:stretch}
-.top-nav-logo{padding:0.7rem 1.25rem;border-right:1px solid var(--border);display:flex;align-items:center}
+.top-nav-logo-wrap{padding:0.65rem 1.5rem;border-right:1px solid var(--border);display:flex;align-items:center}
+.top-nav-logo{display:flex;flex-direction:column;align-items:center;gap:0.08rem;text-decoration:none}
+.top-nav-logo-zh{font-family:'Arial Black',sans-serif;font-size:1rem;color:var(--white);letter-spacing:0.1em;font-weight:900;line-height:1;border-bottom:1px solid #333;padding-bottom:0.1rem}
+.top-nav-logo-en{font-family:var(--font-mono);font-size:0.32rem;letter-spacing:0.35em;color:#555}
 .top-nav-cats{display:flex;align-items:stretch;overflow-x:auto;scrollbar-width:none}
 .top-nav-cats::-webkit-scrollbar{display:none}
 .cat-btn{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.18em;color:#555;background:none;border:none;border-bottom:2px solid transparent;padding:0 1rem;cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s}
 .cat-btn:hover{color:var(--white)}
 .cat-btn.active{color:var(--white);border-bottom-color:var(--red)}
-.mobile-nav{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.25rem;border-bottom:1px solid var(--border);background:var(--dark);position:sticky;top:0;z-index:200}
-.mobile-logo{display:flex;align-items:center;gap:0.5rem;text-decoration:none}
-.mobile-logo-kz-wrap{display:flex;flex-direction:column;align-items:center;gap:0.04rem;border-right:2px solid #C0392B;padding-right:0.5rem}
-.mobile-logo-kz{font-family:'Arial Black',sans-serif;font-size:1.7rem;color:#C0392B;line-height:1;font-weight:900}
-.mobile-logo-kz-en{font-family:var(--font-mono);font-size:0.3rem;letter-spacing:0.28em;color:#C0392B}
-.mobile-logo-zh{font-family:'Arial Black',sans-serif;font-size:1.1rem;color:var(--white);letter-spacing:0.1em;font-weight:900}
-.burger{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:6px}
-.burger span{display:block;width:24px;height:2px;background:var(--white);transition:all 0.25s}
-.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.mobile-menu{display:none;position:fixed;inset:0;background:rgba(10,10,10,0.98);z-index:190;flex-direction:column;justify-content:center;align-items:center;gap:0}
+
+/* ── MOBILE NAV ── */
+.mobile-nav{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1.25rem;border-bottom:1px solid var(--border);background:var(--dark);position:sticky;top:0;z-index:200}
+.mobile-burger{display:flex;flex-direction:column;gap:5px;padding:4px;background:none;border:none;cursor:pointer;width:32px}
+.mobile-burger span{display:block;width:22px;height:2px;background:var(--white);transition:all 0.25s}
+.mobile-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.mobile-burger.open span:nth-child(2){opacity:0}
+.mobile-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-logo{display:flex;flex-direction:column;align-items:center;gap:0.1rem;text-decoration:none}
+.mobile-logo-zh{font-family:'Arial Black',sans-serif;font-size:1.5rem;color:var(--white);line-height:1;font-weight:900;letter-spacing:0.06em;border-bottom:1px solid #333;padding-bottom:0.12rem}
+.mobile-logo-en{font-family:var(--font-mono);font-size:0.42rem;letter-spacing:0.4em;color:#555}
+.mobile-search{font-size:1.1rem;width:32px;text-align:right;background:none;border:none;cursor:pointer;color:var(--white)}
+
+/* ── MOBILE MENU ── */
+.mobile-menu{display:none;position:fixed;inset:0;background:rgba(10,10,10,0.98);z-index:190;flex-direction:column;justify-content:center;align-items:center}
 .mobile-menu.open{display:flex}
 .mobile-menu-label{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.35em;color:#444;margin-bottom:2rem}
 .mobile-menu-item{font-family:'Arial Black',sans-serif;font-size:1.9rem;color:#2a2a2a;font-weight:900;letter-spacing:0.04em;padding:0.55rem 2.5rem;cursor:pointer;transition:color 0.15s;text-align:center;width:100%}
 .mobile-menu-item:hover,.mobile-menu-item.active{color:var(--white)}
 .mobile-menu-item.active{border-left:3px solid var(--red);padding-left:calc(2.5rem - 3px)}
+
+/* ── DESKTOP CONTENT ── */
 .content-wrap{max-width:var(--max-w);margin:0 auto;padding-bottom:3rem}
-.section-bar{display:flex;align-items:center;gap:0.75rem;padding:0.55rem 1rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.section-bar-line{flex:1;height:1px;background:var(--border)}
-.section-bar-text{font-family:var(--font-mono);font-size:0.5rem;letter-spacing:0.3em;color:#333;white-space:nowrap}
 .hero-strip{display:flex;flex-direction:column;gap:1px;background:var(--gray)}
 .hero-main{background:var(--charcoal);cursor:pointer;text-decoration:none;display:block;overflow:hidden}
 .hero-main:hover .card-cover{transform:scale(1.03)}
@@ -73,39 +75,56 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body)}
 .grid-card .card-cover-ph span{font-size:2.5rem}
 .grid-body{padding:0.75rem 1rem 0.9rem}
 .grid-title{font-family:'Arial Black',sans-serif;font-size:0.9rem;color:var(--pale);line-height:1.3;font-weight:900;margin-bottom:0.25rem}
+.section-bar{display:flex;align-items:center;gap:0.75rem;padding:0.55rem 1rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.section-bar-line{flex:1;height:1px;background:var(--border)}
+.section-bar-text{font-family:var(--font-mono);font-size:0.5rem;letter-spacing:0.3em;color:#333;white-space:nowrap}
 .empty{padding:4rem 1.25rem;text-align:center;font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.2em;color:#333}
-.mobile-feed{display:none;flex-direction:column;padding:0 1.25rem;gap:0}
-.mobile-hero-card{text-decoration:none;display:block;padding:1.5rem 0 0}
-.mobile-hero-img-wrap{overflow:hidden;margin-bottom:0}
-.mobile-hero-img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;background:var(--gray);transition:transform 0.35s}
-.mobile-hero-card:active .mobile-hero-img{transform:scale(1.02)}
-.mobile-hero-img-ph{width:100%;aspect-ratio:3/2;background:var(--gray);display:flex;align-items:center;justify-content:center}
-.mobile-hero-img-ph span{font-family:'Arial Black',sans-serif;font-size:4rem;color:#1e1e1e;font-weight:900}
-.mobile-hero-label{display:flex;align-items:center;gap:0.65rem;padding:1rem 0 0.65rem;border-bottom:1px solid var(--red)}
-.mobile-hero-label-line{width:24px;height:2px;background:var(--red);flex-shrink:0}
-.mobile-hero-label-text{font-family:var(--font-mono);font-size:0.52rem;letter-spacing:0.22em;color:var(--red)}
-.mobile-hero-title{font-family:'Arial Black',sans-serif;font-size:1.45rem;color:var(--white);line-height:1.22;font-weight:900;margin:0.75rem 0 0.6rem}
-.mobile-hero-excerpt{font-size:0.9rem;line-height:1.8;color:var(--light);margin-bottom:0.55rem}
-.mobile-hero-meta{display:flex;align-items:center;justify-content:space-between;padding-bottom:1.5rem}
-.mobile-hero-date{font-family:var(--font-mono);font-size:0.52rem;color:#444}
-.mobile-hero-arrow{font-family:var(--font-mono);font-size:0.65rem;color:var(--red)}
-.mobile-section-div{display:flex;align-items:center;gap:0.75rem;padding:0.5rem 0 1rem}
-.mobile-section-line{flex:1;height:1px;background:var(--border)}
-.mobile-section-text{font-family:var(--font-mono);font-size:0.5rem;letter-spacing:0.3em;color:#333;white-space:nowrap}
-.mobile-card{text-decoration:none;display:block;padding:1.5rem 0}
-.mobile-card+.mobile-card{border-top:1px solid var(--border)}
-.mobile-card-img-wrap{overflow:hidden;margin-bottom:0.9rem}
-.mobile-card-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--gray);transition:transform 0.35s}
-.mobile-card:active .mobile-card-img{transform:scale(1.02)}
-.mobile-card-img-ph{width:100%;aspect-ratio:4/3;background:var(--gray);display:flex;align-items:center;justify-content:center}
-.mobile-card-img-ph span{font-family:'Arial Black',sans-serif;font-size:3rem;color:#1e1e1e;font-weight:900}
-.mobile-card-accent{width:24px;height:2px;background:var(--red);margin-bottom:0.5rem}
-.mobile-card-tag{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.2em;color:var(--red);display:block;margin-bottom:0.4rem}
-.mobile-card-title{font-family:'Arial Black',sans-serif;font-size:1.15rem;color:var(--white);line-height:1.28;font-weight:900;margin-bottom:0.5rem}
-.mobile-card-excerpt{font-size:0.88rem;line-height:1.8;color:var(--light);margin-bottom:0.45rem}
-.mobile-card-meta{display:flex;align-items:center;justify-content:space-between}
-.mobile-card-date{font-family:var(--font-mono);font-size:0.52rem;color:#444}
-.mobile-card-arrow{font-family:var(--font-mono);font-size:0.65rem;color:var(--red)}
+
+/* ── MOBILE FEED ── */
+.mobile-feed{display:none;flex-direction:column;padding:0 1.25rem}
+
+/* Hero card */
+.m-hero{text-decoration:none;display:block;padding:1.25rem 0 0}
+.m-hero-img-wrap{overflow:hidden}
+.m-hero-img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;background:var(--gray)}
+.m-hero-img-ph{width:100%;aspect-ratio:3/2;background:var(--gray);display:flex;align-items:center;justify-content:center}
+.m-hero-img-ph span{font-family:'Arial Black',sans-serif;font-size:4rem;color:#1e1e1e;font-weight:900}
+.m-hero-label{display:flex;align-items:center;gap:0.6rem;padding:0.85rem 0 0.6rem;border-bottom:1px solid var(--red)}
+.m-hero-label-line{width:22px;height:2px;background:var(--red);flex-shrink:0}
+.m-hero-label-text{font-family:var(--font-mono);font-size:0.52rem;letter-spacing:0.22em;color:var(--red)}
+.m-hero-title{font-family:'Arial Black',sans-serif;font-size:1.4rem;color:var(--white);line-height:1.22;font-weight:900;margin:0.7rem 0 0.5rem}
+.m-hero-meta{display:flex;align-items:center;justify-content:space-between;padding-bottom:1.25rem;border-bottom:1px solid var(--border)}
+.m-hero-date{font-family:var(--font-mono);font-size:0.5rem;color:#444}
+.m-hero-arrow{font-family:var(--font-mono);font-size:0.65rem;color:var(--red)}
+
+/* Two col */
+.m-two-col{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--gray);margin:1.25rem -1.25rem}
+.m-two-card{background:var(--charcoal);text-decoration:none;display:block;overflow:hidden}
+.m-two-img{width:100%;aspect-ratio:4/3;background:var(--gray);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.m-two-img img{width:100%;height:100%;object-fit:cover;display:block}
+.m-two-img span{font-family:'Arial Black',sans-serif;font-size:2rem;color:#1e1e1e;font-weight:900}
+.m-two-img-tag{position:absolute;top:0.5rem;left:0.5rem;background:var(--red);font-family:var(--font-mono);font-size:0.42rem;letter-spacing:0.1em;color:#fff;padding:0.15rem 0.4rem}
+.m-two-body{padding:0.65rem 0.75rem 0.75rem}
+.m-two-title{font-family:'Arial Black',sans-serif;font-size:0.8rem;color:var(--pale);line-height:1.3;font-weight:900;margin-bottom:0.3rem}
+.m-two-date{font-family:var(--font-mono);font-size:0.44rem;color:#444;display:block}
+
+/* List header */
+.m-list-header{display:flex;align-items:center;gap:0.6rem;padding:1.25rem 0 0.75rem}
+.m-list-header-line{width:3px;height:1rem;background:var(--red);flex-shrink:0}
+.m-list-header-text{font-family:'Arial Black',sans-serif;font-size:0.85rem;color:var(--white);font-weight:900;letter-spacing:0.05em}
+
+/* List cards */
+.m-list-card{display:flex;gap:0.85rem;padding:1rem 0;text-decoration:none;border-bottom:1px solid var(--border);align-items:flex-start}
+.m-list-img{width:110px;flex-shrink:0;overflow:hidden}
+.m-list-img img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--gray)}
+.m-list-img-ph{width:110px;aspect-ratio:4/3;background:var(--gray);display:flex;align-items:center;justify-content:center}
+.m-list-img-ph span{font-family:'Arial Black',sans-serif;font-size:1.5rem;color:#1e1e1e;font-weight:900}
+.m-list-body{flex:1;min-width:0}
+.m-list-tag{font-family:var(--font-mono);font-size:0.5rem;letter-spacing:0.15em;color:var(--red);display:block;margin-bottom:0.3rem}
+.m-list-title{font-family:'Arial Black',sans-serif;font-size:0.92rem;color:var(--pale);line-height:1.35;font-weight:900;margin-bottom:0.35rem}
+.m-list-date{font-family:var(--font-mono);font-size:0.46rem;color:#444}
+
+/* ── RESPONSIVE ── */
 @media(min-width:768px){
   .top-nav{display:block}
   .mobile-nav,.mobile-menu,.mobile-feed{display:none!important}
@@ -123,21 +142,22 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body)}
 @media(max-width:767px){
   .content-wrap .hero-strip,.content-wrap .section-bar,#moreGrid{display:none!important}
   .mobile-feed{display:flex}
-  .content-wrap{padding-bottom:1.5rem}
+  .content-wrap{padding-bottom:1rem}
 }
 </style>
 </head>
 <body>
 
+<!-- DESKTOP NAV -->
 <div class="top-nav">
   <div class="top-nav-inner">
-    <div class="top-nav-logo">
-      <a class="logo" href="index.html">
-        <span class="logo-kz">KZ</span>
-        <div class="logo-text"><span class="logo-zh">怪獸誌</span><span class="logo-en">KAIJUZINE</span></div>
+    <div class="top-nav-logo-wrap">
+      <a class="top-nav-logo" href="index.html">
+        <span class="top-nav-logo-zh">怪獸誌</span>
+        <span class="top-nav-logo-en">KAIJUZINE</span>
       </a>
     </div>
-    <div class="top-nav-cats" id="desktopCats">
+    <div class="top-nav-cats">
       <button class="cat-btn active" onclick="filterArticles('全部',this)">全部</button>
       <button class="cat-btn" onclick="filterArticles('哥吉拉介紹',this)">哥吉拉介紹</button>
       <button class="cat-btn" onclick="filterArticles('系列與時代解析',this)">系列與時代解析</button>
@@ -147,19 +167,19 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body)}
   </div>
 </div>
 
+<!-- MOBILE NAV -->
 <div class="mobile-nav">
-  <a class="mobile-logo" href="index.html">
-    <div class="mobile-logo-kz-wrap">
-      <span class="mobile-logo-kz">KZ</span>
-      <span class="mobile-logo-kz-en">KAIJUZINE</span>
-    </div>
-    <span class="mobile-logo-zh">怪獸誌</span>
-  </a>
-  <button class="burger" id="burgerBtn" onclick="toggleMenu()">
+  <button class="mobile-burger" id="burgerBtn" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </button>
+  <a class="mobile-logo" href="index.html">
+    <span class="mobile-logo-zh">怪獸誌</span>
+    <span class="mobile-logo-en">KAIJUZINE</span>
+  </a>
+  <button class="mobile-search">🔍</button>
 </div>
 
+<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-label">// 文章分類</div>
   <div class="mobile-menu-item active" onclick="mobileCat('全部',this)">全部</div>
@@ -169,16 +189,16 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body)}
   <div class="mobile-menu-item" onclick="mobileCat('收藏市場與指南',this)">收藏市場與指南</div>
 </div>
 
+<!-- DESKTOP CONTENT -->
 <div class="content-wrap">
   <div class="hero-strip" id="heroStrip"><div class="empty">// 載入中...</div></div>
   <div class="section-bar" id="sectionBar" style="display:none">
-    <div class="section-bar-line"></div>
-    <div class="section-bar-text">更多文章</div>
-    <div class="section-bar-line"></div>
+    <div class="section-bar-line"></div><div class="section-bar-text">更多文章</div><div class="section-bar-line"></div>
   </div>
   <div id="moreGrid"></div>
 </div>
 
+<!-- MOBILE FEED -->
 <div class="mobile-feed" id="mobileFeed">
   <div class="empty">// 載入中...</div>
 </div>
@@ -196,6 +216,13 @@ async function loadArticles(){
     document.getElementById('mobileFeed').innerHTML='<div class="empty">// 尚無文章</div>';
   }
 }
+
+function imgOrPh(a,cls,phCls,phText){
+  return a.image
+    ?`<img class="${cls}" src="${a.image}" alt="${a.title}" onerror="this.parentElement.innerHTML='<div class=\\'${phCls}\\'><span>${phText}</span></div>'">`
+    :`<div class="${phCls}"><span>${phText}</span></div>`;
+}
+
 function renderDesktop(articles){
   const hero=document.getElementById('heroStrip');
   const more=document.getElementById('moreGrid');
@@ -205,12 +232,7 @@ function renderDesktop(articles){
   hero.innerHTML=`
     <a class="hero-main" href="${first.file}">
       ${first.image?`<img class="card-cover" src="${first.image}" alt="${first.title}" onerror="this.outerHTML='<div class=\\'card-cover-ph\\'><span>哥</span></div>'">`:`<div class="card-cover-ph"><span>哥</span></div>`}
-      <div class="hero-body">
-        <span class="card-tag">${first.category}</span>
-        <div class="hero-title">${first.title}</div>
-        <div class="hero-excerpt">${first.excerpt}</div>
-        <span class="card-date">${first.date}</span>
-      </div>
+      <div class="hero-body"><span class="card-tag">${first.category}</span><div class="hero-title">${first.title}</div><div class="hero-excerpt">${first.excerpt}</div><span class="card-date">${first.date}</span></div>
     </a>
     ${rest.slice(0,3).length?`<div class="side-list">${rest.slice(0,3).map(a=>`
       <a class="side-card" href="${a.file}">
@@ -225,48 +247,49 @@ function renderDesktop(articles){
     </a>`).join('')}</div>`;}
   else{bar.style.display='none';more.innerHTML='';}
 }
+
 function renderMobile(articles){
   const feed=document.getElementById('mobileFeed');
   if(!articles.length){feed.innerHTML='<div class="empty">// 此分類尚無文章</div>';return;}
   const[first,...rest]=articles;
+
   const heroHtml=`
-    <a class="mobile-hero-card" href="${first.file}">
-      <div class="mobile-hero-img-wrap">
-        ${first.image?`<img class="mobile-hero-img" src="${first.image}" alt="${first.title}" onerror="this.parentElement.outerHTML='<div class=\\'mobile-hero-img-ph\\'><span>哥吉拉</span></div>'">`:`<div class="mobile-hero-img-ph"><span>哥吉拉</span></div>`}
+    <a class="m-hero" href="${first.file}">
+      <div class="m-hero-img-wrap">
+        ${first.image?`<img class="m-hero-img" src="${first.image}" alt="${first.title}" onerror="this.outerHTML='<div class=\\'m-hero-img-ph\\'><span>哥吉拉</span></div>'">`:`<div class="m-hero-img-ph"><span>哥吉拉</span></div>`}
       </div>
-      <div class="mobile-hero-label">
-        <div class="mobile-hero-label-line"></div>
-        <span class="mobile-hero-label-text">${first.category}</span>
-      </div>
-      <div class="mobile-hero-title">${first.title}</div>
-      <p class="mobile-hero-excerpt">${first.excerpt}</p>
-      <div class="mobile-hero-meta">
-        <span class="mobile-hero-date">${first.date}</span>
-        <span class="mobile-hero-arrow">→</span>
-      </div>
+      <div class="m-hero-label"><div class="m-hero-label-line"></div><span class="m-hero-label-text">${first.category}</span></div>
+      <div class="m-hero-title">${first.title}</div>
+      <div class="m-hero-meta"><span class="m-hero-date">${first.date}</span><span class="m-hero-arrow">→</span></div>
     </a>`;
-  const dividerHtml=rest.length?`
-    <div class="mobile-section-div">
-      <div class="mobile-section-line"></div>
-      <div class="mobile-section-text">更多文章</div>
-      <div class="mobile-section-line"></div>
+
+  const twoCol=rest.slice(0,2);
+  const twoHtml=twoCol.length?`
+    <div class="m-two-col">
+      ${twoCol.map(a=>`
+        <a class="m-two-card" href="${a.file}">
+          <div class="m-two-img">
+            ${a.image?`<img src="${a.image}" alt="${a.title}" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.outerHTML='<span style=\\'font-family:Arial Black;font-size:2rem;color:#1e1e1e\\'>${a.title.charAt(0)}</span>'">`:`<span style="font-family:'Arial Black';font-size:2rem;color:#1e1e1e;font-weight:900">${a.title.charAt(0)}</span>`}
+            <div class="m-two-img-tag">${a.category}</div>
+          </div>
+          <div class="m-two-body"><div class="m-two-title">${a.title}</div><span class="m-two-date">${a.date}</span></div>
+        </a>`).join('')}
     </div>`:'';
-  const cardsHtml=rest.map(a=>`
-    <a class="mobile-card" href="${a.file}">
-      <div class="mobile-card-img-wrap">
-        ${a.image?`<img class="mobile-card-img" src="${a.image}" alt="${a.title}" onerror="this.parentElement.outerHTML='<div class=\\'mobile-card-img-ph\\'><span>哥</span></div>'">`:`<div class="mobile-card-img-ph"><span>哥</span></div>`}
-      </div>
-      <div class="mobile-card-accent"></div>
-      <span class="mobile-card-tag">${a.category}</span>
-      <div class="mobile-card-title">${a.title}</div>
-      <p class="mobile-card-excerpt">${a.excerpt}</p>
-      <div class="mobile-card-meta">
-        <span class="mobile-card-date">${a.date}</span>
-        <span class="mobile-card-arrow">→</span>
-      </div>
-    </a>`).join('');
-  feed.innerHTML=heroHtml+dividerHtml+cardsHtml;
+
+  const listArticles=rest.slice(2);
+  const listHtml=listArticles.length?`
+    <div class="m-list-header"><div class="m-list-header-line"></div><div class="m-list-header-text">最新文章</div></div>
+    ${listArticles.map(a=>`
+      <a class="m-list-card" href="${a.file}">
+        <div class="m-list-img">
+          ${a.image?`<img src="${a.image}" alt="${a.title}" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block" onerror="this.parentElement.innerHTML='<div class=\\'m-list-img-ph\\'><span>哥</span></div>'">`:`<div class="m-list-img-ph"><span>哥</span></div>`}
+        </div>
+        <div class="m-list-body"><span class="m-list-tag">${a.category}</span><div class="m-list-title">${a.title}</div><span class="m-list-date">${a.date}</span></div>
+      </a>`).join('')}`:'';
+
+  feed.innerHTML=heroHtml+twoHtml+listHtml;
 }
+
 function filterArticles(cat,btn){
   document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
   if(btn)btn.classList.add('active');
