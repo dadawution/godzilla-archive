@@ -27,8 +27,6 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body)}
 .logo-zh{font-family:'Arial Black',sans-serif;font-size:0.92rem;color:#f0ede8;letter-spacing:0.12em;font-weight:900;line-height:1}
 .logo-en{font-family:var(--font-mono);font-size:0.36rem;letter-spacing:0.06em;color:#555}
 .mobile-logo{display:flex;align-items:center;gap:0.45rem}
-.mobile-logo-kz{font-family:'Arial Black',sans-serif;font-size:1.3rem;color:#C0392B;line-height:1;font-weight:900;border-right:1.5px solid #C0392B;padding-right:0.38rem}
-.mobile-logo-zh{font-family:'Arial Black',sans-serif;font-size:0.95rem;color:#f0ede8;letter-spacing:0.1em;font-weight:900}
 /* ARTICLE PAGE STYLES */
 .back-link{display:block;font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.18em;color:var(--red);text-decoration:none;padding:0.8rem 1.25rem;border-bottom:1px solid var(--border);max-width:var(--max-w);margin:0 auto}
 .cover-wrap{max-width:var(--max-w);margin:0 auto;overflow:hidden}
@@ -102,9 +100,11 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body)}
 }
 
 .mobile-nav{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.25rem;border-bottom:1px solid var(--border);background:var(--dark);position:sticky;top:0;z-index:200}
-.mobile-logo-link{display:flex;align-items:center;gap:0.45rem;text-decoration:none}
-.mobile-logo-kz{font-family:'Arial Black',sans-serif;font-size:1.7rem;color:#C0392B;line-height:1;font-weight:900;border-right:2px solid #C0392B;padding-right:0.45rem}
-.mobile-logo-zh{font-family:'Arial Black',sans-serif;font-size:1.1rem;color:var(--white);letter-spacing:0.1em;font-weight:900}
+.mobile-logo-link{display:flex;align-items:center;gap:0.5rem;text-decoration:none}
+.mobile-logo-kz-wrap{display:flex;flex-direction:column;align-items:center;gap:0.04rem;border-right:2px solid #C0392B;padding-right:0.5rem}
+.mobile-logo-kz{font-family:'Arial Black',sans-serif;font-size:1.7rem;color:#C0392B;line-height:1;font-weight:900}
+.mobile-logo-kz-en{font-family:var(--font-mono);font-size:0.3rem;letter-spacing:0.28em;color:#C0392B}
+.mobile-logo-zh{font-family:'Arial Black',sans-serif;font-size:1.1rem;color:#f0ede8;letter-spacing:0.1em;font-weight:900}
 .burger{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:6px}
 .burger span{display:block;width:24px;height:2px;background:var(--white);transition:all 0.25s}
 .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
