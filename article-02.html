@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>哥吉拉的起源 — 哥吉拉玩具圖鑑</title>
+<title>哥吉拉是什麼？ — 哥吉拉玩具圖鑑</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+TC:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -15,21 +15,13 @@
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: var(--dark); color: var(--white); font-family: var(--font-body); padding-bottom: 5rem; }
-
-  /* NAV */
   nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.97); border-top: 1px solid var(--gray); display: flex; z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
   nav a { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.7rem 0.5rem; text-decoration: none; gap: 0.25rem; }
   nav a .nav-icon { font-size: 1.3rem; }
   nav a .nav-label { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.1em; color: var(--light); }
   nav a.active .nav-label { color: var(--red); }
-
-  /* BACK */
   .back-link { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.15em; color: var(--red); text-decoration: none; padding: 1rem 1.25rem; border-bottom: 1px solid var(--gray); }
-
-  /* COVER */
   .cover-image { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; background: var(--gray); }
-
-  /* ARTICLE HERO */
   .article-hero { padding: 1.75rem 1.25rem 1.5rem; border-bottom: 1px solid var(--gray); }
   .article-meta { display: flex; gap: 0.6rem; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; }
   .article-tag { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--gold); border: 1px solid rgba(201,168,76,0.35); padding: 0.15rem 0.5rem; }
@@ -37,41 +29,26 @@
   .article-title { font-family: var(--font-title); font-size: clamp(2rem, 8vw, 3.2rem); letter-spacing: 0.03em; color: var(--white); line-height: 1.05; margin-bottom: 0.75rem; }
   .article-summary { font-size: 0.9rem; line-height: 1.8; color: var(--light); padding: 1rem; background: var(--charcoal); border-left: 3px solid var(--red); margin-top: 0.5rem; }
   .article-summary strong { color: var(--white); }
-
-  /* TABLE OF CONTENTS */
   .toc { margin: 1.5rem 1.25rem; background: var(--charcoal); border: 1px solid var(--gray); padding: 1.25rem; }
   .toc-title { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.25em; color: var(--red); margin-bottom: 0.75rem; }
   .toc ol { padding-left: 1.25rem; }
   .toc li { margin-bottom: 0.4rem; }
   .toc a { font-size: 0.85rem; color: var(--light); text-decoration: none; line-height: 1.6; }
-  .toc a:hover { color: var(--white); }
-
-  /* ARTICLE BODY */
   .article-body { padding: 0.5rem 1.25rem 1.75rem; }
   .article-body p { font-size: 1rem; line-height: 2; color: var(--pale); margin-bottom: 1.5rem; }
-  .article-body h2 {
-    font-family: var(--font-title); font-size: 1.9rem; letter-spacing: 0.05em;
-    color: var(--white); margin: 2.5rem 0 1rem; line-height: 1;
-    border-left: 3px solid var(--red); padding-left: 0.75rem;
-    scroll-margin-top: 1rem;
-  }
+  .article-body h2 { font-family: var(--font-title); font-size: 1.9rem; letter-spacing: 0.05em; color: var(--white); margin: 2.5rem 0 1rem; line-height: 1; border-left: 3px solid var(--red); padding-left: 0.75rem; scroll-margin-top: 1rem; }
   .article-body h3 { font-family: var(--font-body); font-weight: 700; font-size: 1rem; color: var(--gold); margin: 2rem 0 0.75rem; }
   .article-body strong { color: var(--white); }
   .article-body ul { padding-left: 1.25rem; margin-bottom: 1.5rem; }
   .article-body li { font-size: 0.95rem; line-height: 1.9; color: var(--light); margin-bottom: 0.25rem; }
-
-  /* RELATED ARTICLES */
   .related { margin: 0 1.25rem 1.5rem; }
   .related-title { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.25em; color: var(--red); margin-bottom: 0.75rem; }
   .related-list { display: flex; flex-direction: column; gap: 1px; background: var(--gray); border: 1px solid var(--gray); }
-  .related-card { background: var(--charcoal); padding: 1rem 1.25rem; text-decoration: none; display: flex; gap: 1rem; align-items: center; transition: background 0.2s; }
+  .related-card { background: var(--charcoal); padding: 1rem 1.25rem; text-decoration: none; display: flex; gap: 1rem; align-items: center; }
   .related-card:active { background: var(--dark); }
   .related-emoji { font-size: 1.5rem; flex-shrink: 0; }
-  .related-info {}
   .related-tag { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.25rem; }
   .related-name { font-size: 0.88rem; color: var(--white); line-height: 1.4; }
-
-  /* ARTICLE FOOTER */
   .article-footer { margin: 0 1.25rem; padding: 1.5rem 0; border-top: 1px solid var(--gray); display: flex; justify-content: space-between; }
   .article-footer a { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.15em; color: var(--red); text-decoration: none; }
 </style>
@@ -80,71 +57,82 @@
 
 <a class="back-link" href="articles.html">← 返回文章列表</a>
 
-<img class="cover-image" src="images/cover-01.jpg" alt="哥吉拉起源" onerror="this.style.display='none'">
+<img class="cover-image" src="images/cover-02.jpg" alt="哥吉拉是什麼" onerror="this.style.display='none'">
 
 <div class="article-hero">
   <div class="article-meta">
     <span class="article-tag">收藏心得</span>
-    <span class="article-date">2026-04-08</span>
+    <span class="article-date">2026-04-09</span>
   </div>
-  <h1 class="article-title">哥吉拉的起源：從核武恐懼到文化圖騰</h1>
+  <h1 class="article-title">哥吉拉是什麼？從核戰陰影到文化象徵，一次看懂 Godzilla 的誕生與演變</h1>
   <div class="article-summary">
-    <strong>文章重點：</strong>1954年，一隻從海底誕生的巨獸改變了日本電影史。哥吉拉不只是怪獸，更是戰後日本對核武恐懼的具體化身，也是今日所有哥吉拉玩具收藏文化的起源。
+    <strong>文章重點：</strong>哥吉拉不只是怪獸，而是一個時代的產物。從核武恐懼的具象化，到跨越世代的文化圖騰，這篇文章帶你一次看懂哥吉拉的誕生與演變。
   </div>
 </div>
 
 <div class="toc">
   <div class="toc-title">// 文章目錄</div>
   <ol>
-    <li><a href="#sec1">核武時代的產物</a></li>
-    <li><a href="#sec2">哥吉拉名字的由來</a></li>
-    <li><a href="#sec3">本多豬四郎的執導理念</a></li>
-    <li><a href="#sec4">特攝技術的革命</a></li>
-    <li><a href="#sec5">從恐懼到圖騰：玩具的誕生</a></li>
+    <li><a href="#sec1">戰後日本的陰影：哥吉拉如何誕生</a></li>
+    <li><a href="#sec2">從恐懼象徵到流行文化角色</a></li>
+    <li><a href="#sec3">不同時代的哥吉拉</a></li>
+    <li><a href="#sec4">哥吉拉是一種自然力量的化身</a></li>
+    <li><a href="#sec5">為什麼哥吉拉能持續影響至今</a></li>
   </ol>
 </div>
 
 <div class="article-body">
 
-  <p>1954年11月3日，一隻從深海誕生的巨獸第一次踏上銀幕。它的出現不是偶然，而是整個日本社會在戰後傷痛中集體凝聚出的恐懼具體化身。哥吉拉，這個名字從此改變了世界流行文化的面貌。</p>
+  <p>在多數人的印象中，哥吉拉（Godzilla）是一隻會噴射熱線、摧毀城市的巨大怪獸。然而，如果僅僅將牠視為娛樂作品中的角色，反而忽略了這個形象最核心的意義。</p>
 
-  <h2 id="sec1">核武時代的產物</h2>
+  <p>哥吉拉的誕生，從一開始就不只是為了呈現破壞與對戰，而是承載著一整個時代的集體記憶。牠既是恐懼的具象化，也是人類對自身科技力量反思的投射。在不同的歷史階段，人們總能在哥吉拉身上，看見當下社會的焦慮與不安。</p>
 
-  <p>要理解哥吉拉，必須回到1954年的日本。距離廣島、長崎原爆僅僅過去九年，戰爭的傷痕仍未痊癒。同年3月，美國在比基尼環礁進行氫彈測試，日本漁船「第五福龍丸」遭到核灰塵污染，船員相繼出現輻射症狀，日本社會再度陷入對核武的深度恐懼。</p>
+  <h2 id="sec1">戰後日本的陰影：哥吉拉如何誕生於核武恐懼之中</h2>
 
-  <p>就在這樣的時代背景下，東宝電影公司製作人田中友幸提出了一個構想：如果把這種對核武的集體恐懼，具體化成一隻從海底被核爆喚醒的巨獸，會是什麼樣子？</p>
+  <p>1954 年，電影《哥吉拉》在日本上映。距離廣島與長崎原爆僅不到十年，日本社會仍深陷戰爭帶來的創傷與核武陰影之中。</p>
 
-  <h2 id="sec2">哥吉拉名字的由來</h2>
+  <p>當時的日本，不只是在重建城市與經濟，更在面對一種難以言說的集體恐懼——那是一種來自於人類自身科技所帶來的威脅。核能既象徵進步，也同時意味著毀滅。</p>
 
-  <p>「哥吉拉（ゴジラ）」這個名字是日文「大猩猩（ゴリラ）」與「鯨魚（クジラ）」的合成字，暗示這是一隻融合了陸地與海洋力量的巨獸。英文名「Godzilla」則是在出口到海外市場時所採用的譯名，無意間帶入了「God（神）」的意涵，讓這個角色在西方世界呈現出截然不同的象徵意義。</p>
+  <p>在這樣的背景下，哥吉拉被設定為一種因核試驗而甦醒、並受到輻射影響的古代生物。牠自海中現身，帶著無法阻擋的力量襲向城市。對觀眾而言，那不只是虛構的怪獸，而是一種對現實經驗的再現。因此，初代哥吉拉並不帶有英雄色彩，而是一種令人不安、甚至帶有悲劇性的存在。</p>
 
-  <h2 id="sec3">本多豬四郎的執導理念</h2>
+  <h2 id="sec2">從恐懼象徵到流行文化角色</h2>
 
-  <p>導演本多豬四郎是一位曾親歷二戰的老兵，他將自己對戰爭的親身記憶注入電影之中。片中哥吉拉踐踏東京的場景，刻意呼應二戰空襲的畫面；倖存者在廢墟中哭泣的鏡頭，幾乎就是戰後日本的真實寫照。這部電影從來就不只是一部怪獸片，而是一部關於人類如何面對自己所創造出的毀滅力量的寓言。</p>
+  <p>隨著時間推移，日本社會逐漸走出戰後陰影，進入經濟高速成長的年代。社會氛圍的轉變，也反映在哥吉拉的形象上。</p>
 
-  <h2 id="sec4">特攝技術的革命</h2>
+  <p>到了 1960 至 1970 年代，哥吉拉不再只是單純的破壞者，而開始被塑造成與其他怪獸對抗的角色。在這些作品中，牠有時甚至站在「守護地球」的一方，與王者基多拉或其他威脅人類的怪獸展開對決。</p>
 
-  <p>讓哥吉拉成真的關鍵人物是特技監督圓谷英二。他以精巧的微縮模型搭配演員穿著怪獸戲服的「特攝（Tokusatsu）」技法，創造出震撼人心的城市破壞場景。這套技術後來發展成日本特有的「特攝文化」，影響了往後數十年的影視製作，也直接催生了各種怪獸玩具的誕生。</p>
+  <p>這樣的轉變，使哥吉拉逐漸從恐懼的象徵，轉化為大眾娛樂的一部分，也讓這個角色被更廣泛的觀眾所接受。</p>
 
-  <h2 id="sec5">從恐懼到圖騰：玩具的誕生</h2>
+  <h2 id="sec3">不同時代的哥吉拉：同一角色，不同詮釋</h2>
 
-  <p>電影上映後的巨大成功，讓東宝迅速授權周邊商品的生產。最早期的哥吉拉玩具以橡皮軟膠（ソフビ）製成，造型粗獷、色彩單純，卻是今日整個怪獸玩具收藏文化的起點。</p>
+  <p>進入 1980 年代之後，哥吉拉系列再次回歸較為嚴肅的敘事方向。作品開始建立更完整的世界觀與連續劇式的劇情，使角色重新具有威脅性與重量感。</p>
 
-  <p>隨著哥吉拉從核武恐懼的象徵，逐漸轉變為保護地球的英雄，玩具也跟著演變——從令人恐懼的黑色巨獸，到充滿親切感的昭和彩色軟膠，再到今日精密可動的S.H.MonsterArts收藏品。每一款玩具，都是那個時代人們與哥吉拉關係的具體紀錄。</p>
+  <p>而在 2000 年之後，每一部新作幾乎都以「重新詮釋」為核心。有些作品強調災難電影的寫實感，有些則回歸怪獸對戰的娛樂性。例如，《新哥吉拉》將焦點放在政府如何應對突發危機，而《哥吉拉 -1.0》則再次回到戰後創傷的敘事核心。這些作品雖然風格各異，但都延續了一個重要概念——<strong>哥吉拉始終代表著人類無法完全掌控的力量。</strong></p>
 
-  <h3>值得收藏的起源相關玩具</h3>
+  <h2 id="sec4">哥吉拉到底是什麼？一種自然力量的化身</h2>
+
+  <p>如果要為哥吉拉下定義，那麼牠更接近於一種自然力量的具象化。</p>
+
+  <p>牠並非傳統意義上的反派，也不是單純的英雄。牠的出現，往往與人類的行為有關，但其結果卻不受人類控制。這種設定，使哥吉拉在不同時代都能被重新解讀，並持續產生新的意義。</p>
+
+  <p>從核戰恐懼，到現代社會對災害與制度的反思，哥吉拉的存在始終與現實世界保持著某種對應關係。</p>
+
+  <h2 id="sec5">為什麼哥吉拉能持續影響至今？</h2>
+
+  <p>在超過半世紀的發展中，哥吉拉已從一部電影中的角色，轉變為全球性的文化符號。牠的影響力，並不僅來自於視覺上的震撼，更來自於其背後所承載的象徵意義。</p>
+
+  <p>每一個時代，都能在哥吉拉身上投射不同的焦慮與想像。這種能夠隨著時代被重新詮釋的特性，使這個角色不會隨時間消失，反而持續累積其文化價值。</p>
+
+  <h3>想繼續深入了解？</h3>
   <ul>
-    <li>Bandai Movie Monster Series 初代哥吉拉（1954版造型）</li>
-    <li>S.H.MonsterArts Godzilla 1954 — 初代造型精密還原</li>
-    <li>X-Plus 30cm Series Godzilla 1954 — 高端收藏首選</li>
-    <li>NECA Head-to-Tail Godzilla 1954 — CP值最高的初代款</li>
+    <li>昭和、平成、令和哥吉拉差異解析</li>
+    <li>哥吉拉電影觀看順序</li>
+    <li>王者基多拉與主要敵對怪獸介紹</li>
+    <li>哥吉拉玩具與收藏入門</li>
   </ul>
-
-  <p>七十年過去，哥吉拉從一個承載核武恐懼的黑暗象徵，成為了跨越世代的文化圖騰。每一隻收藏架上的哥吉拉玩具，都帶著這段歷史的重量——這也正是哥吉拉收藏之所以迷人的根本原因。</p>
 
 </div>
 
-<!-- 延伸閱讀 -->
 <div class="related">
   <div class="related-title">// 延伸閱讀</div>
   <div class="related-list" id="relatedList"></div>
@@ -163,10 +151,9 @@
 </nav>
 
 <script>
-// 延伸閱讀：從 articles.json 抓其他文章
+const currentFile = 'article-02.html';
+const categoryEmoji = { '開箱評測': '📦', '收藏心得': '💭', '品牌介紹': '🏷️', '市場資訊': '📊' };
 async function loadRelated() {
-  const currentFile = 'article-01.html';
-  const categoryEmoji = { '開箱評測': '📦', '收藏心得': '💭', '品牌介紹': '🏷️', '市場資訊': '📊' };
   try {
     const res = await fetch('articles.json');
     const all = await res.json();
@@ -176,7 +163,7 @@ async function loadRelated() {
     list.innerHTML = others.map(a => `
       <a class="related-card" href="${a.file}">
         <span class="related-emoji">${categoryEmoji[a.category] || '📄'}</span>
-        <div class="related-info">
+        <div>
           <div class="related-tag">${a.category}</div>
           <div class="related-name">${a.title}</div>
         </div>

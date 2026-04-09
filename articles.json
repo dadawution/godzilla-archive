@@ -4,7 +4,15 @@
     "date": "2026-04-08",
     "category": "收藏心得",
     "excerpt": "1954年，一隻從海底誕生的巨獸改變了日本電影史。哥吉拉不只是怪獸，更是戰後日本對核武恐懼的具體化身。",
-    "image": "images/godzilla-origin.jpg",
+    "image": "images/cover-01.jpg",
     "file": "article-01.html"
+  },
+  {
+    "title": "哥吉拉是什麼？從核戰陰影到文化象徵，一次看懂 Godzilla 的誕生與演變",
+    "date": "2026-04-09",
+    "category": "收藏心得",
+    "excerpt": "哥吉拉不只是怪獸，而是一個時代的產物。從核武恐懼的具象化，到跨越世代的文化圖騰，一次看懂哥吉拉的誕生與演變。",
+    "image": "images/cover-02.jpg",
+    "file": "article-02.html"
   }
 ]
