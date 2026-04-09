@@ -3,156 +3,237 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>文章標題 — 哥吉拉玩具圖鑑</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+TC:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<title>文章標題 — 哥吉拉誌</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --red: #C0392B; --dark: #0a0a0a; --charcoal: #1a1a1a; --gray: #2a2a2a;
-    --light: #888; --pale: #ccc; --white: #f0ede8; --gold: #c9a84c;
-    --font-title: 'Bebas Neue', sans-serif;
-    --font-body: 'Noto Serif TC', serif;
-    --font-mono: 'Share Tech Mono', monospace;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--dark); color: var(--white); font-family: var(--font-body); padding-bottom: 5rem; }
-  nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.97); border-top: 1px solid var(--gray); display: flex; z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
-  nav a { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.7rem 0.5rem; text-decoration: none; gap: 0.25rem; }
-  nav a .nav-icon { font-size: 1.3rem; }
-  nav a .nav-label { font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.1em; color: var(--light); }
-  nav a.active .nav-label { color: var(--red); }
-  .back-link { display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.15em; color: var(--red); text-decoration: none; padding: 1rem 1.25rem; border-bottom: 1px solid var(--gray); }
-  .cover-image { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; background: var(--gray); }
-  .article-hero { padding: 1.75rem 1.25rem 1.5rem; border-bottom: 1px solid var(--gray); }
-  .article-meta { display: flex; gap: 0.6rem; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; }
-  .article-tag { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--gold); border: 1px solid rgba(201,168,76,0.35); padding: 0.15rem 0.5rem; }
-  .article-date { font-family: var(--font-mono); font-size: 0.6rem; color: var(--light); }
-  .article-title { font-family: var(--font-title); font-size: clamp(2rem, 8vw, 3.2rem); letter-spacing: 0.03em; color: var(--white); line-height: 1.05; margin-bottom: 0.75rem; }
-  .article-summary { font-size: 0.9rem; line-height: 1.8; color: var(--light); padding: 1rem; background: var(--charcoal); border-left: 3px solid var(--red); margin-top: 0.5rem; }
-  .article-summary strong { color: var(--white); }
-  .toc { margin: 1.5rem 1.25rem; background: var(--charcoal); border: 1px solid var(--gray); padding: 1.25rem; }
-  .toc-title { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.25em; color: var(--red); margin-bottom: 0.75rem; }
-  .toc ol { padding-left: 1.25rem; }
-  .toc li { margin-bottom: 0.4rem; }
-  .toc a { font-size: 0.85rem; color: var(--light); text-decoration: none; line-height: 1.6; }
-  .article-body { padding: 0.5rem 1.25rem 1.75rem; }
-  .article-body p { font-size: 1rem; line-height: 2; color: var(--pale); margin-bottom: 1.5rem; }
-  .article-body h2 { font-family: var(--font-title); font-size: 1.9rem; letter-spacing: 0.05em; color: var(--white); margin: 2.5rem 0 1rem; line-height: 1; border-left: 3px solid var(--red); padding-left: 0.75rem; scroll-margin-top: 1rem; }
-  .article-body h3 { font-family: var(--font-body); font-weight: 700; font-size: 1rem; color: var(--gold); margin: 2rem 0 0.75rem; }
-  .article-body strong { color: var(--white); }
-  .article-body ul { padding-left: 1.25rem; margin-bottom: 1.5rem; }
-  .article-body li { font-size: 0.95rem; line-height: 1.9; color: var(--light); margin-bottom: 0.25rem; }
-  .related { margin: 0 1.25rem 1.5rem; }
-  .related-title { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.25em; color: var(--red); margin-bottom: 0.75rem; }
-  .related-list { display: flex; flex-direction: column; gap: 1px; background: var(--gray); border: 1px solid var(--gray); }
-  .related-card { background: var(--charcoal); padding: 1rem 1.25rem; text-decoration: none; display: flex; gap: 1rem; align-items: center; }
-  .related-card:active { background: var(--dark); }
-  .related-emoji { font-size: 1.5rem; flex-shrink: 0; }
-  .related-tag { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.25rem; }
-  .related-name { font-size: 0.88rem; color: var(--white); line-height: 1.4; }
-  .article-footer { margin: 0 1.25rem; padding: 1.5rem 0; border-top: 1px solid var(--gray); display: flex; justify-content: space-between; }
-  .article-footer a { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.15em; color: var(--red); text-decoration: none; }
+:root{--red:#C0392B;--dark:#0a0a0a;--charcoal:#111;--gray:#1a1a1a;--border:#222;--light:#666;--pale:#999;--white:#f0ede8;--gold:#c9a84c;--font-body:'Noto Serif TC',serif;--font-mono:'Share Tech Mono',monospace;--max-w:1100px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--dark);color:var(--white);font-family:var(--font-body)}
+
+/* LOGO E2 */
+.logo{display:flex;align-items:center;gap:0.6rem;text-decoration:none}
+.logo-badge{border:2px solid var(--red);padding:0.28rem 0.38rem;display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.logo-gz{font-family:'Arial Black',sans-serif;font-size:1.1rem;color:var(--red);line-height:1;font-weight:900;letter-spacing:0.02em}
+.logo-tw{font-family:var(--font-mono);font-size:0.32rem;letter-spacing:0.35em;color:var(--red);margin-top:0.06rem}
+.logo-text{display:flex;flex-direction:column;gap:0.06rem}
+.logo-zh{font-family:'Arial Black',sans-serif;font-size:0.95rem;color:var(--white);letter-spacing:0.1em;font-weight:900;line-height:1}
+.logo-en{font-family:var(--font-mono);font-size:0.38rem;letter-spacing:0.28em;color:#555}
+
+/* DESKTOP NAV */
+.top-nav{display:none;position:sticky;top:0;z-index:200;background:rgba(10,10,10,0.97);border-bottom:1px solid var(--border);backdrop-filter:blur(10px)}
+.top-nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:stretch}
+.top-nav-logo{padding:0.7rem 1.25rem;border-right:1px solid var(--border);display:flex;align-items:center}
+.top-nav-cats{display:flex;align-items:stretch}
+.cat-link{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.18em;color:#555;text-decoration:none;border-bottom:2px solid transparent;padding:0 1rem;display:flex;align-items:center;transition:color .2s,border-color .2s;white-space:nowrap}
+.cat-link:hover{color:var(--white)}
+.cat-link.active{color:var(--white);border-bottom-color:var(--red)}
+
+/* MOBILE TOP */
+.mobile-top{display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.65rem 1rem;border-bottom:1px solid var(--border);background:var(--dark);position:sticky;top:0;z-index:200}
+.mobile-logo-badge{border:1.5px solid var(--red);padding:0.18rem 0.25rem;display:flex;flex-direction:column;align-items:center}
+.mobile-logo-gz{font-family:'Arial Black',sans-serif;font-size:0.85rem;color:var(--red);line-height:1;font-weight:900}
+.mobile-logo-tw{font-family:var(--font-mono);font-size:0.28rem;letter-spacing:0.3em;color:var(--red)}
+.mobile-logo-zh{font-family:'Arial Black',sans-serif;font-size:1rem;color:var(--white);letter-spacing:0.08em;font-weight:900}
+
+/* BOTTOM NAV */
+.bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,10,0.97);border-top:1px solid var(--border);z-index:200;padding-bottom:env(safe-area-inset-bottom)}
+.bottom-nav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.65rem 0.5rem;text-decoration:none;gap:0.22rem}
+.bottom-nav a .bn-icon{font-size:1.2rem}
+.bottom-nav a .bn-label{font-family:var(--font-mono);font-size:0.5rem;letter-spacing:0.1em;color:#555}
+.bottom-nav a.active .bn-label{color:var(--red)}
+
+/* BACK LINK */
+.back-link{display:flex;align-items:center;gap:0.4rem;font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.18em;color:var(--red);text-decoration:none;padding:0.8rem 1.25rem;border-bottom:1px solid var(--border);max-width:var(--max-w);margin:0 auto;width:100%}
+
+/* COVER */
+.cover-wrap{position:relative;overflow:hidden;max-height:480px}
+.cover-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--gray)}
+.cover-ph{width:100%;aspect-ratio:16/9;background:var(--gray);display:flex;align-items:center;justify-content:center}
+.cover-ph span{font-family:'Arial Black',sans-serif;font-size:6rem;color:#1e1e1e;font-weight:900}
+.cover-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8) 0%,rgba(0,0,0,0.2) 50%,transparent 100%)}
+.cover-meta{position:absolute;bottom:0;left:0;right:0;padding:1.5rem 1.25rem;max-width:var(--max-w);margin:0 auto}
+.cover-tag{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.22em;color:var(--red);display:block;margin-bottom:0.5rem}
+.cover-title{font-family:'Arial Black',sans-serif;font-size:clamp(1.3rem,4vw,2.2rem);color:var(--white);line-height:1.15;font-weight:900}
+
+/* ARTICLE LAYOUT */
+.article-outer{max-width:var(--max-w);margin:0 auto;display:flex;align-items:flex-start;gap:0;padding-bottom:5rem}
+.article-main{flex:1;min-width:0;padding:1.5rem 1.5rem 2rem 1.25rem;border-right:1px solid var(--border)}
+.article-side{width:240px;flex-shrink:0;padding:1.5rem 1rem;position:sticky;top:60px}
+
+/* ARTICLE META */
+.article-date{font-family:var(--font-mono);font-size:0.5rem;letter-spacing:0.18em;color:#444;display:block;margin-bottom:1.1rem}
+.article-summary{font-size:0.88rem;line-height:1.85;color:var(--light);padding:0.9rem 1.1rem;border-left:3px solid var(--red);background:var(--charcoal);margin-bottom:1.5rem}
+.article-summary strong{color:var(--pale)}
+
+/* ARTICLE BODY */
+.article-body p{font-size:1rem;line-height:2.05;color:#aaa;margin-bottom:1.5rem}
+.article-body h2{font-family:'Arial Black',sans-serif;font-size:1.2rem;color:var(--white);margin:2.5rem 0 1rem;font-weight:900;border-left:3px solid var(--red);padding-left:0.7rem;line-height:1.2;scroll-margin-top:5rem}
+.article-body h3{font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.18em;color:var(--gold);margin:2rem 0 0.75rem}
+.article-body strong{color:var(--pale)}
+.article-body ul{padding-left:1.25rem;margin-bottom:1.5rem}
+.article-body li{font-size:0.95rem;line-height:1.95;color:var(--light);margin-bottom:0.25rem}
+
+/* SIDEBAR TOC */
+.side-label{font-family:var(--font-mono);font-size:0.5rem;letter-spacing:0.28em;color:var(--red);display:block;margin-bottom:0.75rem}
+.toc-list{list-style:none;margin-bottom:2rem}
+.toc-item{border-bottom:1px solid var(--border);padding:0.4rem 0}
+.toc-a{font-family:var(--font-mono);font-size:0.55rem;color:#555;text-decoration:none;display:block;line-height:1.5;transition:color .15s}
+.toc-a:hover{color:var(--white)}
+.toc-num{color:var(--red);margin-right:0.3rem}
+
+/* SIDEBAR RELATED */
+.related-cards{display:flex;flex-direction:column;gap:1px;background:var(--border)}
+.rel-card{background:var(--charcoal);text-decoration:none;display:block;overflow:hidden;transition:background .15s}
+.rel-card:hover{background:#161616}
+.rel-card:hover .rel-img{transform:scale(1.04)}
+.rel-img-wrap{overflow:hidden;height:70px}
+.rel-img{width:100%;height:70px;object-fit:cover;display:block;background:var(--gray);transition:transform 0.3s}
+.rel-img-ph{height:70px;background:var(--gray);display:flex;align-items:center;justify-content:center}
+.rel-img-ph span{font-family:'Arial Black',sans-serif;font-size:1.5rem;color:#1e1e1e;font-weight:900}
+.rel-body{padding:0.5rem 0.65rem 0.6rem}
+.rel-tag{font-family:var(--font-mono);font-size:0.46rem;letter-spacing:0.12em;color:var(--red);display:block;margin-bottom:0.2rem}
+.rel-name{font-family:'Arial Black',sans-serif;font-size:0.7rem;color:var(--pale);line-height:1.3;font-weight:900}
+
+/* ARTICLE FOOTER */
+.article-footer{display:flex;justify-content:space-between;padding:1.25rem 1.25rem;border-top:1px solid var(--border);max-width:var(--max-w);margin:0 auto}
+.article-footer a{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.15em;color:var(--red);text-decoration:none}
+
+/* RESPONSIVE */
+@media(min-width:768px){
+  .top-nav{display:block}
+  .mobile-top,.bottom-nav{display:none}
+  .article-outer{padding-bottom:2rem}
+  .cover-img{aspect-ratio:21/9;max-height:420px}
+  .cover-ph{aspect-ratio:21/9;max-height:420px}
+  .cover-ph span{font-size:8rem}
+}
+@media(max-width:767px){
+  .article-side{display:none}
+  .article-main{border-right:none;padding:1.25rem 1.25rem 2rem}
+}
 </style>
 </head>
 <body>
 
-<a class="back-link" href="articles.html">← 返回文章列表</a>
+<!-- DESKTOP NAV -->
+<div class="top-nav">
+  <div class="top-nav-inner">
+    <div class="top-nav-logo">
+      <a class="logo" href="index.html">
+        <div class="logo-badge"><div class="logo-gz">GZ</div><div class="logo-tw">TW</div></div>
+        <div class="logo-text"><div class="logo-zh">哥吉拉誌</div><div class="logo-en">GODZILLA TW</div></div>
+      </a>
+    </div>
+    <div class="top-nav-cats">
+      <a class="cat-link" href="index.html">全部</a>
+      <a class="cat-link active" href="index.html?cat=哥吉拉介紹">哥吉拉介紹</a>
+      <a class="cat-link" href="index.html?cat=系列與時代解析">系列與時代解析</a>
+      <a class="cat-link" href="index.html?cat=玩具與收藏">玩具與收藏</a>
+      <a class="cat-link" href="index.html?cat=收藏市場與指南">收藏市場與指南</a>
+    </div>
+  </div>
+</div>
 
-<!-- ★ 封面圖片：把 your-image.jpg 換成你上傳的圖片檔名 -->
-<img class="cover-image" src="images/your-image.jpg" alt="文章封面" onerror="this.style.display='none'">
+<!-- MOBILE TOP -->
+<div class="mobile-top">
+  <div class="mobile-logo-badge"><div class="mobile-logo-gz">GZ</div><div class="mobile-logo-tw">TW</div></div>
+  <div class="mobile-logo-zh">哥吉拉誌</div>
+</div>
 
-<div class="article-hero">
-  <div class="article-meta">
-    <!-- ★ 分類選一個：開箱評測 / 收藏心得 / 品牌介紹 / 市場資訊 -->
-    <span class="article-tag">收藏心得</span>
-    <!-- ★ 修改日期 -->
+<a class="back-link" href="index.html">← 返回文章列表</a>
+
+<!-- ★ 封面圖片：把 your-image.jpg 換成你的圖片檔名 -->
+<div class="cover-wrap">
+  <img class="cover-img" src="images/your-image.jpg" alt="封面" onerror="this.outerHTML='<div class=\\'cover-ph\\'><span>哥吉拉</span></div>'">
+  <div class="cover-overlay"></div>
+  <div class="cover-meta">
+    <!-- ★ 改分類和標題 -->
+    <span class="cover-tag">哥吉拉介紹</span>
+    <div class="cover-title">在這裡填入文章標題</div>
+  </div>
+</div>
+
+<div class="article-outer">
+  <div class="article-main">
+    <!-- ★ 改日期 -->
     <span class="article-date">2026-04-08</span>
+    <!-- ★ 改摘要 -->
+    <div class="article-summary"><strong>文章重點：</strong>在這裡寫一句話說明這篇文章的核心內容。</div>
+
+    <div class="article-body">
+      <!-- ★ 文章內容從這裡開始 -->
+      <p>這裡是文章開頭引言，用 &lt;p&gt; 包起來就好。</p>
+
+      <!-- ★ 大段落標題，id 對應目錄的 href -->
+      <h2 id="sec1">第一個段落標題</h2>
+      <p>這裡是第一段內容。</p>
+
+      <h2 id="sec2">第二個段落標題</h2>
+      <p>這裡是第二段內容。</p>
+
+      <!-- 小標題不需要加目錄 -->
+      <h3>這是小標題</h3>
+      <p>小標題下面的內容。</p>
+
+      <h2 id="sec3">第三個段落標題</h2>
+      <ul>
+        <li>清單第一項</li>
+        <li>清單第二項</li>
+        <li>清單第三項</li>
+      </ul>
+      <p>文章結尾段落。</p>
+    </div>
   </div>
-  <!-- ★ 修改標題 -->
-  <h1 class="article-title">在這裡填入文章標題</h1>
-  <div class="article-summary">
-    <!-- ★ 修改重點摘要 -->
-    <strong>文章重點：</strong>在這裡寫一句話說明這篇文章的核心內容。
+
+  <!-- SIDEBAR -->
+  <div class="article-side">
+    <!-- ★ 目錄項目對應上面的 id -->
+    <span class="side-label">// 文章目錄</span>
+    <ul class="toc-list">
+      <li class="toc-item"><a class="toc-a" href="#sec1"><span class="toc-num">01</span>第一個段落標題</a></li>
+      <li class="toc-item"><a class="toc-a" href="#sec2"><span class="toc-num">02</span>第二個段落標題</a></li>
+      <li class="toc-item"><a class="toc-a" href="#sec3"><span class="toc-num">03</span>第三個段落標題</a></li>
+    </ul>
+
+    <span class="side-label">// 延伸閱讀</span>
+    <div class="related-cards" id="relatedList"></div>
   </div>
-</div>
-
-<!-- ★ 文章目錄：有幾個段落就寫幾個，href="#secN" 對應下面的 id="secN" -->
-<div class="toc">
-  <div class="toc-title">// 文章目錄</div>
-  <ol>
-    <li><a href="#sec1">第一個段落標題</a></li>
-    <li><a href="#sec2">第二個段落標題</a></li>
-    <li><a href="#sec3">第三個段落標題</a></li>
-  </ol>
-</div>
-
-<div class="article-body">
-
-  <p>這裡是文章開頭的引言段落，簡單說明這篇文章要談什麼。</p>
-
-  <!-- ★ 段落：h2 是大標題，id 要對應目錄的 href -->
-  <h2 id="sec1">第一個段落標題</h2>
-  <p>這裡是第一段的內容。想寫多長就多長，每個段落用 p 包起來就好。</p>
-  <p>可以繼續加更多段落。</p>
-
-  <h2 id="sec2">第二個段落標題</h2>
-  <p>這裡是第二段的內容。</p>
-
-  <!-- h3 是小標題，不需要加入目錄 -->
-  <h3>這是小標題</h3>
-  <p>小標題下面的內容。</p>
-
-  <h2 id="sec3">第三個段落標題</h2>
-  <p>這裡是第三段的內容。</p>
-
-  <!-- 清單用法 -->
-  <ul>
-    <li>清單第一項</li>
-    <li>清單第二項</li>
-    <li>清單第三項</li>
-  </ul>
-
-  <p>文章結尾的總結段落。</p>
-
-</div>
-
-<!-- 延伸閱讀（自動從 articles.json 抓，不需要修改） -->
-<div class="related">
-  <div class="related-title">// 延伸閱讀</div>
-  <div class="related-list" id="relatedList"></div>
 </div>
 
 <div class="article-footer">
-  <a href="articles.html">← 返回列表</a>
+  <a href="index.html">← 返回列表</a>
   <a href="index.html">回首頁 →</a>
 </div>
 
-<nav>
-  <a href="index.html"><span class="nav-icon">🏠</span><span class="nav-label">首頁</span></a>
-  <a href="knowledge.html"><span class="nav-icon">📖</span><span class="nav-label">知識庫</span></a>
-  <a href="guide.html"><span class="nav-icon">⭐</span><span class="nav-label">收藏指南</span></a>
-  <a class="active" href="articles.html"><span class="nav-icon">✏️</span><span class="nav-label">文章</span></a>
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="index.html"><span class="bn-icon">🏠</span><span class="bn-label">首頁</span></a>
+  <a href="#" onclick="alert('搜尋功能即將推出')"><span class="bn-icon">🔍</span><span class="bn-label">搜尋</span></a>
+  <a href="#"><span class="bn-icon">👤</span><span class="bn-label">關於</span></a>
 </nav>
 
 <script>
-// ★ 把這行的檔名改成這篇文章自己的檔名，例如 article-02.html
+/* ★ 把這行改成這篇文章的檔名 */
 const currentFile = 'article-template.html';
-const categoryEmoji = { '開箱評測': '📦', '收藏心得': '💭', '品牌介紹': '🏷️', '市場資訊': '📊' };
+const categoryEmoji = {'哥吉拉介紹':'🦖','系列與時代解析':'📅','玩具與收藏':'🧸','收藏市場與指南':'📊'};
+
 async function loadRelated() {
   try {
     const res = await fetch('articles.json');
     const all = await res.json();
-    const others = all.filter(a => a.file !== currentFile).slice(0, 3);
+    const others = all.filter(a => a.file !== currentFile).slice(0, 4);
     const list = document.getElementById('relatedList');
     if (!others.length) { list.parentElement.style.display = 'none'; return; }
     list.innerHTML = others.map(a => `
-      <a class="related-card" href="${a.file}">
-        <span class="related-emoji">${categoryEmoji[a.category] || '📄'}</span>
-        <div>
-          <div class="related-tag">${a.category}</div>
-          <div class="related-name">${a.title}</div>
+      <a class="rel-card" href="${a.file}">
+        ${a.image
+          ? `<div class="rel-img-wrap"><img class="rel-img" src="${a.image}" alt="${a.title}" onerror="this.parentElement.outerHTML='<div class=\\'rel-img-ph\\'><span>哥</span></div>'"></div>`
+          : `<div class="rel-img-ph"><span>哥</span></div>`}
+        <div class="rel-body">
+          <span class="rel-tag">${a.category}</span>
+          <div class="rel-name">${a.title}</div>
         </div>
-      </a>
-    `).join('');
+      </a>`).join('');
   } catch { document.getElementById('relatedList').parentElement.style.display = 'none'; }
 }
 loadRelated();
