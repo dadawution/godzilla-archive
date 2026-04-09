@@ -1,18 +1,98 @@
 [
   {
-    "title": "哥吉拉的起源：從核武恐懼到文化圖騰",
+    "title": "哥吉拉是什麼？從核戰陰影到文化象徵，一次看懂 Godzilla 的誕生與演變",
     "date": "2026-04-09",
+    "category": "哥吉拉介紹",
+    "excerpt": "哥吉拉不只是怪獸，而是一個時代的產物。從核武恐懼的具象化，到跨越世代的文化圖騰，一次看懂哥吉拉的誕生與演變。",
+    "image": "images/cover-02.jpg",
+    "file": "article-02.html"
+  },
+  {
+    "title": "哥吉拉的起源：從核武恐懼到文化圖騰",
+    "date": "2026-04-08",
     "category": "哥吉拉介紹",
     "excerpt": "1954年，一隻從海底誕生的巨獸改變了日本電影史。哥吉拉不只是怪獸，更是戰後日本對核武恐懼的具體化身。",
     "image": "images/cover-01.jpg",
     "file": "article-01.html"
   },
   {
-    "title": "哥吉拉是什麼？從核戰陰影到文化象徵，一次看懂 Godzilla 的誕生與演變",
-    "date": "2026-04-08",
+    "title": "哥吉拉的體型有多大？從初代到現代的尺寸演變",
+    "date": "2026-04-07",
     "category": "哥吉拉介紹",
-    "excerpt": "哥吉拉不只是怪獸，而是一個時代的產物。從核武恐懼的具象化，到跨越世代的文化圖騰，一次看懂哥吉拉的誕生與演變。",
-    "image": "images/cover-02.jpg",
-    "file": "article-02.html"
+    "excerpt": "初代哥吉拉身高僅50公尺，到了《哥吉拉：怪獸之王》已達119公尺。追蹤七十年來哥吉拉體型的驚人演變。",
+    "image": "images/cover-03.jpg",
+    "file": "article-03.html"
+  },
+  {
+    "title": "哥吉拉的能力解析：原子吐息、核脈動與再生能力",
+    "date": "2026-04-06",
+    "category": "哥吉拉介紹",
+    "excerpt": "哥吉拉最標誌性的武器是原子吐息，但牠的能力遠不止於此。完整解析哥吉拉在不同時代的各種能力。",
+    "image": "images/cover-04.jpg",
+    "file": "article-04.html"
+  },
+  {
+    "title": "王者基多拉完整介紹：哥吉拉最強宿敵的起源與演變",
+    "date": "2026-04-05",
+    "category": "哥吉拉介紹",
+    "excerpt": "三頭金龍、重力光線、宇宙怪獸——王者基多拉是哥吉拉系列中最具代表性的反派怪獸。",
+    "image": "images/cover-05.jpg",
+    "file": "article-05.html"
+  },
+  {
+    "title": "昭和哥吉拉（1954–1975）：從恐懼象徵到英雄怪獸",
+    "date": "2026-04-04",
+    "category": "系列與時代解析",
+    "excerpt": "昭和系列橫跨二十年，哥吉拉的形象從令人恐懼的核武象徵，逐漸轉變為孩子們喜愛的英雄怪獸。",
+    "image": "images/cover-06.jpg",
+    "file": "article-06.html"
+  },
+  {
+    "title": "平成哥吉拉（1984–1995）：黑暗回歸與世界觀重建",
+    "date": "2026-04-03",
+    "category": "系列與時代解析",
+    "excerpt": "沉寂近十年後，哥吉拉以更黑暗、更具威脅性的形象回歸。平成系列建立了連貫的世界觀與劇情線。",
+    "image": "images/cover-07.jpg",
+    "file": "article-07.html"
+  },
+  {
+    "title": "《哥吉拉 -1.0》深度解析：戰後日本的傷痛與救贖",
+    "date": "2026-04-02",
+    "category": "系列與時代解析",
+    "excerpt": "2023年的《哥吉拉 -1.0》奪下奧斯卡視覺效果獎，它把哥吉拉帶回了最純粹的起點——戰後日本的集體傷痛。",
+    "image": "images/cover-08.jpg",
+    "file": "article-08.html"
+  },
+  {
+    "title": "S.H.MonsterArts 完整收藏指南：從入門到進階",
+    "date": "2026-04-01",
+    "category": "玩具與收藏",
+    "excerpt": "萬代魂商店的S.H.MonsterArts是哥吉拉可動人形的頂點。從基本介紹到購買策略，幫你建立完整的MonsterArts收藏。",
+    "image": "images/cover-09.jpg",
+    "file": "article-09.html"
+  },
+  {
+    "title": "X-Plus vs NECA vs Hiya Toys：三大品牌完整比較",
+    "date": "2026-03-31",
+    "category": "玩具與收藏",
+    "excerpt": "除了S.H.MonsterArts，哥吉拉玩具市場還有三個不可忽視的品牌。從造型、價格、取得難度三個維度完整比較。",
+    "image": "images/cover-10.jpg",
+    "file": "article-10.html"
+  },
+  {
+    "title": "哥吉拉玩具保存完整指南：防褪色、防變形、展示規劃",
+    "date": "2026-03-30",
+    "category": "收藏市場與指南",
+    "excerpt": "花了心思建立的收藏，值得用對的方式保存。涵蓋軟膠、硬質塑膠、樹脂等不同材質的保存要點。",
+    "image": "images/cover-11.jpg",
+    "file": "article-11.html"
+  },
+  {
+    "title": "哥吉拉玩具購買管道完整攻略：官網、代拍、二手市場",
+    "date": "2026-03-29",
+    "category": "收藏市場與指南",
+    "excerpt": "在哪裡買、如何買、如何確認真偽？完整整理哥吉拉玩具的各種購買管道，讓你以最好的價格買到最想要的收藏。",
+    "image": "images/cover-12.jpg",
+    "file": "article-12.html"
   }
 ]
