@@ -73,18 +73,18 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body)}
 .article-footer a{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.15em;color:var(--red);text-decoration:none}
 @media(min-width:768px){
   .top-nav{display:block}
-  .mobile-top,.bottom-nav{display:none}
+  .mobile-nav,.mobile-menu,.bottom-nav{display:none}
   .article-outer{padding-bottom:2rem}
   .cover-img{aspect-ratio:16/9;max-height:480px}
   .cover-ph{aspect-ratio:16/9;max-height:480px}
 }
 @media(max-width:767px){
   .article-side{display:none}
-  .article-main{border-right:none;padding:1.25rem 1.25rem 2rem;max-width:100%}
+  .article-main{border-right:none;padding:1.25rem 1.25rem 2.5rem;max-width:100%}
 }
 @media(max-width:767px){
   .article-side{display:none}
-  .article-main{border-right:none;padding:1.25rem 1.25rem 2rem;max-width:100%}
+  .article-main{border-right:none;padding:1.25rem 1.25rem 2.5rem;max-width:100%}
   .article-body p{font-size:1.1rem;line-height:2.2;margin-bottom:1.85rem}
   .article-body h2{font-size:1.3rem;margin:2.75rem 0 1rem}
   .article-body h3{font-size:0.85rem}
@@ -100,6 +100,21 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body)}
   .article-body li{font-size:1.05rem;line-height:2.1}
   .article-summary{font-size:1rem;line-height:1.95}
 }
+
+.mobile-nav{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.25rem;border-bottom:1px solid var(--border);background:var(--dark);position:sticky;top:0;z-index:200}
+.mobile-logo-link{display:flex;align-items:center;gap:0.45rem;text-decoration:none}
+.mobile-logo-kz{font-family:'Arial Black',sans-serif;font-size:1.7rem;color:#C0392B;line-height:1;font-weight:900;border-right:2px solid #C0392B;padding-right:0.45rem}
+.mobile-logo-zh{font-family:'Arial Black',sans-serif;font-size:1.1rem;color:var(--white);letter-spacing:0.1em;font-weight:900}
+.burger{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:6px}
+.burger span{display:block;width:24px;height:2px;background:var(--white);transition:all 0.25s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;inset:0;background:rgba(10,10,10,0.98);z-index:190;flex-direction:column;justify-content:center;align-items:center}
+.mobile-menu.open{display:flex}
+.mobile-menu-label{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.35em;color:#444;margin-bottom:2rem}
+.mobile-menu-item{font-family:'Arial Black',sans-serif;font-size:1.9rem;color:#2a2a2a;font-weight:900;letter-spacing:0.04em;padding:0.55rem 2.5rem;cursor:pointer;transition:color 0.15s;text-align:center;width:100%;text-decoration:none;display:block}
+.mobile-menu-item:hover{color:var(--white)}
 </style>
 </head>
 <body>
@@ -125,12 +140,25 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body)}
   </div>
 </div>
 
-<div class="mobile-top">
-  <a class="mobile-logo" href="index.html" style="text-decoration:none">
+<div class="mobile-nav">
+  <a class="mobile-logo-link" href="index.html">
     <span class="mobile-logo-kz">KZ</span>
     <span class="mobile-logo-zh">怪獸誌</span>
   </a>
+  <button class="burger" id="burgerBtn" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </div>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-label">// 文章分類</div>
+  <a class="mobile-menu-item" href="index.html" onclick="toggleMenu()">全部</a>
+  <a class="mobile-menu-item" href="index.html" onclick="toggleMenu()">哥吉拉介紹</a>
+  <a class="mobile-menu-item" href="index.html" onclick="toggleMenu()">系列與時代解析</a>
+  <a class="mobile-menu-item" href="index.html" onclick="toggleMenu()">玩具與收藏</a>
+  <a class="mobile-menu-item" href="index.html" onclick="toggleMenu()">收藏市場與指南</a>
+</div>
+
 
 <a class="back-link" href="index.html">← 返回文章列表</a>
 
@@ -168,11 +196,6 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body)}
   <a href="index.html">回首頁 →</a>
 </div>
 
-<nav class="bottom-nav">
-  <a href="index.html"><span class="bn-icon">🏠</span><span class="bn-label">首頁</span></a>
-  <a href="#" onclick="alert('搜尋功能即將推出')"><span class="bn-icon">🔍</span><span class="bn-label">搜尋</span></a>
-  <a href="#"><span class="bn-icon">👤</span><span class="bn-label">關於</span></a>
-</nav>
 
 <script>
 /* ★ 把這行改成這篇文章的檔名 */
