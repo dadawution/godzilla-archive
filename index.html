@@ -301,3 +301,26 @@ function renderMobile(articles){
   feed.innerHTML=html;
 }
 
+function filterArticles(cat,btn){
+  document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('active');});
+  if(btn)btn.classList.add('active');
+  const f=cat==='全部'?allArticles:allArticles.filter(function(a){return a.category===cat;});
+  renderDesktop(f);renderMobile(f);
+}
+function mobileCat(cat,el){
+  document.querySelectorAll('.mobile-menu-item').forEach(function(i){i.classList.remove('active');});
+  el.classList.add('active');
+  filterArticles(cat,null);
+  toggleMenu();
+}
+function toggleMenu(){
+  const m=document.getElementById('mobileMenu');
+  const b=document.getElementById('burgerBtn');
+  m.classList.toggle('open');
+  b.classList.toggle('open');
+  document.body.style.overflow=m.classList.contains('open')?'hidden':'';
+}
+loadArticles();
+</script>
+</body>
+</html>
