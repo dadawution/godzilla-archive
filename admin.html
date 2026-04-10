@@ -200,8 +200,9 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body);min-
 <!-- TOKEN BAR -->
 <div class="token-bar">
   <span class="token-label">GitHub Token：</span>
-  <input class="token-input" id="ghToken" type="password" placeholder="貼上你的 GitHub Personal Access Token（ghp_xxxxxxxx）" oninput="checkToken()">
+  <input class="token-input" id="ghToken" type="password" placeholder="貼上 GitHub Token（設定後自動記住）" oninput="checkToken()">
   <button class="token-btn" onclick="verifyToken()">驗證</button>
+  <button class="token-btn" id="forgetBtn" onclick="forgetToken()" style="display:none;color:#C0392B;border-color:#C0392B">忘記</button>
   <span class="token-status no" id="tokenStatus">未連線</span>
   <span class="token-help"><a href="https://github.com/settings/tokens" target="_blank">如何取得 Token？</a></span>
 </div>
@@ -356,6 +357,7 @@ var tokenVerified=false;
 
 // ── INIT ──
 document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
+autoLoadToken();
 addSec();
 loadList();
 upv();
@@ -377,6 +379,7 @@ function checkToken(){
   tokenVerified=false;
   document.getElementById('tokenStatus').textContent=t?'未驗證':'未連線';
   document.getElementById('tokenStatus').className='token-status no';
+  document.getElementById('forgetBtn').style.display='none';
 }
 
 async function verifyToken(){
@@ -389,8 +392,11 @@ async function verifyToken(){
     });
     if(r.ok){
       tokenVerified=true;
-      document.getElementById('tokenStatus').textContent='✓ 已連線';
+      // Save to localStorage
+      try{localStorage.setItem('kz_gh_token',t);}catch(e){}
+      document.getElementById('tokenStatus').textContent='✓ 已連線（已記住）';
       document.getElementById('tokenStatus').className='token-status ok';
+      document.getElementById('forgetBtn').style.display='inline-flex';
       loadList();
     }else{
       document.getElementById('tokenStatus').textContent='✗ 驗證失敗';
@@ -401,6 +407,45 @@ async function verifyToken(){
     document.getElementById('tokenStatus').textContent='✗ 連線失敗';
     alert('連線失敗，請確認網路狀態。');
   }
+}
+
+function forgetToken(){
+  if(!confirm('確定要清除記住的 Token 嗎？')) return;
+  try{localStorage.removeItem('kz_gh_token');}catch(e){}
+  document.getElementById('ghToken').value='';
+  tokenVerified=false;
+  document.getElementById('tokenStatus').textContent='未連線';
+  document.getElementById('tokenStatus').className='token-status no';
+  document.getElementById('forgetBtn').style.display='none';
+}
+
+function autoLoadToken(){
+  try{
+    var saved=localStorage.getItem('kz_gh_token');
+    if(saved){
+      document.getElementById('ghToken').value=saved;
+      // Auto verify silently
+      fetch('https://api.github.com/repos/'+OWNER+'/'+REPO,{
+        headers:{Authorization:'token '+saved,'Accept':'application/vnd.github.v3+json'}
+      }).then(function(r){
+        if(r.ok){
+          tokenVerified=true;
+          document.getElementById('tokenStatus').textContent='✓ 已連線（已記住）';
+          document.getElementById('tokenStatus').className='token-status ok';
+          document.getElementById('forgetBtn').style.display='inline-flex';
+          loadList();
+        }else{
+          // Token expired or revoked
+          try{localStorage.removeItem('kz_gh_token');}catch(e){}
+          document.getElementById('ghToken').value='';
+          document.getElementById('tokenStatus').textContent='Token 已失效，請重新貼上';
+          document.getElementById('tokenStatus').className='token-status no';
+        }
+      }).catch(function(){
+        document.getElementById('tokenStatus').textContent='未連線';
+      });
+    }
+  }catch(e){}
 }
 
 // ── GITHUB API ──
