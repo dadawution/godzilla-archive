@@ -278,13 +278,16 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body);min-
 
     <div class="stitle" style="margin-top:1.5rem">封面圖片</div>
     <div class="field">
-      <div class="cover-zone" onclick="document.getElementById('f-cover').click()">
-        <input type="file" id="f-cover" accept="image/*" onchange="handleCover(this)" style="display:none">
-        <div class="cover-ph" id="coverPH"><span class="cover-ph-icon">📷</span><span class="cover-ph-txt">點擊上傳封面圖片</span></div>
-        <div class="cover-img-wrap" id="coverWrap" style="display:none">
-          <img class="cover-img-prev" id="coverPrev" src="">
-          <div class="cover-overlay"><span class="cover-overlay-txt">點擊更換圖片</span></div>
+      <div class="cover-img-wrap" id="coverWrap" style="display:none;margin-bottom:0.6rem">
+        <img class="cover-img-prev" id="coverPrev" src="">
+        <div class="cover-overlay"><span class="cover-overlay-txt">目前封面</span></div>
+      </div>
+      <div style="display:flex;gap:0.6rem;flex-wrap:wrap">
+        <div class="cover-zone" style="flex:1;min-width:140px" onclick="document.getElementById('f-cover').click()">
+          <input type="file" id="f-cover" accept="image/*" onchange="handleCover(this)" style="display:none">
+          <div class="cover-ph" id="coverPH" style="padding:0.85rem"><span class="cover-ph-icon" style="font-size:1.2rem">📷</span><span class="cover-ph-txt">上傳新圖片</span></div>
         </div>
+        <button class="simg-from-lib" style="flex:1;min-width:140px;padding:0.85rem;font-size:0.55rem;border:1px dashed #3a1a1a" onclick="openPickerForCover()">🖼 從照片庫選封面</button>
       </div>
       <div class="hint" id="coverHint"></div>
     </div>
@@ -390,6 +393,7 @@ var secImages={};
 var tokenOK=false;
 var libPhotos=[], photoTags={};
 var pickerTarget=null;
+var pickerForCover=false;
 var tagModalFile='';
 
 // ── INIT ──
@@ -649,9 +653,19 @@ function getSecs(){
 }
 
 // ── PICKER ──
-function openPicker(secId){pickerTarget=secId;document.getElementById('pickerModal').classList.add('open');document.getElementById('pickerSearch').value='';renderPicker(libPhotos);}
+function openPicker(secId){pickerTarget=secId;pickerForCover=false;document.getElementById('pickerModal').classList.add('open');document.getElementById('pickerSearch').value='';renderPicker(libPhotos);}
+function openPickerForCover(){pickerTarget=null;pickerForCover=true;document.getElementById('pickerModal').classList.add('open');document.getElementById('pickerSearch').value='';renderPicker(libPhotos);}
 function closePicker(){document.getElementById('pickerModal').classList.remove('open');pickerTarget=null;}
 function selectFromLib(url,name){
+  if(pickerForCover){
+    // Set as cover image
+    coverDataURL='';coverFile=null;coverIsLoaded=true;coverLoadedPath='images/'+name;
+    document.getElementById('coverPrev').src=url;
+    document.getElementById('coverWrap').style.display='block';
+    document.getElementById('coverHint').textContent='已從照片庫選擇：'+name;
+    upv();closePicker();
+    return;
+  }
   if(pickerTarget===null)return;
   var n=pickerTarget;
   secImages[n]={dataURL:url,file:null,isLoaded:true,libName:name};
@@ -852,6 +866,35 @@ async function uploadPhotos(input){
   result.textContent='✓ 上傳完成：'+ok+' 張成功'+(fail?' / '+fail+' 張失敗':'');
   input.value='';
   loadLib();
+}
+
+// ── DELETE PHOTO ──
+async function deletePhoto(name, sha){
+  if(!getToken()){alert('請先驗證 GitHub Token');return;}
+  if(!confirm('確定要刪除圖片：'+name+'\n\n此操作無法復原，且不會檢查圖片是否正在使用中。')){return;}
+  try{
+    // Get current sha if not provided
+    var fileSha=sha;
+    if(!fileSha){
+      var info=await ghGet('images/'+name);
+      if(!info){alert('找不到此圖片');return;}
+      fileSha=info.sha;
+    }
+    await ghDelete('images/'+name,'刪除圖片：'+name,fileSha);
+    // Remove from photoTags if exists
+    if(photoTags[name]){
+      delete photoTags[name];
+      try{
+        var tsha=null;var te=await ghGet('photo-tags.json');if(te)tsha=te.sha;
+        await ghPut('photo-tags.json',JSON.stringify(photoTags,null,2),'刪除圖片後更新標籤',tsha);
+      }catch(e){}
+    }
+    // Refresh library
+    var res=document.getElementById('libResult');
+    res.style.display='block';res.className='lib-result ok';
+    res.textContent='✓ 已刪除：'+name;
+    loadLib();
+  }catch(e){alert('刪除失敗：'+e.message);}
 }
 
 // ── TAG EDITOR ──
