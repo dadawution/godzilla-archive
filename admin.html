@@ -485,8 +485,30 @@ function durl2b64(d){return d.split(',')[1];}
 async function loadList(){
   try{
     var r=await fetch('articles.json');allArts=await r.json();
-    var s=document.getElementById('loadSel');s.innerHTML='<option value="">— 選擇文章 —</option>';
-    allArts.forEach(function(a){var o=document.createElement('option');o.value=a.file;o.textContent=a.title;s.appendChild(o);});
+    var s=document.getElementById('loadSel');
+    s.innerHTML='<option value="">— 選擇文章 —</option>';
+    var cats=['哥吉拉介紹','系列與時代解析','玩具與收藏','收藏市場與指南'];
+    cats.forEach(function(cat){
+      var arts=allArts.filter(function(a){return a.category===cat;});
+      if(!arts.length)return;
+      var grp=document.createElement('optgroup');
+      grp.label='── '+cat+' ──';
+      arts.forEach(function(a){
+        var o=document.createElement('option');
+        o.value=a.file;
+        o.textContent=a.title;
+        grp.appendChild(o);
+      });
+      s.appendChild(grp);
+    });
+    // Uncategorized
+    var knownCats=['哥吉拉介紹','系列與時代解析','玩具與收藏','收藏市場與指南'];
+    var others=allArts.filter(function(a){return knownCats.indexOf(a.category)===-1;});
+    if(others.length){
+      var grp=document.createElement('optgroup');grp.label='── 其他 ──';
+      others.forEach(function(a){var o=document.createElement('option');o.value=a.file;o.textContent=a.title;grp.appendChild(o);});
+      s.appendChild(grp);
+    }
   }catch(e){}
 }
 
