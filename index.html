@@ -263,70 +263,41 @@ function renderDesktop(articles){
   }
 }
 
+function goTo(el){var u=el.getAttribute('data-href');if(u)location.href=u;}
 function renderMobile(articles){
   const feed=document.getElementById('mobileFeed');
   if(!articles.length){feed.innerHTML='<div class="empty" style="padding:4rem 1.25rem">// 此分類尚無文章</div>';return;}
   const first=articles[0];
   const rest=articles.slice(1);
-
-  function mImg(src,alt,imgCls,phCls,phTxt){
-    if(!src) return '<div class="'+phCls+'"><span>'+phTxt+'</span></div>';
-    return '<img class="'+imgCls+'" src="'+src+'" alt="'+alt+'" onerror="imgErr(this)">';
+  function listImg(src,alt){
+    if(!src) return '<div class="m-list-img-ph"><span>哥</span></div>';
+    return '<img src="'+src+'" alt="'+alt+'" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--gray)" onerror="imgErr(this)">';
   }
-
-  let html='<a class="m-hero" href="'+first.file+'">';
-  html+='<div class="m-hero-img-wrap">'+mImg(first.image,first.title,'m-hero-img','m-hero-img-ph','哥吉拉')+'</div>';
+  let heroImg=first.image
+    ?'<img class="m-hero-img" src="'+first.image+'" alt="'+first.title+'" onerror="imgErr(this)">'
+    :'<div class="m-hero-img-ph"><span>哥吉拉</span></div>';
+  let html='<div class="m-hero" onclick="goTo(this)" data-href="'+first.file+'" style="cursor:pointer">';
+  html+='<div class="m-hero-img-wrap">'+heroImg+'</div>';
   html+='<div class="m-hero-body">';
   html+='<div class="m-hero-label"><div class="m-hero-label-line"></div><span class="m-hero-label-text">'+first.category+'</span></div>';
   html+='<div class="m-hero-title">'+first.title+'</div>';
   html+='<div class="m-hero-excerpt">'+first.excerpt+'</div>';
   html+='<div class="m-hero-meta"><span class="m-hero-date">'+first.date+'</span><span class="m-hero-arrow">→</span></div>';
-  html+='</div></a>';
-
+  html+='</div></div>';
   if(rest.length){
     html+='<div class="m-sec-div"><div class="m-sec-div-line"></div><div class="m-sec-div-text">最新文章</div></div>';
     html+='<div class="m-list">';
-    rest.forEach(function(a){
-      html+='<a class="m-list-card" href="'+a.file+'">';
-      html+='<div class="m-list-img">';
-      if(a.image) html+='<img src="'+a.image+'" alt="'+a.title+'" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--gray)" onerror="imgErr(this)">';
-      else html+='<div class="m-list-img-ph"><span>哥</span></div>';
-      html+='</div>';
+    rest.forEach(function(art){
+      html+='<div class="m-list-card" onclick="goTo(this)" data-href="'+art.file+'" style="cursor:pointer">';
+      html+='<div class="m-list-img">'+listImg(art.image,art.title)+'</div>';
       html+='<div class="m-list-body">';
-      html+='<span class="m-list-tag">'+a.category+'</span>';
-      html+='<div class="m-list-title">'+a.title+'</div>';
-      html+='<span class="m-list-date">'+a.date+'</span>';
-      html+='</div></a>';
+      html+='<span class="m-list-tag">'+art.category+'</span>';
+      html+='<div class="m-list-title">'+art.title+'</div>';
+      html+='<span class="m-list-date">'+art.date+'</span>';
+      html+='</div></div>';
     });
     html+='</div>';
   }
-
   feed.innerHTML=html;
 }
 
-function filterArticles(cat,btn){
-  document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('active');});
-  if(btn) btn.classList.add('active');
-  const f=cat==='全部'?allArticles:allArticles.filter(function(a){return a.category===cat;});
-  renderDesktop(f); renderMobile(f);
-}
-
-function mobileCat(cat,el){
-  document.querySelectorAll('.mobile-menu-item').forEach(function(i){i.classList.remove('active');});
-  el.classList.add('active');
-  filterArticles(cat,null);
-  toggleMenu();
-}
-
-function toggleMenu(){
-  const m=document.getElementById('mobileMenu');
-  const b=document.getElementById('burgerBtn');
-  m.classList.toggle('open');
-  b.classList.toggle('open');
-  document.body.style.overflow=m.classList.contains('open')?'hidden':'';
-}
-
-loadArticles();
-</script>
-</body>
-</html>
