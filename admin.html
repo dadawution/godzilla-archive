@@ -6,134 +6,138 @@
 <title>怪獸誌 — 上稿工具</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-:root{
-  --red:#C0392B;--dark:#0a0a0a;--charcoal:#111;--gray:#1a1a1a;
-  --border:#252525;--light:#666;--pale:#999;--white:#f0ede8;--gold:#c9a84c;
-  --green:#2ecc71;--font-mono:'Share Tech Mono',monospace;
-  --font-body:'Noto Serif TC',serif;
-}
+:root{--red:#C0392B;--dark:#0a0a0a;--charcoal:#111;--gray:#1a1a1a;--border:#252525;--light:#666;--pale:#999;--white:#f0ede8;--gold:#c9a84c;--green:#2ecc71;--font-mono:'Share Tech Mono',monospace;--font-body:'Noto Serif TC',serif}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--dark);color:var(--white);font-family:var(--font-body);min-height:100vh}
-
-/* HEADER */
-.header{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);background:var(--charcoal);position:sticky;top:0;z-index:100}
+.header{display:flex;align-items:center;justify-content:space-between;padding:0.85rem 2rem;border-bottom:1px solid var(--border);background:var(--charcoal);position:sticky;top:0;z-index:100}
+.header-left{display:flex;align-items:center;gap:1.5rem}
 .header-logo{display:flex;flex-direction:column;align-items:flex-start;gap:0.05rem}
 .header-logo-zh{font-family:'Arial Black',sans-serif;font-size:1.1rem;color:var(--white);font-weight:900;letter-spacing:0.08em;line-height:1;border-bottom:1px solid #333;padding-bottom:0.08rem}
 .header-logo-en{font-family:var(--font-mono);font-size:0.35rem;letter-spacing:0.35em;color:#555}
-.header-title{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.3em;color:var(--red)}
-.header-link{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.15em;color:#555;text-decoration:none}
+.header-badge{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.25em;color:var(--red)}
+.header-link{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.15em;color:#555;text-decoration:none}
 .header-link:hover{color:var(--white)}
-
-/* LAYOUT */
-.main{display:grid;grid-template-columns:1fr 360px;gap:0;min-height:calc(100vh - 57px)}
-
-/* FORM PANEL */
-.form-panel{padding:2rem;border-right:1px solid var(--border);overflow-y:auto}
-.section-title{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.3em;color:var(--red);margin-bottom:1.25rem;padding-bottom:0.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.5rem}
-.section-title::before{content:'';display:block;width:3px;height:0.8rem;background:var(--red)}
-
-/* FORM FIELDS */
-.field{margin-bottom:1.5rem}
-.field-label{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.2em;color:var(--pale);display:block;margin-bottom:0.5rem}
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--charcoal);padding:0 2rem}
+.tab{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.2em;color:#555;padding:0.75rem 1.25rem;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.15s;background:none;border-top:none;border-left:none;border-right:none}
+.tab:hover{color:var(--pale)}
+.tab.active{color:var(--white);border-bottom-color:var(--red)}
+.panel{display:none}
+.panel.active{display:block}
+.panel-two{display:none;grid-template-columns:1fr 360px;min-height:calc(100vh - 106px)}
+.panel-two.active{display:grid}
+.form-area{padding:2rem;border-right:1px solid var(--border);overflow-y:auto}
+.section-title{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.28em;color:var(--red);margin-bottom:1.1rem;padding-bottom:0.45rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.5rem}
+.section-title::before{content:'';display:block;width:3px;height:0.75rem;background:var(--red)}
+.field{margin-bottom:1.35rem}
+.field-label{font-family:var(--font-mono);font-size:0.56rem;letter-spacing:0.18em;color:var(--pale);display:block;margin-bottom:0.45rem}
 .field-label span{color:var(--red)}
-.field-input,.field-select,.field-textarea{width:100%;background:var(--charcoal);border:1px solid var(--border);color:var(--white);font-family:var(--font-body);font-size:0.9rem;padding:0.7rem 0.9rem;outline:none;transition:border-color 0.2s;-webkit-appearance:none}
+.field-input,.field-select,.field-textarea{width:100%;background:var(--charcoal);border:1px solid var(--border);color:var(--white);font-family:var(--font-body);font-size:0.88rem;padding:0.65rem 0.85rem;outline:none;transition:border-color 0.2s}
 .field-input:focus,.field-select:focus,.field-textarea:focus{border-color:var(--red)}
-.field-textarea{resize:vertical;min-height:120px;line-height:1.8}
-.field-select{cursor:pointer}
+.field-textarea{resize:vertical;min-height:100px;line-height:1.8}
+.field-select{cursor:pointer;-webkit-appearance:none}
 .field-select option{background:var(--charcoal)}
-
-/* SECTION BLOCK */
-.section-block{background:var(--charcoal);border:1px solid var(--border);margin-bottom:1rem;overflow:hidden}
-.section-block-header{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;border-bottom:1px solid var(--border);cursor:pointer}
-.section-block-num{font-family:var(--font-mono);font-size:0.55rem;color:var(--red);margin-right:0.5rem}
-.section-block-title-input{background:none;border:none;color:var(--white);font-family:var(--font-body);font-size:0.9rem;flex:1;outline:none;padding:0}
-.section-block-title-input::placeholder{color:#444}
-.section-block-del{font-family:var(--font-mono);font-size:0.6rem;color:#444;background:none;border:none;cursor:pointer;padding:0.2rem 0.4rem;transition:color 0.15s}
+.field-hint{font-family:var(--font-mono);font-size:0.5rem;color:#444;margin-top:0.3rem}
+.load-bar{background:var(--charcoal);border:1px solid var(--border);padding:0.85rem 1rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem}
+.load-bar select{flex:1;background:var(--gray);border:1px solid var(--border);color:var(--white);font-family:var(--font-mono);font-size:0.6rem;padding:0.5rem 0.75rem;outline:none;cursor:pointer}
+.load-bar select option{background:var(--charcoal)}
+.load-btn{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.15em;background:var(--gray);border:1px solid var(--border);color:var(--pale);padding:0.5rem 1rem;cursor:pointer;white-space:nowrap;transition:all 0.15s}
+.load-btn:hover{color:var(--white);border-color:var(--pale)}
+.load-label{font-family:var(--font-mono);font-size:0.52rem;color:#444;white-space:nowrap}
+.section-block{background:var(--charcoal);border:1px solid var(--border);margin-bottom:0.85rem;overflow:hidden}
+.section-block-header{display:flex;align-items:center;gap:0.5rem;padding:0.65rem 0.85rem;border-bottom:1px solid var(--border);background:#0d0d0d}
+.section-block-num{font-family:var(--font-mono);font-size:0.5rem;color:var(--red);flex-shrink:0}
+.section-block-title-input{background:none;border:none;color:var(--white);font-family:var(--font-body);font-size:0.88rem;flex:1;outline:none;padding:0}
+.section-block-title-input::placeholder{color:#333}
+.section-block-optional{font-family:var(--font-mono);font-size:0.46rem;color:#3a3a3a;flex-shrink:0}
+.section-block-del{font-family:var(--font-mono);font-size:0.55rem;color:#3a3a3a;background:none;border:none;cursor:pointer;padding:0.15rem 0.4rem;transition:color 0.15s;flex-shrink:0}
 .section-block-del:hover{color:var(--red)}
-.section-block-body{padding:0.75rem 1rem}
-
-/* IMAGE UPLOAD */
-.img-upload{border:1px dashed var(--border);padding:1.5rem;text-align:center;cursor:pointer;transition:border-color 0.2s;background:var(--charcoal);position:relative}
+.section-block-body{padding:0.65rem 0.85rem}
+.img-upload{border:1px dashed var(--border);padding:1.25rem;text-align:center;cursor:pointer;transition:border-color 0.2s;background:var(--charcoal);position:relative}
 .img-upload:hover{border-color:var(--red)}
 .img-upload input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
-.img-upload-icon{font-size:2rem;margin-bottom:0.5rem;display:block}
-.img-upload-text{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.15em;color:var(--pale)}
-.img-preview{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;margin-top:0.75rem;border:1px solid var(--border)}
-
-/* BUTTONS */
-.btn{font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.2em;padding:0.7rem 1.25rem;border:none;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem}
+.img-upload-icon{font-size:1.75rem;margin-bottom:0.4rem;display:block}
+.img-upload-text{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.12em;color:var(--pale)}
+.img-preview{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;margin-top:0.65rem;border:1px solid var(--border)}
+.btn{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.18em;padding:0.65rem 1.1rem;border:none;cursor:pointer;transition:all 0.15s;display:inline-flex;align-items:center;gap:0.4rem}
 .btn-primary{background:var(--red);color:#fff}
 .btn-primary:hover{background:#a93226}
 .btn-secondary{background:var(--charcoal);color:var(--pale);border:1px solid var(--border)}
 .btn-secondary:hover{color:var(--white);border-color:var(--pale)}
-.btn-green{background:var(--green);color:#fff}
-.btn-green:hover{background:#27ae60}
-.btn-row{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:0.75rem}
-.btn-add{width:100%;background:var(--gray);border:1px dashed var(--border);color:#555;padding:0.65rem;font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.2em;cursor:pointer;transition:all 0.2s;text-align:center}
+.btn-row{display:flex;gap:0.65rem;flex-wrap:wrap;margin-top:0.75rem}
+.btn-add{width:100%;background:var(--gray);border:1px dashed var(--border);color:#444;padding:0.6rem;font-family:var(--font-mono);font-size:0.56rem;letter-spacing:0.18em;cursor:pointer;transition:all 0.15s;text-align:center}
 .btn-add:hover{color:var(--white);border-color:var(--red)}
-
-/* PREVIEW PANEL */
-.preview-panel{background:var(--dark);overflow-y:auto;position:sticky;top:57px;height:calc(100vh - 57px)}
-.preview-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.preview-header-title{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.25em;color:var(--pale)}
-.preview-status{font-family:var(--font-mono);font-size:0.55rem;color:var(--green);letter-spacing:0.1em}
-
-/* MINI PREVIEW */
-.mini-preview{padding:0}
-.mini-cover{width:100%;aspect-ratio:16/9;background:var(--gray);object-fit:cover;display:block}
+.preview-panel{background:var(--dark);overflow-y:auto;position:sticky;top:106px;height:calc(100vh - 106px)}
+.preview-header{padding:0.85rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.preview-header-title{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.22em;color:var(--pale)}
+.preview-status{font-family:var(--font-mono);font-size:0.52rem;color:var(--green)}
+.mini-cover{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
 .mini-cover-ph{width:100%;aspect-ratio:16/9;background:var(--gray);display:flex;align-items:center;justify-content:center}
 .mini-cover-ph span{font-family:'Arial Black',sans-serif;font-size:3rem;color:#1e1e1e;font-weight:900}
 .mini-body{padding:1rem}
-.mini-tag{font-family:var(--font-mono);font-size:0.5rem;letter-spacing:0.2em;color:var(--red);display:block;margin-bottom:0.4rem}
-.mini-title{font-family:'Arial Black',sans-serif;font-size:1.1rem;color:var(--white);line-height:1.2;font-weight:900;margin-bottom:0.5rem}
-.mini-date{font-family:var(--font-mono);font-size:0.48rem;color:#444;display:block;margin-bottom:0.85rem}
-.mini-summary{font-size:0.8rem;line-height:1.8;color:var(--light);padding:0.75rem 0.85rem;border-left:2px solid var(--red);background:var(--charcoal);margin-bottom:0.85rem}
-.mini-section{margin-bottom:0.75rem}
-.mini-h2{font-family:'Arial Black',sans-serif;font-size:0.95rem;color:var(--white);border-left:2px solid var(--red);padding-left:0.5rem;margin-bottom:0.35rem;font-weight:900}
-.mini-p{font-size:0.78rem;line-height:1.8;color:#888}
-
-/* OUTPUT */
-.output-panel{border-top:1px solid var(--border);padding:1.25rem}
-.output-title{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.25em;color:var(--pale);margin-bottom:0.75rem;display:block}
-.download-cards{display:flex;flex-direction:column;gap:0.5rem}
-.download-card{background:var(--charcoal);border:1px solid var(--border);padding:0.75rem 1rem;display:flex;align-items:center;justify-content:space-between}
-.download-card-name{font-family:var(--font-mono);font-size:0.6rem;color:var(--pale)}
-.download-card-btn{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.12em;background:var(--red);color:#fff;border:none;padding:0.35rem 0.75rem;cursor:pointer}
+.mini-tag{font-family:var(--font-mono);font-size:0.48rem;letter-spacing:0.18em;color:var(--red);display:block;margin-bottom:0.35rem}
+.mini-title{font-family:'Arial Black',sans-serif;font-size:1rem;color:var(--white);line-height:1.2;font-weight:900;margin-bottom:0.45rem}
+.mini-date{font-family:var(--font-mono);font-size:0.46rem;color:#444;display:block;margin-bottom:0.75rem}
+.mini-summary{font-size:0.78rem;line-height:1.8;color:var(--light);padding:0.65rem 0.75rem;border-left:2px solid var(--red);background:var(--charcoal);margin-bottom:0.75rem}
+.mini-h2{font-family:'Arial Black',sans-serif;font-size:0.85rem;color:var(--white);border-left:2px solid var(--red);padding-left:0.45rem;margin:0.85rem 0 0.3rem;font-weight:900}
+.mini-p{font-size:0.75rem;line-height:1.75;color:#777;margin-bottom:0.4rem}
+.output-area{margin-top:1.5rem;display:none}
+.output-label{font-family:var(--font-mono);font-size:0.52rem;letter-spacing:0.22em;color:var(--pale);margin-bottom:0.65rem;display:block}
+.download-card{background:var(--charcoal);border:1px solid var(--border);padding:0.7rem 1rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem}
+.download-card-name{font-family:var(--font-mono);font-size:0.58rem;color:var(--pale)}
+.download-card-btn{font-family:var(--font-mono);font-size:0.52rem;letter-spacing:0.1em;background:var(--red);color:#fff;border:none;padding:0.3rem 0.7rem;cursor:pointer}
 .download-card-btn:hover{background:#a93226}
-
-/* STEPS */
-.steps{padding:1rem 1.25rem;border-top:1px solid var(--border)}
-.step{display:flex;gap:0.75rem;align-items:flex-start;padding:0.5rem 0;border-bottom:1px solid var(--border)}
+.steps-wrap{margin-top:0.85rem;border:1px solid var(--border);padding:0.85rem 1rem}
+.step{display:flex;gap:0.65rem;align-items:flex-start;padding:0.4rem 0;border-bottom:1px solid var(--border)}
 .step:last-child{border-bottom:none}
-.step-num{font-family:var(--font-mono);font-size:0.55rem;color:var(--red);flex-shrink:0;padding-top:0.05rem}
-.step-text{font-size:0.78rem;line-height:1.65;color:var(--light)}
-.step-text code{font-family:var(--font-mono);font-size:0.7rem;color:var(--gold);background:#161616;padding:0.1rem 0.3rem}
-
-@media(max-width:900px){
-  .main{grid-template-columns:1fr}
-  .preview-panel{display:none}
-}
+.step-num{font-family:var(--font-mono);font-size:0.5rem;color:var(--red);flex-shrink:0;padding-top:0.05rem}
+.step-text{font-size:0.75rem;line-height:1.65;color:var(--light)}
+.step-text code{font-family:var(--font-mono);font-size:0.65rem;color:var(--gold);background:#161616;padding:0.1rem 0.3rem}
+.sort-panel{padding:2rem}
+.sort-list{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1.5rem}
+.sort-item{background:var(--charcoal);padding:0.85rem 1rem;display:flex;align-items:center;gap:0.85rem;cursor:grab;user-select:none;transition:background 0.15s}
+.sort-item:active{cursor:grabbing}
+.sort-item.dragging{opacity:0.4}
+.sort-item.drag-over{border-top:2px solid var(--red)}
+.sort-handle{font-size:0.9rem;color:#3a3a3a;flex-shrink:0}
+.sort-num{font-family:var(--font-mono);font-size:0.52rem;color:var(--red);flex-shrink:0;width:1.5rem}
+.sort-info{flex:1;min-width:0}
+.sort-title{font-family:'Arial Black',sans-serif;font-size:0.85rem;color:var(--pale);font-weight:900;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sort-meta{display:flex;gap:0.75rem;margin-top:0.2rem}
+.sort-cat{font-family:var(--font-mono);font-size:0.48rem;letter-spacing:0.12em;color:var(--red)}
+.sort-date{font-family:var(--font-mono);font-size:0.48rem;color:#444}
+.sort-empty{font-family:var(--font-mono);font-size:0.62rem;color:#333;text-align:center;padding:3rem;letter-spacing:0.2em}
+.sort-hint{font-family:var(--font-mono);font-size:0.55rem;color:#444;margin-bottom:1.25rem;line-height:1.9}
+.sort-hint span{color:var(--pale)}
+@media(max-width:900px){.panel-two{grid-template-columns:1fr}.preview-panel{display:none}}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div style="display:flex;align-items:center;gap:1.5rem">
+  <div class="header-left">
     <div class="header-logo">
       <span class="header-logo-zh">怪獸誌</span>
       <span class="header-logo-en">KAIJUZINE</span>
     </div>
-    <div class="header-title">// 上稿工具</div>
+    <span class="header-badge">// 上稿工具</span>
   </div>
   <a class="header-link" href="index.html" target="_blank">← 前往網站</a>
 </div>
 
-<div class="main">
+<div class="tabs">
+  <button class="tab active" id="tab-btn-write" onclick="switchTab('write',this)">✏️ 寫文章</button>
+  <button class="tab" id="tab-btn-sort" onclick="switchTab('sort',this)">↕ 文章排序</button>
+</div>
 
-  <!-- FORM -->
-  <div class="form-panel">
+<div class="panel-two active" id="panel-write">
+  <div class="form-area">
 
-    <!-- 基本資訊 -->
+    <div class="load-bar">
+      <span class="load-label">載入文章修改：</span>
+      <select id="loadSelect"><option value="">— 選擇文章 —</option></select>
+      <button class="load-btn" onclick="loadArticle()">載入</button>
+    </div>
+
     <div class="section-title">基本資訊</div>
 
     <div class="field">
@@ -159,7 +163,8 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body);min-
 
     <div class="field">
       <label class="field-label">文章檔名 <span>*</span></label>
-      <input class="field-input" id="f-filename" type="text" placeholder="例：article-13.html" oninput="updatePreview()">
+      <input class="field-input" id="f-filename" type="text" placeholder="例：article-13.html 或 godzilla-origins.html">
+      <div class="field-hint">英文、數字、連字號，結尾為 .html</div>
     </div>
 
     <div class="field">
@@ -170,430 +175,282 @@ body{background:var(--dark);color:var(--white);font-family:var(--font-body);min-
         <div class="img-upload-text">點擊或拖曳上傳封面圖片</div>
         <img class="img-preview" id="imgPreview" style="display:none">
       </div>
-      <div style="font-family:var(--font-mono);font-size:0.52rem;color:#444;margin-top:0.4rem" id="imgFilename"></div>
+      <div class="field-hint" id="imgFilename"></div>
     </div>
 
     <div class="field">
       <label class="field-label">文章摘要 <span>*</span></label>
-      <textarea class="field-textarea" id="f-excerpt" rows="3" placeholder="50–80字的摘要，顯示在文章列表和首頁卡片" oninput="updatePreview()" style="min-height:80px"></textarea>
+      <textarea class="field-textarea" id="f-excerpt" rows="2" placeholder="50–80字，顯示在首頁卡片" oninput="updatePreview()" style="min-height:75px"></textarea>
     </div>
 
     <div class="field">
-      <label class="field-label">文章重點（顯示在文章頁頂部）</label>
-      <textarea class="field-textarea" id="f-summary" rows="2" placeholder="一句話說明這篇文章的核心內容" oninput="updatePreview()" style="min-height:70px"></textarea>
+      <label class="field-label">文章重點（選填）</label>
+      <textarea class="field-textarea" id="f-summary" rows="2" placeholder="一句話說明核心內容，顯示在文章頁頂部" oninput="updatePreview()" style="min-height:70px"></textarea>
     </div>
 
-    <!-- 文章內容 -->
-    <div class="section-title" style="margin-top:2rem">文章內容</div>
+    <div class="section-title" style="margin-top:1.75rem">文章內容</div>
+    <div class="field-hint" style="margin-bottom:1rem;color:#555">段落標題可留空。內文空一行會分成兩個段落。</div>
 
     <div id="sections"></div>
-
     <button class="btn-add" onclick="addSection()">+ 新增段落</button>
 
-    <!-- 操作 -->
-    <div class="section-title" style="margin-top:2rem">產生檔案</div>
-
-    <div style="font-family:var(--font-mono);font-size:0.6rem;color:var(--light);line-height:1.8;margin-bottom:1.25rem">
-      填寫完成後，點下方按鈕產生檔案。<br>
-      下載後上傳到 GitHub 即完成上稿。
-    </div>
-
+    <div class="section-title" style="margin-top:1.75rem">產生檔案</div>
     <div class="btn-row">
-      <button class="btn btn-primary" onclick="generateFiles()">⚡ 產生檔案</button>
+      <button class="btn btn-primary" onclick="generateFiles()">⚡ 產生並下載</button>
       <button class="btn btn-secondary" onclick="clearAll()">✕ 清除</button>
     </div>
 
-    <div id="outputArea" style="margin-top:1.5rem;display:none">
-      <div class="output-title">// 下載檔案</div>
-      <div class="download-cards" id="downloadCards"></div>
-      <div class="steps" style="margin-top:1rem;padding:0">
-        <div style="font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.25em;color:var(--pale);margin-bottom:0.75rem">// 上傳步驟</div>
-        <div class="step"><div class="step-num">01</div><div class="step-text">下載 <code>article-XX.html</code> 和 <code>articles.json</code></div></div>
-        <div class="step"><div class="step-num">02</div><div class="step-text">把封面圖片重新命名為 <code id="coverName">cover-XX.jpg</code></div></div>
-        <div class="step"><div class="step-num">03</div><div class="step-text">前往 GitHub，上傳所有檔案（圖片放進 <code>images/</code> 資料夾）</div></div>
-        <div class="step"><div class="step-num">04</div><div class="step-text">Commit → 等 1 分鐘 → 網站更新完成</div></div>
+    <div class="output-area" id="outputArea">
+      <span class="output-label">// 下載檔案</span>
+      <div id="downloadCards"></div>
+      <div class="steps-wrap">
+        <div class="step"><div class="step-num">01</div><div class="step-text">下載 <code id="dlFilename">article.html</code> 和 <code>articles.json</code></div></div>
+        <div class="step"><div class="step-num">02</div><div class="step-text">把封面圖片命名為 <code id="coverName">cover.jpg</code>，放進 <code>images/</code> 資料夾</div></div>
+        <div class="step"><div class="step-num">03</div><div class="step-text">前往 GitHub 上傳所有檔案，Commit 後等 1 分鐘完成</div></div>
       </div>
     </div>
 
   </div>
 
-  <!-- PREVIEW -->
   <div class="preview-panel">
     <div class="preview-header">
       <span class="preview-header-title">// 即時預覽</span>
       <span class="preview-status" id="previewStatus">等待輸入...</span>
     </div>
-    <div class="mini-preview" id="miniPreview">
+    <div id="miniPreview">
       <div class="mini-cover-ph"><span>哥吉拉</span></div>
       <div class="mini-body">
-        <span class="mini-tag">哥吉拉介紹</span>
+        <span class="mini-tag">分類</span>
         <div class="mini-title">文章標題</div>
         <span class="mini-date">日期</span>
         <div class="mini-summary">文章重點</div>
       </div>
     </div>
   </div>
+</div>
 
+<div class="panel" id="panel-sort">
+  <div class="sort-panel">
+    <div class="section-title">文章排序</div>
+    <div class="sort-hint">
+      拖曳調整順序，排好後點「產生 articles.json」下載並上傳 GitHub。<br>
+      <span>排序結果會直接反映在首頁，與文章日期無關。</span>
+    </div>
+    <div class="sort-list" id="sortList"><div class="sort-empty">// 載入中...</div></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="generateSortedJSON()">⚡ 產生 articles.json</button>
+      <button class="btn btn-secondary" onclick="loadSort()">↺ 重新載入</button>
+    </div>
+    <div class="output-area" id="sortOutputArea">
+      <span class="output-label">// 下載檔案</span>
+      <div id="sortDownloadCard"></div>
+      <div class="steps-wrap">
+        <div class="step"><div class="step-num">01</div><div class="step-text">下載 <code>articles.json</code></div></div>
+        <div class="step"><div class="step-num">02</div><div class="step-text">前往 GitHub，上傳覆蓋舊的 <code>articles.json</code></div></div>
+        <div class="step"><div class="step-num">03</div><div class="step-text">Commit → 等 1 分鐘 → 首頁順序更新</div></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-// Init date
-document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
+var sectionCount=0,imgFile=null,allArticles=[],sortData=[],dragSrc=null;
 
-let sectionCount = 0;
-let imgFile = null;
-let imgCoverName = '';
+document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
+addSection();
+loadArticlesList();
+updatePreview();
 
-function addSection(){
-  sectionCount++;
-  const n = sectionCount;
-  const div = document.createElement('div');
-  div.className = 'section-block';
-  div.id = 'sec-'+n;
-  div.innerHTML = `
-    <div class="section-block-header">
-      <span class="section-block-num">H${n}</span>
-      <input class="section-block-title-input" id="sec-title-${n}" placeholder="段落標題" oninput="updatePreview()" type="text">
-      <button class="section-block-del" onclick="removeSection(${n})">✕</button>
-    </div>
-    <div class="section-block-body">
-      <textarea class="field-textarea" id="sec-body-${n}" placeholder="段落內文..." oninput="updatePreview()" style="min-height:100px;border:none;padding:0;background:transparent;font-size:0.88rem"></textarea>
-    </div>`;
-  document.getElementById('sections').appendChild(div);
-  document.getElementById('sec-title-'+n).focus();
+function switchTab(name,btn){
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.panel,.panel-two').forEach(function(p){p.classList.remove('active');});
+  btn.classList.add('active');
+  document.getElementById('panel-'+name).classList.add('active');
+  if(name==='sort') loadSort();
 }
 
-function removeSection(n){
-  const el = document.getElementById('sec-'+n);
-  if(el) el.remove();
-  updatePreview();
+async function loadArticlesList(){
+  try{
+    var res=await fetch('articles.json');
+    allArticles=await res.json();
+    var sel=document.getElementById('loadSelect');
+    sel.innerHTML='<option value="">— 選擇文章 —</option>';
+    allArticles.forEach(function(a){
+      var opt=document.createElement('option');
+      opt.value=a.file; opt.textContent=a.title; sel.appendChild(opt);
+    });
+  }catch(e){}
+}
+
+async function loadArticle(){
+  var file=document.getElementById('loadSelect').value;
+  if(!file){alert('請選擇文章');return;}
+  try{
+    var res=await fetch(file);
+    var html=await res.text();
+    var parser=new DOMParser();
+    var doc=parser.parseFromString(html,'text/html');
+    var ct=doc.querySelector('.cover-title');
+    if(ct) document.getElementById('f-title').value=ct.textContent.trim();
+    var ctag=doc.querySelector('.cover-tag');
+    if(ctag) document.getElementById('f-category').value=ctag.textContent.trim();
+    var de=doc.querySelector('.article-date');
+    if(de) document.getElementById('f-date').value=de.textContent.trim();
+    document.getElementById('f-filename').value=file;
+    var found=allArticles.find(function(a){return a.file===file;});
+    if(found&&found.excerpt) document.getElementById('f-excerpt').value=found.excerpt;
+    var se=doc.querySelector('.article-summary');
+    if(se){var st=se.querySelector('strong');if(st)st.remove();document.getElementById('f-summary').value=se.textContent.trim();}
+    if(found&&found.image) document.getElementById('imgFilename').textContent='目前封面：'+found.image+'（不更換可不上傳）';
+    document.getElementById('sections').innerHTML='';
+    sectionCount=0;
+    var body=doc.querySelector('.article-body');
+    if(body){
+      var children=Array.from(body.children);
+      var curTitle='',curParas=[];
+      function flush(){
+        if(curParas.length>0||curTitle){addSectionWith(curTitle,curParas.join('\n\n'));}
+        curTitle='';curParas=[];
+      }
+      children.forEach(function(el){
+        if(el.tagName==='H2'){flush();curTitle=el.textContent.trim();}
+        else if(el.tagName==='P'){curParas.push(el.textContent.trim());}
+        else if(el.tagName==='UL'){curParas.push(Array.from(el.querySelectorAll('li')).map(function(li){return li.textContent.trim();}).join('\n'));}
+      });
+      flush();
+    }
+    updatePreview();
+    alert('文章已載入！');
+  }catch(e){alert('載入失敗。請在 GitHub Pages 上使用此工具。');}
+}
+
+function addSection(){addSectionWith('','');}
+
+function addSectionWith(title,body){
+  sectionCount++;
+  var n=sectionCount;
+  var div=document.createElement('div');
+  div.className='section-block';div.id='sec-'+n;
+  div.innerHTML='<div class="section-block-header">'+
+    '<span class="section-block-num">'+n+'</span>'+
+    '<input class="section-block-title-input" id="sec-title-'+n+'" placeholder="段落標題（選填）" oninput="updatePreview()" type="text">'+
+    '<span class="section-block-optional">選填</span>'+
+    '<button class="section-block-del" onclick="removeSection('+n+')">✕</button>'+
+  '</div>'+
+  '<div class="section-block-body">'+
+    '<textarea class="field-textarea" id="sec-body-'+n+'" placeholder="段落內文...\n\n空一行自動分段。" oninput="updatePreview()" style="min-height:100px;border:none;padding:0;background:transparent;font-size:0.88rem"></textarea>'+
+  '</div>';
+  document.getElementById('sections').appendChild(div);
+  if(title) document.getElementById('sec-title-'+n).value=title;
+  if(body) document.getElementById('sec-body-'+n).value=body;
+  if(!title) document.getElementById('sec-title-'+n).focus();
+}
+
+function removeSection(n){var el=document.getElementById('sec-'+n);if(el)el.remove();updatePreview();}
+
+function getSections(){
+  var s=[];
+  document.querySelectorAll('.section-block').forEach(function(b){
+    var id=b.id.replace('sec-','');
+    var te=document.getElementById('sec-title-'+id);
+    var be=document.getElementById('sec-body-'+id);
+    if(be&&be.value.trim()) s.push({id:'s'+id,title:te?te.value.trim():'',body:be.value.trim()});
+  });
+  return s;
 }
 
 function handleImage(input){
-  const file = input.files[0];
-  if(!file) return;
-  imgFile = file;
-  const reader = new FileReader();
-  reader.onload = function(e){
-    const prev = document.getElementById('imgPreview');
-    prev.src = e.target.result;
-    prev.style.display = 'block';
+  var file=input.files[0];if(!file)return;imgFile=file;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var p=document.getElementById('imgPreview');
+    p.src=e.target.result;p.style.display='block';
     document.getElementById('imgUpload').querySelector('.img-upload-icon').style.display='none';
     document.getElementById('imgUpload').querySelector('.img-upload-text').style.display='none';
-    document.getElementById('imgFilename').textContent = '檔案：' + file.name;
+    document.getElementById('imgFilename').textContent='選擇的檔案：'+file.name;
     updatePreview();
   };
   reader.readAsDataURL(file);
 }
 
-function getSections(){
-  const sections = [];
-  document.querySelectorAll('.section-block').forEach(function(block){
-    const id = block.id.replace('sec-','');
-    const title = document.getElementById('sec-title-'+id);
-    const body = document.getElementById('sec-body-'+id);
-    if(title && body && title.value.trim()){
-      sections.push({id:'s'+id, title:title.value.trim(), body:body.value.trim()});
-    }
-  });
-  return sections;
-}
-
 function updatePreview(){
-  const title = document.getElementById('f-title').value || '文章標題';
-  const category = document.getElementById('f-category').value;
-  const date = document.getElementById('f-date').value || '日期';
-  const summary = document.getElementById('f-summary').value || '文章重點摘要...';
-  const sections = getSections();
-
-  let html = '';
-  if(imgFile){
-    html += '<img class="mini-cover" src="'+document.getElementById('imgPreview').src+'">';
-  } else {
-    html += '<div class="mini-cover-ph"><span>哥吉拉</span></div>';
-  }
-  html += '<div class="mini-body">';
-  html += '<span class="mini-tag">'+category+'</span>';
-  html += '<div class="mini-title">'+title+'</div>';
-  html += '<span class="mini-date">'+date+'</span>';
-  html += '<div class="mini-summary">'+summary+'</div>';
+  var title=document.getElementById('f-title').value||'文章標題';
+  var cat=document.getElementById('f-category').value;
+  var date=document.getElementById('f-date').value||'日期';
+  var sum=document.getElementById('f-summary').value||document.getElementById('f-excerpt').value||'文章重點';
+  var sections=getSections();
+  var html='';
+  var p=document.getElementById('imgPreview');
+  if(p.style.display!=='none'&&p.src) html+='<img class="mini-cover" src="'+p.src+'">';
+  else html+='<div class="mini-cover-ph"><span>哥吉拉</span></div>';
+  html+='<div class="mini-body">';
+  html+='<span class="mini-tag">'+cat+'</span>';
+  html+='<div class="mini-title">'+title+'</div>';
+  html+='<span class="mini-date">'+date+'</span>';
+  html+='<div class="mini-summary">'+sum+'</div>';
   sections.forEach(function(s){
-    html += '<div class="mini-section">';
-    html += '<div class="mini-h2">'+s.title+'</div>';
-    if(s.body) html += '<div class="mini-p">'+(s.body.length>120?s.body.slice(0,120)+'...':s.body)+'</div>';
-    html += '</div>';
+    if(s.title) html+='<div class="mini-h2">'+s.title+'</div>';
+    var first=s.body.split(/\n\s*\n/)[0];
+    if(first) html+='<div class="mini-p">'+(first.length>100?first.slice(0,100)+'...':first)+'</div>';
   });
-  html += '</div>';
-
-  document.getElementById('miniPreview').innerHTML = html;
-  const hasTitle = document.getElementById('f-title').value.trim();
-  document.getElementById('previewStatus').textContent = hasTitle ? '✓ 預覽更新' : '等待輸入...';
+  html+='</div>';
+  document.getElementById('miniPreview').innerHTML=html;
+  document.getElementById('previewStatus').textContent=document.getElementById('f-title').value.trim()?'✓ 即時更新':'等待輸入...';
 }
 
 function generateFiles(){
-  const title = document.getElementById('f-title').value.trim();
-  const category = document.getElementById('f-category').value;
-  const date = document.getElementById('f-date').value;
-  const filename = document.getElementById('f-filename').value.trim();
-  const excerpt = document.getElementById('f-excerpt').value.trim();
-  const summary = document.getElementById('f-summary').value.trim();
-  const sections = getSections();
-
-  if(!title||!date||!filename){
-    alert('請填寫標題、日期和檔名');return;
-  }
-  if(!filename.endsWith('.html')){
-    alert('檔名必須以 .html 結尾，例如 article-13.html');return;
-  }
-
-  const coverNum = filename.replace('article-','').replace('.html','');
-  const coverFile = 'images/cover-'+coverNum+'.jpg';
-  imgCoverName = 'cover-'+coverNum+'.jpg';
-  document.getElementById('coverName').textContent = imgCoverName;
-
-  // Build TOC
-  const tocHtml = sections.map(function(s,i){
+  var title=document.getElementById('f-title').value.trim();
+  var cat=document.getElementById('f-category').value;
+  var date=document.getElementById('f-date').value;
+  var fn=document.getElementById('f-filename').value.trim();
+  var exc=document.getElementById('f-excerpt').value.trim();
+  var sum=document.getElementById('f-summary').value.trim();
+  var secs=getSections();
+  if(!title||!date||!fn){alert('請填寫標題、日期和檔名');return;}
+  if(!fn.endsWith('.html')){alert('檔名必須以 .html 結尾');return;}
+  var base=fn.replace(/\.html$/,'');
+  var coverFile='images/cover-'+base.replace('article-','')+'.jpg';
+  var found=allArticles.find(function(a){return a.file===fn;});
+  var finalCover=imgFile?coverFile:(found?found.image:coverFile);
+  var tocItems=secs.filter(function(s){return s.title;});
+  var tocHtml=tocItems.map(function(s,i){
     return '      <li class="toc-item"><a class="toc-a" href="#'+s.id+'"><span class="toc-num">0'+(i+1)+'</span>'+s.title+'</a></li>';
   }).join('\n');
-
-  // Build body
-  const bodyHtml = sections.map(function(s){
-    const paras = s.body.split('\n').filter(function(p){return p.trim();}).map(function(p){
-      return '      <p>'+p.trim()+'</p>';
+  var bodyHtml=secs.map(function(s){
+    var blocks=s.body.split(/\n\s*\n/);
+    var paras=blocks.filter(function(b){return b.trim();}).map(function(b){
+      return '      <p>'+b.trim().replace(/\n/g,' ')+'</p>';
     }).join('\n');
-    return '      <h2 id="'+s.id+'">'+s.title+'</h2>\n'+paras;
+    return s.title?'      <h2 id="'+s.id+'">'+s.title+'</h2>\n'+paras:paras;
   }).join('\n');
-
-  // Generate HTML
-  const articleHtml = generateArticleHTML(title, category, date, filename, coverFile, excerpt, summary, tocHtml, bodyHtml);
-
-  // Load existing articles.json
-  loadAndUpdateJSON(filename, title, category, date, excerpt, coverFile, articleHtml);
-}
-
-function generateArticleHTML(title, category, date, filename, coverFile, excerpt, summary, tocHtml, bodyHtml){
-  return `<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${title} — 怪獸誌 KAIJUZINE</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<style>
-:root{--red:#C0392B;--dark:#0a0a0a;--charcoal:#111;--gray:#1a1a1a;--border:#1e1e1e;--light:#666;--pale:#999;--white:#f0ede8;--gold:#c9a84c;--font-body:'Noto Serif TC',serif;--font-mono:'Share Tech Mono',monospace;--max-w:1100px}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--dark);color:var(--white);font-family:var(--font-body)}
-.top-nav{display:none;position:sticky;top:0;z-index:200;background:rgba(10,10,10,0.97);border-bottom:1px solid var(--border);backdrop-filter:blur(10px)}
-.top-nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:stretch}
-.top-nav-logo-wrap{padding:0 1.25rem;border-right:1px solid var(--border);display:flex;align-items:center}
-.top-nav-logo{display:flex;flex-direction:column;align-items:center;gap:0.06rem;text-decoration:none}
-.top-nav-logo-zh{font-family:'Arial Black',sans-serif;font-size:0.85rem;color:var(--white);letter-spacing:0.1em;font-weight:900;line-height:1;border-bottom:1px solid #333;padding-bottom:0.08rem}
-.top-nav-logo-en{font-family:var(--font-mono);font-size:0.26rem;letter-spacing:0.3em;color:#555}
-.cat-link{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.18em;color:#555;text-decoration:none;border-bottom:2px solid transparent;padding:0 1rem;display:flex;align-items:center;transition:color .2s,border-color .2s;white-space:nowrap}
-.cat-link:hover{color:var(--white)}
-.cat-link.active{color:var(--white);border-bottom-color:var(--red)}
-.mobile-nav{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1.25rem;border-bottom:1px solid var(--border);background:var(--dark);position:sticky;top:0;z-index:200}
-.mobile-burger{display:flex;flex-direction:column;gap:5px;padding:4px;background:none;border:none;cursor:pointer;width:32px}
-.mobile-burger span{display:block;width:22px;height:2px;background:var(--white);transition:all 0.25s}
-.mobile-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.mobile-burger.open span:nth-child(2){opacity:0}
-.mobile-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.mobile-logo{display:flex;flex-direction:column;align-items:center;gap:0.1rem;text-decoration:none}
-.mobile-logo-zh{font-family:'Arial Black',sans-serif;font-size:1.5rem;color:var(--white);line-height:1;font-weight:900;letter-spacing:0.06em;border-bottom:1px solid #333;padding-bottom:0.12rem}
-.mobile-logo-en{font-family:var(--font-mono);font-size:0.42rem;letter-spacing:0.4em;color:#555}
-.mobile-search{font-size:1.1rem;width:32px;text-align:right;background:none;border:none;cursor:pointer;color:var(--white)}
-.mobile-menu{display:none;position:fixed;inset:0;background:rgba(10,10,10,0.98);z-index:190;flex-direction:column;justify-content:center;align-items:center}
-.mobile-menu.open{display:flex}
-.mobile-menu-label{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.35em;color:#444;margin-bottom:2rem}
-.mobile-menu-item{font-family:'Arial Black',sans-serif;font-size:1.9rem;color:#2a2a2a;font-weight:900;padding:0.55rem 2.5rem;text-align:center;width:100%;text-decoration:none;display:block;transition:color 0.15s}
-.mobile-menu-item:hover{color:var(--white)}
-.back-link{display:block;font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.18em;color:var(--red);text-decoration:none;padding:0.8rem 1.25rem;border-bottom:1px solid var(--border);max-width:var(--max-w);margin:0 auto}
-.cover-wrap{max-width:var(--max-w);margin:0 auto;overflow:hidden}
-.cover-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--gray)}
-.cover-ph{width:100%;aspect-ratio:16/9;background:var(--gray);display:flex;align-items:center;justify-content:center}
-.cover-ph span{font-family:'Arial Black',sans-serif;font-size:6rem;color:#1e1e1e;font-weight:900}
-.cover-header{max-width:var(--max-w);margin:0 auto;padding:1.25rem 1.25rem 0}
-.cover-tag{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.22em;color:var(--red);display:block;margin-bottom:0.6rem}
-.cover-title{font-family:'Arial Black',sans-serif;font-size:clamp(1.4rem,3.5vw,2.4rem);color:var(--white);line-height:1.15;font-weight:900}
-.article-outer{max-width:var(--max-w);margin:0 auto;display:flex;align-items:flex-start;padding-bottom:5rem}
-.article-main{flex:1;min-width:0;padding:1.5rem 2rem 2rem 1.25rem;border-right:1px solid var(--border);max-width:720px}
-.article-side{width:240px;flex-shrink:0;padding:1.5rem 1rem;position:sticky;top:60px;max-height:calc(100vh - 80px);overflow-y:auto;scrollbar-width:none}
-.article-side::-webkit-scrollbar{display:none}
-.article-date{font-family:var(--font-mono);font-size:0.52rem;letter-spacing:0.18em;color:#555;display:block;margin-bottom:1.1rem}
-.article-summary{font-size:0.88rem;line-height:1.85;color:var(--light);padding:0.9rem 1.1rem;border-left:3px solid var(--red);background:var(--charcoal);margin-bottom:1.5rem}
-.article-summary strong{color:var(--pale)}
-.article-body p{font-size:1rem;line-height:2.1;color:#aaa;margin-bottom:1.75rem}
-.article-body h2{font-family:'Arial Black',sans-serif;font-size:1.2rem;color:var(--white);margin:2.5rem 0 1rem;font-weight:900;border-left:3px solid var(--red);padding-left:0.7rem;line-height:1.2;scroll-margin-top:5rem}
-.article-body h3{font-family:var(--font-mono);font-size:0.75rem;letter-spacing:0.18em;color:var(--gold);margin:2rem 0 0.75rem}
-.article-body strong{color:var(--pale)}
-.article-body ul{padding-left:1.25rem;margin-bottom:1.75rem}
-.article-body li{font-size:0.95rem;line-height:2;color:var(--light);margin-bottom:0.35rem}
-.side-label{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.25em;color:var(--red);display:block;margin-bottom:0.85rem}
-.toc-list{list-style:none;margin-bottom:2rem}
-.toc-item{border-bottom:1px solid var(--border);padding:0.5rem 0}
-.toc-a{font-family:var(--font-mono);font-size:0.68rem;color:#666;text-decoration:none;display:block;line-height:1.6;transition:color .15s}
-.toc-a:hover,.toc-a.active{color:var(--white)}
-.toc-num{color:var(--red);margin-right:0.35rem}
-.related-section{padding:1.5rem 0 0}
-.related-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.85rem}
-.related-header-line{width:3px;height:1rem;background:var(--red);flex-shrink:0}
-.related-header-text{font-family:'Arial Black',sans-serif;font-size:0.9rem;color:var(--white);font-weight:900}
-.related-cards{display:flex;flex-direction:column;gap:0}
-.rel-card{display:flex;gap:0.85rem;padding:0.9rem 0;text-decoration:none;border-bottom:1px solid var(--border);align-items:flex-start}
-.rel-card:last-child{border-bottom:none}
-.rel-img-wrap{width:100px;flex-shrink:0;overflow:hidden}
-.rel-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--gray)}
-.rel-img-ph{width:100px;aspect-ratio:4/3;background:var(--gray);display:flex;align-items:center;justify-content:center}
-.rel-img-ph span{font-family:'Arial Black',sans-serif;font-size:1.3rem;color:#1e1e1e;font-weight:900}
-.rel-body{flex:1;min-width:0}
-.rel-tag{font-family:var(--font-mono);font-size:0.5rem;letter-spacing:0.15em;color:var(--red);display:block;margin-bottom:0.3rem}
-.rel-name{font-family:'Arial Black',sans-serif;font-size:0.88rem;color:var(--pale);line-height:1.35;font-weight:900}
-.article-footer{display:flex;justify-content:space-between;padding:1.25rem 1.25rem;border-top:1px solid var(--border);max-width:var(--max-w);margin:0 auto}
-.article-footer a{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.15em;color:var(--red);text-decoration:none}
-@media(min-width:768px){.top-nav{display:block}.mobile-nav,.mobile-menu{display:none}.article-outer{padding-bottom:2rem}.cover-img{aspect-ratio:16/9;max-height:480px}.cover-ph{aspect-ratio:16/9;max-height:480px}}
-@media(max-width:767px){.article-side{display:none}.article-main{border-right:none;padding:1.25rem 1.25rem 2.5rem;max-width:100%}}
-@media(max-width:767px){.article-body p{font-size:1.1rem;line-height:2.2}.article-body h2{font-size:1.3rem}.article-body li{font-size:1.05rem;line-height:2.1}.article-summary{font-size:1rem;line-height:1.95}}
-</style>
-</head>
-<body>
-<div class="top-nav">
-  <div class="top-nav-inner">
-    <div class="top-nav-logo-wrap">
-      <a class="top-nav-logo" href="index.html">
-        <span class="top-nav-logo-zh">怪獸誌</span>
-        <span class="top-nav-logo-en">KAIJUZINE</span>
-      </a>
-    </div>
-    <div style="display:flex;align-items:stretch">
-      <a class="cat-link" href="index.html">全部</a>
-      <a class="cat-link active" href="index.html">${category}</a>
-      <a class="cat-link" href="index.html">系列與時代解析</a>
-      <a class="cat-link" href="index.html">玩具與收藏</a>
-      <a class="cat-link" href="index.html">收藏市場與指南</a>
-    </div>
-  </div>
-</div>
-<div class="mobile-nav">
-  <button class="mobile-burger" id="burgerBtn" onclick="toggleMenu()"><span></span><span></span><span></span></button>
-  <a class="mobile-logo" href="index.html"><span class="mobile-logo-zh">怪獸誌</span><span class="mobile-logo-en">KAIJUZINE</span></a>
-  <button class="mobile-search">🔍</button>
-</div>
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-menu-label">// 文章分類</div>
-  <a class="mobile-menu-item" href="index.html">全部</a>
-  <a class="mobile-menu-item" href="index.html">哥吉拉介紹</a>
-  <a class="mobile-menu-item" href="index.html">系列與時代解析</a>
-  <a class="mobile-menu-item" href="index.html">玩具與收藏</a>
-  <a class="mobile-menu-item" href="index.html">收藏市場與指南</a>
-</div>
-<a class="back-link" href="index.html">← 返回文章列表</a>
-<div class="cover-wrap">
-  <img class="cover-img" src="${coverFile}" alt="${title}" onerror="this.style.visibility='hidden';this.parentElement.style.background='#1a1a1a'">
-</div>
-<div class="cover-header">
-  <span class="cover-tag">${category}</span>
-  <div class="cover-title">${title}</div>
-</div>
-<div class="article-outer">
-  <div class="article-main">
-    <span class="article-date">${date}</span>
-    <div class="article-summary"><strong>文章重點：</strong>${summary||excerpt}</div>
-    <div class="article-body">
-${bodyHtml}
-    </div>
-  </div>
-  <div class="article-side">
-    <span class="side-label">// 文章目錄</span>
-    <ul class="toc-list">
-${tocHtml}
-    </ul>
-    <div class="related-section" id="relatedSection">
-      <div class="related-header"><div class="related-header-line"></div><div class="related-header-text">延伸閱讀</div></div>
-      <div class="related-cards" id="relatedList"></div>
-    </div>
-  </div>
-</div>
-<div class="article-footer">
-  <a href="index.html">← 返回列表</a>
-  <a href="index.html">回首頁 →</a>
-</div>
-<script>
-const currentFile='${filename}';
-async function loadRelated(){
-  try{
-    const res=await fetch('articles.json');
-    const all=await res.json();
-    const others=all.filter(a=>a.file!==currentFile).slice(0,4);
-    const list=document.getElementById('relatedList');
-    if(!others.length){document.getElementById('relatedSection').style.display='none';return;}
-    list.innerHTML=others.map(a=>'<a class="rel-card" href="'+a.file+'"><div class="rel-img-wrap">'+(a.image?'<img class="rel-img" src="'+a.image+'" alt="'+a.title+'" onerror="this.style.visibility=\'hidden\'">':'<div class="rel-img-ph"><span>哥</span></div>')+'</div><div class="rel-body"><span class="rel-tag">'+a.category+'</span><div class="rel-name">'+a.title+'</div></div></a>').join('');
-  }catch{document.getElementById('relatedSection').style.display='none';}
-}
-function toggleMenu(){const m=document.getElementById('mobileMenu');const b=document.getElementById('burgerBtn');m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';}
-const tocLinks=document.querySelectorAll('.toc-a');
-const headings=document.querySelectorAll('.article-body h2[id]');
-if(tocLinks.length&&headings.length){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){tocLinks.forEach(l=>l.classList.remove('active'));const a=document.querySelector('.toc-a[href="#'+e.target.id+'"]');if(a)a.classList.add('active');}});},{rootMargin:'-20% 0px -70% 0px'});headings.forEach(h=>obs.observe(h));}
-loadRelated();
-<\/script>
-</body>
-</html>`;
-}
-
-function loadAndUpdateJSON(filename, title, category, date, excerpt, coverFile, articleHtml){
-  fetch('articles.json')
-    .then(function(r){return r.json();})
-    .then(function(existing){
-      buildOutput(existing, filename, title, category, date, excerpt, coverFile, articleHtml);
-    })
-    .catch(function(){
-      buildOutput([], filename, title, category, date, excerpt, coverFile, articleHtml);
-    });
-}
-
-function buildOutput(existing, filename, title, category, date, excerpt, coverFile, articleHtml){
-  // Remove duplicate if exists
-  const filtered = existing.filter(function(a){return a.file !== filename;});
-  const newEntry = {title:title, date:date, category:category, excerpt:excerpt, image:coverFile, file:filename};
-  filtered.unshift(newEntry);
+  var art=buildHTML(title,cat,date,fn,finalCover,exc,sum,tocHtml,bodyHtml);
+  var filtered=allArticles.filter(function(a){return a.file!==fn;});
+  filtered.unshift({title:title,date:date,category:cat,excerpt:exc,image:finalCover,file:fn});
   filtered.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
-
-  const jsonStr = JSON.stringify(filtered, null, 2);
-
-  // Show output
-  document.getElementById('outputArea').style.display = 'block';
-  document.getElementById('downloadCards').innerHTML = `
-    <div class="download-card">
-      <span class="download-card-name">${filename}</span>
-      <button class="download-card-btn" onclick="downloadFile('${filename}', articleHtmlContent)">下載</button>
-    </div>
-    <div class="download-card">
-      <span class="download-card-name">articles.json</span>
-      <button class="download-card-btn" onclick="downloadFile('articles.json', jsonContent)">下載</button>
-    </div>`;
-
-  window.articleHtmlContent = articleHtml;
-  window.jsonContent = jsonStr;
-
-  // Fix onclick to use stored values
-  const btns = document.querySelectorAll('.download-card-btn');
-  btns[0].onclick = function(){ downloadBlob(filename, articleHtml, 'text/html'); };
-  btns[1].onclick = function(){ downloadBlob('articles.json', jsonStr, 'application/json'); };
+  var json=JSON.stringify(filtered,null,2);
+  document.getElementById('outputArea').style.display='block';
+  document.getElementById('dlFilename').textContent=fn;
+  document.getElementById('coverName').textContent=finalCover.split('/').pop();
+  var cards=document.getElementById('downloadCards');
+  cards.innerHTML='';
+  function mk(name,content,type){
+    var d=document.createElement('div');d.className='download-card';
+    d.innerHTML='<span class="download-card-name">'+name+'</span><button class="download-card-btn">下載</button>';
+    d.querySelector('button').onclick=function(){dl(name,content,type);};
+    cards.appendChild(d);
+  }
+  mk(fn,art,'text/html');mk('articles.json',json,'application/json');
+  document.getElementById('outputArea').scrollIntoView({behavior:'smooth'});
 }
 
-function downloadBlob(name, content, type){
-  const blob = new Blob([content], {type: type});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = name; a.click();
-  URL.revokeObjectURL(url);
+function dl(name,content,type){
+  var b=new Blob([content],{type:type});var u=URL.createObjectURL(b);
+  var a=document.createElement('a');a.href=u;a.download=name;a.click();URL.revokeObjectURL(u);
 }
 
 function clearAll(){
-  if(!confirm('確定要清除所有內容嗎？')) return;
-  document.getElementById('f-title').value='';
-  document.getElementById('f-filename').value='';
-  document.getElementById('f-excerpt').value='';
-  document.getElementById('f-summary').value='';
+  if(!confirm('確定要清除所有內容嗎？'))return;
+  ['f-title','f-filename','f-excerpt','f-summary'].forEach(function(id){document.getElementById(id).value='';});
   document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
   document.getElementById('sections').innerHTML='';
   document.getElementById('imgPreview').style.display='none';
@@ -601,13 +458,56 @@ function clearAll(){
   document.getElementById('imgUpload').querySelector('.img-upload-icon').style.display='';
   document.getElementById('imgUpload').querySelector('.img-upload-text').style.display='';
   document.getElementById('outputArea').style.display='none';
-  sectionCount=0; imgFile=null;
-  updatePreview();
+  sectionCount=0;imgFile=null;addSection();updatePreview();
 }
 
-// Init with one section
-addSection();
-updatePreview();
+async function loadSort(){
+  var list=document.getElementById('sortList');
+  try{
+    var res=await fetch('articles.json');
+    sortData=await res.json();
+    renderSort();
+  }catch(e){list.innerHTML='<div class="sort-empty">// 無法載入 articles.json<br>請在 GitHub Pages 上使用</div>';}
+}
+
+function renderSort(){
+  var list=document.getElementById('sortList');
+  if(!sortData.length){list.innerHTML='<div class="sort-empty">// 尚無文章</div>';return;}
+  list.innerHTML='';
+  sortData.forEach(function(a,i){
+    var item=document.createElement('div');
+    item.className='sort-item';item.draggable=true;item.dataset.index=i;
+    item.innerHTML='<span class="sort-handle">⠿</span>'+
+      '<span class="sort-num">'+String(i+1).padStart(2,'0')+'</span>'+
+      '<div class="sort-info">'+
+        '<div class="sort-title">'+a.title+'</div>'+
+        '<div class="sort-meta"><span class="sort-cat">'+a.category+'</span><span class="sort-date">'+a.date+'</span></div>'+
+      '</div>';
+    item.addEventListener('dragstart',function(){dragSrc=this;this.classList.add('dragging');});
+    item.addEventListener('dragend',function(){this.classList.remove('dragging');document.querySelectorAll('.sort-item').forEach(function(el){el.classList.remove('drag-over');});});
+    item.addEventListener('dragover',function(e){e.preventDefault();document.querySelectorAll('.sort-item').forEach(function(el){el.classList.remove('drag-over');});if(this!==dragSrc)this.classList.add('drag-over');});
+    item.addEventListener('drop',function(e){
+      e.preventDefault();if(this===dragSrc)return;
+      var from=parseInt(dragSrc.dataset.index),to=parseInt(this.dataset.index);
+      var moved=sortData.splice(from,1)[0];sortData.splice(to,0,moved);renderSort();
+    });
+    list.appendChild(item);
+  });
+}
+
+function generateSortedJSON(){
+  if(!sortData.length){alert('請先載入文章列表');return;}
+  var json=JSON.stringify(sortData,null,2);
+  document.getElementById('sortOutputArea').style.display='block';
+  var card=document.getElementById('sortDownloadCard');
+  card.innerHTML='<div class="download-card"><span class="download-card-name">articles.json</span><button class="download-card-btn" id="sortDlBtn">下載</button></div>';
+  document.getElementById('sortDlBtn').onclick=function(){dl('articles.json',json,'application/json');};
+}
+
+function buildHTML(title,cat,date,fn,cover,exc,sum,toc,body){
+var t=sum||exc;
+return '<!DOCTYPE html>\n<html lang="zh-TW">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>'+title+' \u2014 \u602a\u7363\u8a8c KAIJUZINE</title>\n<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">\n<style>\n:root{--red:#C0392B;--dark:#0a0a0a;--charcoal:#111;--gray:#1a1a1a;--border:#1e1e1e;--light:#666;--pale:#999;--white:#f0ede8;--gold:#c9a84c;--font-body:\'Noto Serif TC\',serif;--font-mono:\'Share Tech Mono\',monospace;--max-w:1100px}\n*{margin:0;padding:0;box-sizing:border-box}\nbody{background:var(--dark);color:var(--white);font-family:var(--font-body)}\n.top-nav{display:none;position:sticky;top:0;z-index:200;background:rgba(10,10,10,0.97);border-bottom:1px solid var(--border);backdrop-filter:blur(10px)}\n.top-nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:stretch}\n.top-nav-logo-wrap{padding:0 1.25rem;border-right:1px solid var(--border);display:flex;align-items:center}\n.top-nav-logo{display:flex;flex-direction:column;align-items:center;gap:0.06rem;text-decoration:none}\n.top-nav-logo-zh{font-family:\'Arial Black\',sans-serif;font-size:0.85rem;color:var(--white);letter-spacing:0.1em;font-weight:900;line-height:1;border-bottom:1px solid #333;padding-bottom:0.08rem}\n.top-nav-logo-en{font-family:var(--font-mono);font-size:0.26rem;letter-spacing:0.3em;color:#555}\n.cat-link{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.18em;color:#555;text-decoration:none;border-bottom:2px solid transparent;padding:0 1rem;display:flex;align-items:center;transition:color .2s,border-color .2s;white-space:nowrap}\n.cat-link:hover{color:var(--white)}\n.cat-link.active{color:var(--white);border-bottom-color:var(--red)}\n.mobile-nav{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1.25rem;border-bottom:1px solid var(--border);background:var(--dark);position:sticky;top:0;z-index:200}\n.mobile-burger{display:flex;flex-direction:column;gap:5px;padding:4px;background:none;border:none;cursor:pointer;width:32px}\n.mobile-burger span{display:block;width:22px;height:2px;background:var(--white);transition:all 0.25s}\n.mobile-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}\n.mobile-burger.open span:nth-child(2){opacity:0}\n.mobile-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}\n.mobile-logo{display:flex;flex-direction:column;align-items:center;gap:0.1rem;text-decoration:none}\n.mobile-logo-zh{font-family:\'Arial Black\',sans-serif;font-size:1.5rem;color:var(--white);line-height:1;font-weight:900;letter-spacing:0.06em;border-bottom:1px solid #333;padding-bottom:0.12rem}\n.mobile-logo-en{font-family:var(--font-mono);font-size:0.42rem;letter-spacing:0.4em;color:#555}\n.mobile-search{font-size:1.1rem;width:32px;text-align:right;background:none;border:none;cursor:pointer;color:var(--white)}\n.mobile-menu{display:none;position:fixed;inset:0;background:rgba(10,10,10,0.98);z-index:190;flex-direction:column;justify-content:center;align-items:center}\n.mobile-menu.open{display:flex}\n.mobile-menu-label{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.35em;color:#444;margin-bottom:2rem}\n.mobile-menu-item{font-family:\'Arial Black\',sans-serif;font-size:1.9rem;color:#2a2a2a;font-weight:900;padding:0.55rem 2.5rem;text-align:center;width:100%;text-decoration:none;display:block;transition:color 0.15s}\n.mobile-menu-item:hover{color:var(--white)}\n.back-link{display:block;font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.18em;color:var(--red);text-decoration:none;padding:0.8rem 1.25rem;border-bottom:1px solid var(--border);max-width:var(--max-w);margin:0 auto}\n.cover-wrap{max-width:var(--max-w);margin:0 auto;overflow:hidden}\n.cover-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--gray)}\n.cover-header{max-width:var(--max-w);margin:0 auto;padding:1.25rem 1.25rem 0}\n.cover-tag{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.22em;color:var(--red);display:block;margin-bottom:0.6rem}\n.cover-title{font-family:\'Arial Black\',sans-serif;font-size:clamp(1.4rem,3.5vw,2.4rem);color:var(--white);line-height:1.15;font-weight:900}\n.article-outer{max-width:var(--max-w);margin:0 auto;display:flex;align-items:flex-start;padding-bottom:5rem}\n.article-main{flex:1;min-width:0;padding:1.5rem 2rem 2rem 1.25rem;border-right:1px solid var(--border);max-width:720px}\n.article-side{width:240px;flex-shrink:0;padding:1.5rem 1rem;position:sticky;top:60px;max-height:calc(100vh - 80px);overflow-y:auto;scrollbar-width:none}\n.article-side::-webkit-scrollbar{display:none}\n.article-date{font-family:var(--font-mono);font-size:0.52rem;letter-spacing:0.18em;color:#555;display:block;margin-bottom:1.1rem}\n.article-summary{font-size:0.88rem;line-height:1.85;color:var(--light);padding:0.9rem 1.1rem;border-left:3px solid var(--red);background:var(--charcoal);margin-bottom:1.5rem}\n.article-summary strong{color:var(--pale)}\n.article-body p{font-size:1rem;line-height:2.1;color:#aaa;margin-bottom:1.75rem}\n.article-body h2{font-family:\'Arial Black\',sans-serif;font-size:1.2rem;color:var(--white);margin:2.5rem 0 1rem;font-weight:900;border-left:3px solid var(--red);padding-left:0.7rem;line-height:1.2;scroll-margin-top:5rem}\n.article-body h3{font-family:var(--font-mono);font-size:0.75rem;letter-spacing:0.18em;color:var(--gold);margin:2rem 0 0.75rem}\n.article-body strong{color:var(--pale)}\n.article-body ul{padding-left:1.25rem;margin-bottom:1.75rem}\n.article-body li{font-size:0.95rem;line-height:2;color:var(--light);margin-bottom:0.35rem}\n.side-label{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.25em;color:var(--red);display:block;margin-bottom:0.85rem}\n.toc-list{list-style:none;margin-bottom:2rem}\n.toc-item{border-bottom:1px solid var(--border);padding:0.5rem 0}\n.toc-a{font-family:var(--font-mono);font-size:0.68rem;color:#666;text-decoration:none;display:block;line-height:1.6;transition:color .15s}\n.toc-a:hover,.toc-a.active{color:var(--white)}\n.toc-num{color:var(--red);margin-right:0.35rem}\n.related-section{padding:1.5rem 0 0}\n.related-header{display:flex;align-items:center;gap:0.6rem;margin-bottom:0.85rem}\n.related-header-line{width:3px;height:1rem;background:var(--red);flex-shrink:0}\n.related-header-text{font-family:\'Arial Black\',sans-serif;font-size:0.9rem;color:var(--white);font-weight:900}\n.rel-card{display:flex;gap:0.85rem;padding:0.9rem 0;text-decoration:none;border-bottom:1px solid var(--border);align-items:flex-start}\n.rel-card:last-child{border-bottom:none}\n.rel-img-wrap{width:100px;flex-shrink:0;overflow:hidden}\n.rel-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--gray)}\n.rel-img-ph{width:100px;aspect-ratio:4/3;background:var(--gray);display:flex;align-items:center;justify-content:center}\n.rel-img-ph span{font-family:\'Arial Black\',sans-serif;font-size:1.3rem;color:#1e1e1e;font-weight:900}\n.rel-body{flex:1;min-width:0}\n.rel-tag{font-family:var(--font-mono);font-size:0.5rem;letter-spacing:0.15em;color:var(--red);display:block;margin-bottom:0.3rem}\n.rel-name{font-family:\'Arial Black\',sans-serif;font-size:0.88rem;color:var(--pale);line-height:1.35;font-weight:900}\n.article-footer{display:flex;justify-content:space-between;padding:1.25rem;border-top:1px solid var(--border);max-width:var(--max-w);margin:0 auto}\n.article-footer a{font-family:var(--font-mono);font-size:0.55rem;letter-spacing:0.15em;color:var(--red);text-decoration:none}\n@media(min-width:768px){.top-nav{display:block}.mobile-nav,.mobile-menu{display:none}.article-outer{padding-bottom:2rem}.cover-img{aspect-ratio:16/9;max-height:480px}}\n@media(max-width:767px){.article-side{display:none}.article-main{border-right:none;padding:1.25rem 1.25rem 2.5rem;max-width:100%}.article-body p{font-size:1.1rem;line-height:2.2}.article-body h2{font-size:1.3rem}.article-summary{font-size:1rem}}\n</style>\n</head>\n<body>\n<div class="top-nav"><div class="top-nav-inner"><div class="top-nav-logo-wrap"><a class="top-nav-logo" href="index.html"><span class="top-nav-logo-zh">\u602a\u7363\u8a8c</span><span class="top-nav-logo-en">KAIJUZINE</span></a></div><div style="display:flex;align-items:stretch"><a class="cat-link" href="index.html">\u5168\u90e8</a><a class="cat-link active" href="index.html">'+cat+'</a><a class="cat-link" href="index.html">\u7cfb\u5217\u8207\u6642\u4ee3\u89e3\u6790</a><a class="cat-link" href="index.html">\u73a9\u5177\u8207\u6536\u85cf</a><a class="cat-link" href="index.html">\u6536\u85cf\u5e02\u5834\u8207\u6307\u5357</a></div></div></div>\n<div class="mobile-nav"><button class="mobile-burger" id="burgerBtn" onclick="toggleMenu()"><span></span><span></span><span></span></button><a class="mobile-logo" href="index.html"><span class="mobile-logo-zh">\u602a\u7363\u8a8c</span><span class="mobile-logo-en">KAIJUZINE</span></a><button class="mobile-search">\ud83d\udd0d</button></div>\n<div class="mobile-menu" id="mobileMenu"><div class="mobile-menu-label">// \u6587\u7ae0\u5206\u985e</div><a class="mobile-menu-item" href="index.html">\u5168\u90e8</a><a class="mobile-menu-item" href="index.html">\u54e5\u5409\u62c9\u4ecb\u7d39</a><a class="mobile-menu-item" href="index.html">\u7cfb\u5217\u8207\u6642\u4ee3\u89e3\u6790</a><a class="mobile-menu-item" href="index.html">\u73a9\u5177\u8207\u6536\u85cf</a><a class="mobile-menu-item" href="index.html">\u6536\u85cf\u5e02\u5834\u8207\u6307\u5357</a></div>\n<a class="back-link" href="index.html">\u2190 \u8fd4\u56de\u6587\u7ae0\u5217\u8868</a>\n<div class="cover-wrap"><img class="cover-img" src="'+cover+'" alt="'+title+'" onerror="this.style.visibility=\'hidden\';this.parentElement.style.background=\'#1a1a1a\'"></div>\n<div class="cover-header"><span class="cover-tag">'+cat+'</span><div class="cover-title">'+title+'</div></div>\n<div class="article-outer">\n  <div class="article-main">\n    <span class="article-date">'+date+'</span>\n    <div class="article-summary"><strong>\u6587\u7ae0\u91cd\u9ede\uff1a</strong>'+t+'</div>\n    <div class="article-body">\n'+body+'\n    </div>\n  </div>\n  <div class="article-side">\n'+(toc?'    <span class="side-label">// \u6587\u7ae0\u76ee\u9304</span>\n    <ul class="toc-list">\n'+toc+'\n    </ul>\n':'')+'    <div class="related-section" id="relatedSection">\n      <div class="related-header"><div class="related-header-line"></div><div class="related-header-text">\u5ef6\u4f38\u95b1\u8b80</div></div>\n      <div class="related-cards" id="relatedList"></div>\n    </div>\n  </div>\n</div>\n<div class="article-footer"><a href="index.html">\u2190 \u8fd4\u56de\u5217\u8868</a><a href="index.html">\u56de\u9996\u9801 \u2192</a></div>\n<script>\nvar cur=\''+fn+'\';\nasync function lr(){try{var r=await fetch(\'articles.json\');var all=await r.json();var o=all.filter(function(a){return a.file!==cur;}).slice(0,4);var l=document.getElementById(\'relatedList\');if(!o.length){document.getElementById(\'relatedSection\').style.display=\'none\';return;}l.innerHTML=o.map(function(a){return \'<a class="rel-card" href="\'+a.file+\'"><div class="rel-img-wrap">\'+(a.image?\'<img class="rel-img" src="\'+a.image+\'" alt="\'+a.title+\'" onerror="this.style.visibility=\\\'hidden\\\'">\':\'<div class="rel-img-ph"><span>\u54e5</span></div>\')+\'</div><div class="rel-body"><span class="rel-tag">\'+a.category+\'</span><div class="rel-name">\'+a.title+\'</div></div></a>\';}).join(\'\');}catch(e){document.getElementById(\'relatedSection\').style.display=\'none\';}}\nfunction tm(){var m=document.getElementById(\'mobileMenu\');var b=document.getElementById(\'burgerBtn\');m.classList.toggle(\'open\');b.classList.toggle(\'open\');document.body.style.overflow=m.classList.contains(\'open\')?\'hidden\':\'\';};\nvar tl=document.querySelectorAll(\'.toc-a\'),hl=document.querySelectorAll(\'.article-body h2[id]\');if(tl.length&&hl.length){var ob=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){tl.forEach(function(l){l.classList.remove(\'active\');});var a=document.querySelector(\'.toc-a[href="#\'+e.target.id+\'"]\');if(a)a.classList.add(\'active\');}});},{rootMargin:\'-20% 0px -70% 0px\'});hl.forEach(function(h){ob.observe(h);});}\nlr();\n<\/script>\n</body>\n</html>';
+}
 </script>
 </body>
 </html>
