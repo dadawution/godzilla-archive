@@ -28,7 +28,7 @@
     "date": "2026-04-06",
     "category": "哥吉拉介紹",
     "excerpt": "哥吉拉最標誌性的武器是原子吐息，但牠的能力遠不止於此。完整解析哥吉拉在不同時代的各種能力。",
-    "image": "images/cover-04.jpg",
+    "image": "images/godzilla-origin02.jpg",
     "file": "article-04.html"
   },
   {
@@ -86,5 +86,13 @@
     "excerpt": "花了心思建立的收藏，值得用對的方式保存。涵蓋軟膠、硬質塑膠、樹脂等不同材質的保存要點。",
     "image": "images/cover-11.jpg",
     "file": "article-11.html"
+  },
+  {
+    "title": "哥吉拉玩具購買管道完整攻略：官網、代拍、二手市場",
+    "date": "2026-03-29",
+    "category": "收藏市場與指南",
+    "excerpt": "在哪裡買、如何買、如何確認真偽？完整整理哥吉拉玩具的各種購買管道，讓你以最好的價格買到最想要的收藏。",
+    "image": "images/cover-12.jpg",
+    "file": "article-12.html"
   }
 ]
