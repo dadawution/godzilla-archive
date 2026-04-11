@@ -263,87 +263,61 @@ function renderDesktop(articles){
   }
 }
 
-function navTo(idx){
-  if(currentArticles&&currentArticles[idx]) location.href=currentArticles[idx].file;
-}
-var currentArticles=[];
-
-function makeEl(tag,cls,html){
-  var el=document.createElement(tag);
-  if(cls) el.className=cls;
-  if(html) el.innerHTML=html;
-  return el;
-}
-
 function renderMobile(articles){
-  currentArticles=articles;
   var feed=document.getElementById('mobileFeed');
   feed.innerHTML='';
   if(!articles.length){
-    var empty=makeEl('div','empty','// 此分類尚無文章');
-    empty.style.padding='4rem 1.25rem';
-    feed.appendChild(empty);
-    return;
+    var e=document.createElement('div');
+    e.className='empty';e.style.padding='4rem 1.25rem';
+    e.textContent='// 此分類尚無文章';
+    feed.appendChild(e);return;
   }
-
   var first=articles[0];
   var rest=articles.slice(1);
 
-  // ── HERO ──
-  var hero=makeEl('div','m-hero');
-  hero.style.cursor='pointer';
-  hero.addEventListener('click',function(){navTo(0);});
+  // HERO - native <a> tag
+  var hero=document.createElement('a');
+  hero.className='m-hero';
+  hero.href=first.file;
 
-  var imgWrap=makeEl('div','m-hero-img-wrap');
+  var imgWrap=document.createElement('div');
+  imgWrap.className='m-hero-img-wrap';
   if(first.image){
     var hImg=document.createElement('img');
-    hImg.className='m-hero-img';
-    hImg.src=first.image;
-    hImg.alt=first.title;
+    hImg.className='m-hero-img';hImg.src=first.image;hImg.alt=first.title;
     hImg.onerror=function(){imgErr(this);};
     imgWrap.appendChild(hImg);
   } else {
-    var hPh=makeEl('div','m-hero-img-ph','<span>哥吉拉</span>');
-    imgWrap.appendChild(hPh);
+    imgWrap.innerHTML='<div class="m-hero-img-ph"><span>哥吉拉</span></div>';
   }
   hero.appendChild(imgWrap);
 
-  var body=makeEl('div','m-hero-body');
-  var label=makeEl('div','m-hero-label','<div class="m-hero-label-line"></div><span class="m-hero-label-text">'+first.category+'</span>');
-  var title=makeEl('div','m-hero-title');
-  title.textContent=first.title;
-  var excerpt=makeEl('div','m-hero-excerpt');
-  excerpt.textContent=first.excerpt;
-  var meta=makeEl('div','m-hero-meta','<span class="m-hero-date">'+first.date+'</span><span class="m-hero-arrow">→</span>');
-  body.appendChild(label);
-  body.appendChild(title);
-  body.appendChild(excerpt);
-  body.appendChild(meta);
-  hero.appendChild(body);
+  var hbody=document.createElement('div');hbody.className='m-hero-body';
+  hbody.innerHTML=
+    '<div class="m-hero-label"><div class="m-hero-label-line"></div><span class="m-hero-label-text">'+first.category+'</span></div>'+
+    '<div class="m-hero-title">'+first.title+'</div>'+
+    '<div class="m-hero-excerpt">'+first.excerpt+'</div>'+
+    '<div class="m-hero-meta"><span class="m-hero-date">'+first.date+'</span><span class="m-hero-arrow">→</span></div>';
+  hero.appendChild(hbody);
   feed.appendChild(hero);
 
   if(!rest.length) return;
 
-  // ── SECTION DIVIDER ──
-  var secDiv=makeEl('div','m-sec-div','<div class="m-sec-div-line"></div><div class="m-sec-div-text">最新文章</div>');
+  var secDiv=document.createElement('div');secDiv.className='m-sec-div';
+  secDiv.innerHTML='<div class="m-sec-div-line"></div><div class="m-sec-div-text">最新文章</div>';
   feed.appendChild(secDiv);
 
-  // ── LIST ──
-  var list=makeEl('div','m-list');
-  rest.forEach(function(art,i){
-    var idx=i+1;
-    var card=makeEl('div','m-list-card');
-    card.style.cursor='pointer';
-    card.addEventListener('click',function(e){
-      e.stopPropagation();
-      navTo(idx);
-    });
+  var list=document.createElement('div');list.className='m-list';
+  rest.forEach(function(art){
+    // Each card is a native <a> tag with href
+    var card=document.createElement('a');
+    card.className='m-list-card';
+    card.href=art.file;
 
-    var imgBox=makeEl('div','m-list-img');
+    var imgBox=document.createElement('div');imgBox.className='m-list-img';
     if(art.image){
       var lImg=document.createElement('img');
-      lImg.src=art.image;
-      lImg.alt=art.title;
+      lImg.src=art.image;lImg.alt=art.title;
       lImg.style.cssText='width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--gray)';
       lImg.onerror=function(){imgErr(this);};
       imgBox.appendChild(lImg);
@@ -352,17 +326,12 @@ function renderMobile(articles){
     }
     card.appendChild(imgBox);
 
-    var lBody=makeEl('div','m-list-body');
-    var lTag=makeEl('span','m-list-tag');
-    lTag.textContent=art.category;
-    var lTitle=makeEl('div','m-list-title');
-    lTitle.textContent=art.title;
-    var lDate=makeEl('span','m-list-date');
-    lDate.textContent=art.date;
-    lBody.appendChild(lTag);
-    lBody.appendChild(lTitle);
-    lBody.appendChild(lDate);
-    card.appendChild(lBody);
+    var lbody=document.createElement('div');lbody.className='m-list-body';
+    var lTag=document.createElement('span');lTag.className='m-list-tag';lTag.textContent=art.category;
+    var lTitle=document.createElement('div');lTitle.className='m-list-title';lTitle.textContent=art.title;
+    var lDate=document.createElement('span');lDate.className='m-list-date';lDate.textContent=art.date;
+    lbody.appendChild(lTag);lbody.appendChild(lTitle);lbody.appendChild(lDate);
+    card.appendChild(lbody);
     list.appendChild(card);
   });
   feed.appendChild(list);
