@@ -488,7 +488,7 @@ function durl2b64(d){return d.split(',')[1];}
 // ── LOAD LIST ──
 async function loadList(){
   try{
-    var r=await fetch('articles.json');allArts=await r.json();
+    var r=await fetch('articles.json?t='+Date.now());allArts=await r.json();
     var s=document.getElementById('loadSel');
     s.innerHTML='<option value="">— 選擇文章 —</option>';
     var cats=['哥吉拉介紹','系列與時代解析','玩具與收藏','收藏市場與指南'];
@@ -921,7 +921,7 @@ async function saveTags(){
 // ── SORT ──
 async function loadSort(){
   var list=document.getElementById('sortList');
-  try{var r=await fetch('articles.json');sortData=await r.json();renderSort();}
+  try{var r=await fetch('articles.json?t='+Date.now());sortData=await r.json();renderSort();}
   catch(e){list.innerHTML='<div class="sort-empty">// 無法載入，請在 GitHub Pages 上使用</div>';}
 }
 function renderSort(){
