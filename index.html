@@ -264,55 +264,110 @@ function renderDesktop(articles){
 }
 
 function navTo(idx){
-  if(currentArticles&&currentArticles[idx])location.href=currentArticles[idx].file;
+  if(currentArticles&&currentArticles[idx]) location.href=currentArticles[idx].file;
 }
 var currentArticles=[];
+
+function makeEl(tag,cls,html){
+  var el=document.createElement(tag);
+  if(cls) el.className=cls;
+  if(html) el.innerHTML=html;
+  return el;
+}
+
 function renderMobile(articles){
   currentArticles=articles;
-  const feed=document.getElementById('mobileFeed');
+  var feed=document.getElementById('mobileFeed');
+  feed.innerHTML='';
   if(!articles.length){
-    feed.innerHTML='<div class="empty" style="padding:4rem 1.25rem">// 此分類尚無文章</div>';
+    var empty=makeEl('div','empty','// 此分類尚無文章');
+    empty.style.padding='4rem 1.25rem';
+    feed.appendChild(empty);
     return;
   }
-  const first=articles[0];
-  const rest=articles.slice(1);
 
-  function listImg(src,alt){
-    if(!src) return '<div class="m-list-img-ph"><span>哥</span></div>';
-    return '<img src="'+src+'" alt="'+alt+'" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--gray)" onerror="imgErr(this)">';
+  var first=articles[0];
+  var rest=articles.slice(1);
+
+  // ── HERO ──
+  var hero=makeEl('div','m-hero');
+  hero.style.cursor='pointer';
+  hero.addEventListener('click',function(){navTo(0);});
+
+  var imgWrap=makeEl('div','m-hero-img-wrap');
+  if(first.image){
+    var hImg=document.createElement('img');
+    hImg.className='m-hero-img';
+    hImg.src=first.image;
+    hImg.alt=first.title;
+    hImg.onerror=function(){imgErr(this);};
+    imgWrap.appendChild(hImg);
+  } else {
+    var hPh=makeEl('div','m-hero-img-ph','<span>哥吉拉</span>');
+    imgWrap.appendChild(hPh);
   }
+  hero.appendChild(imgWrap);
 
-  let heroImg=first.image
-    ?'<img class="m-hero-img" src="'+first.image+'" alt="'+first.title+'" onerror="imgErr(this)">'
-    :'<div class="m-hero-img-ph"><span>哥吉拉</span></div>';
+  var body=makeEl('div','m-hero-body');
+  var label=makeEl('div','m-hero-label','<div class="m-hero-label-line"></div><span class="m-hero-label-text">'+first.category+'</span>');
+  var title=makeEl('div','m-hero-title');
+  title.textContent=first.title;
+  var excerpt=makeEl('div','m-hero-excerpt');
+  excerpt.textContent=first.excerpt;
+  var meta=makeEl('div','m-hero-meta','<span class="m-hero-date">'+first.date+'</span><span class="m-hero-arrow">→</span>');
+  body.appendChild(label);
+  body.appendChild(title);
+  body.appendChild(excerpt);
+  body.appendChild(meta);
+  hero.appendChild(body);
+  feed.appendChild(hero);
 
-  let html='<div class="m-hero" onclick="navTo(0)" style="cursor:pointer">';
-  html+='<div class="m-hero-img-wrap">'+heroImg+'</div>';
-  html+='<div class="m-hero-body">';
-  html+='<div class="m-hero-label"><div class="m-hero-label-line"></div><span class="m-hero-label-text">'+first.category+'</span></div>';
-  html+='<div class="m-hero-title">'+first.title+'</div>';
-  html+='<div class="m-hero-excerpt">'+first.excerpt+'</div>';
-  html+='<div class="m-hero-meta"><span class="m-hero-date">'+first.date+'</span><span class="m-hero-arrow">→</span></div>';
-  html+='</div></div>';
+  if(!rest.length) return;
 
-  if(rest.length){
-    html+='<div class="m-sec-div"><div class="m-sec-div-line"></div><div class="m-sec-div-text">最新文章</div></div>';
-    html+='<div class="m-list">';
-    rest.forEach(function(art,i){
-      var idx=i+1;
-      html+='<div class="m-list-card" onclick="navTo('+idx+')" style="cursor:pointer">';
-      html+='<div class="m-list-img">'+listImg(art.image,art.title)+'</div>';
-      html+='<div class="m-list-body">';
-      html+='<span class="m-list-tag">'+art.category+'</span>';
-      html+='<div class="m-list-title">'+art.title+'</div>';
-      html+='<span class="m-list-date">'+art.date+'</span>';
-      html+='</div></div>';
+  // ── SECTION DIVIDER ──
+  var secDiv=makeEl('div','m-sec-div','<div class="m-sec-div-line"></div><div class="m-sec-div-text">最新文章</div>');
+  feed.appendChild(secDiv);
+
+  // ── LIST ──
+  var list=makeEl('div','m-list');
+  rest.forEach(function(art,i){
+    var idx=i+1;
+    var card=makeEl('div','m-list-card');
+    card.style.cursor='pointer';
+    card.addEventListener('click',function(e){
+      e.stopPropagation();
+      navTo(idx);
     });
-    html+='</div>';
-  }
 
-  feed.innerHTML=html;
+    var imgBox=makeEl('div','m-list-img');
+    if(art.image){
+      var lImg=document.createElement('img');
+      lImg.src=art.image;
+      lImg.alt=art.title;
+      lImg.style.cssText='width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--gray)';
+      lImg.onerror=function(){imgErr(this);};
+      imgBox.appendChild(lImg);
+    } else {
+      imgBox.innerHTML='<div class="m-list-img-ph"><span>哥</span></div>';
+    }
+    card.appendChild(imgBox);
+
+    var lBody=makeEl('div','m-list-body');
+    var lTag=makeEl('span','m-list-tag');
+    lTag.textContent=art.category;
+    var lTitle=makeEl('div','m-list-title');
+    lTitle.textContent=art.title;
+    var lDate=makeEl('span','m-list-date');
+    lDate.textContent=art.date;
+    lBody.appendChild(lTag);
+    lBody.appendChild(lTitle);
+    lBody.appendChild(lDate);
+    card.appendChild(lBody);
+    list.appendChild(card);
+  });
+  feed.appendChild(list);
 }
+
 function filterArticles(cat,btn){
   document.querySelectorAll('.cat-btn').forEach(function(b){b.classList.remove('active');});
   if(btn)btn.classList.add('active');
