@@ -40,6 +40,14 @@
     "file": "article-06.html"
   },
   {
+    "title": "哥吉拉的起源：從核武恐懼到文化圖騰",
+    "date": "2026-04-07",
+    "category": "哥吉拉介紹",
+    "excerpt": "初代哥吉拉身高僅50公尺，到了《哥吉拉：怪獸之王》已達119公尺。追蹤七十年來哥吉拉體型的驚人演變。",
+    "image": "images/godzilla-origin02.jpg",
+    "file": "article-03.html"
+  },
+  {
     "title": "平成哥吉拉（1984–1995）：黑暗回歸與世界觀重建",
     "date": "2026-04-03",
     "category": "系列與時代解析",
@@ -86,13 +94,5 @@
     "excerpt": "在哪裡買、如何買、如何確認真偽？完整整理哥吉拉玩具的各種購買管道，讓你以最好的價格買到最想要的收藏。",
     "image": "images/cover-12.jpg",
     "file": "article-12.html"
-  },
-  {
-    "title": "哥吉拉的起源：從核武恐懼到文化圖騰",
-    "date": "2026-04-07",
-    "category": "哥吉拉介紹",
-    "excerpt": "初代哥吉拉身高僅50公尺，到了《哥吉拉：怪獸之王》已達119公尺。追蹤七十年來哥吉拉體型的驚人演變。",
-    "image": "images/godzilla-origin02.jpg",
-    "file": "article-03.html"
   }
 ]
