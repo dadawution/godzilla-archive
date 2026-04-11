@@ -653,8 +653,20 @@ function getSecs(){
 }
 
 // ── PICKER ──
-function openPicker(secId){pickerTarget=secId;pickerForCover=false;document.getElementById('pickerModal').classList.add('open');document.getElementById('pickerSearch').value='';renderPicker(libPhotos);}
-function openPickerForCover(){pickerTarget=null;pickerForCover=true;document.getElementById('pickerModal').classList.add('open');document.getElementById('pickerSearch').value='';renderPicker(libPhotos);}
+async function openPicker(secId){
+  pickerTarget=secId;pickerForCover=false;
+  document.getElementById('pickerModal').classList.add('open');
+  document.getElementById('pickerSearch').value='';
+  if(!libPhotos.length) await loadLib();
+  renderPicker(libPhotos);
+}
+async function openPickerForCover(){
+  pickerTarget=null;pickerForCover=true;
+  document.getElementById('pickerModal').classList.add('open');
+  document.getElementById('pickerSearch').value='';
+  if(!libPhotos.length) await loadLib();
+  renderPicker(libPhotos);
+}
 function closePicker(){document.getElementById('pickerModal').classList.remove('open');pickerTarget=null;pickerForCover=false;}
 function selectFromLib(url,name){
   if(pickerForCover){
