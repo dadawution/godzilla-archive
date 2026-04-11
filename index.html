@@ -200,7 +200,6 @@ async function loadArticles(){
   try{
     const res=await fetch('articles.json');
     allArticles=await res.json();
-    allArticles.sort((a,b)=>new Date(b.date)-new Date(a.date));
     renderDesktop(allArticles);
     renderMobile(allArticles);
   }catch{
