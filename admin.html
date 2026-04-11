@@ -655,7 +655,7 @@ function getSecs(){
 // ── PICKER ──
 function openPicker(secId){pickerTarget=secId;pickerForCover=false;document.getElementById('pickerModal').classList.add('open');document.getElementById('pickerSearch').value='';renderPicker(libPhotos);}
 function openPickerForCover(){pickerTarget=null;pickerForCover=true;document.getElementById('pickerModal').classList.add('open');document.getElementById('pickerSearch').value='';renderPicker(libPhotos);}
-function closePicker(){document.getElementById('pickerModal').classList.remove('open');pickerTarget=null;}
+function closePicker(){document.getElementById('pickerModal').classList.remove('open');pickerTarget=null;pickerForCover=false;}
 function selectFromLib(url,name){
   if(pickerForCover){
     // Set as cover image
@@ -746,7 +746,6 @@ async function publish(){
   var artHTML=buildHTML(title,cat,date,fn,finalCover,coverAlt,exc,sum,parts.toc,parts.body);
   var newArts=allArts.filter(function(a){return a.file!==fn;});
   newArts.unshift({title:title,date:date,category:cat,excerpt:exc,image:finalCover,file:fn});
-  newArts.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
   var json=JSON.stringify(newArts,null,2);
   var prog=document.getElementById('pubProg');prog.className='pub-prog show';document.getElementById('pubResult').style.display='none';
   try{
