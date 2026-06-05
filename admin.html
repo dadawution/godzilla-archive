@@ -1785,12 +1785,12 @@ function renderArticleList(){
       <div class="item-info">
         <span class="item-cat">${a.category}</span>${a.draft?'<span class="item-draft-badge">草稿</span>':''}
         <div class="item-title">${a.title}</div>
-        <div class="item-meta">${a.date} ・ ${a.type}</div>
+        <div class="item-meta">${a.date} ・ ${a.category||''}</div>
       </div>
       <div class="item-actions">
-        ${a.draft?`<button class="btn-sm" style="background:var(--amber-light);color:var(--amber);border:1px solid var(--amber)" onclick="publishDraft(${a.id})">發布</button>`:''}
-        <button class="btn-sm" style="background:var(--teal-light);color:var(--teal)" onclick="editArticle(${a.id})">編輯</button>
-        <button class="btn-sm btn-del" onclick="openDelModal(${a.id})">刪除</button>
+        ${a.draft?`<button class="btn-sm" style="background:var(--amber-light);color:var(--amber);border:1px solid var(--amber)" onclick="publishDraft('${a.id}')">發布</button>`:''}
+        <button class="btn-sm" style="background:var(--teal-light);color:var(--teal)" onclick="editArticle('${a.id}')">編輯</button>
+        <button class="btn-sm btn-del" onclick="openDelModal('${a.id}')">刪除</button>
       </div>
     </div>`).join('')}</div>`;
 }
