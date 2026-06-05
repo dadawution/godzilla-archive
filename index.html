@@ -801,7 +801,7 @@
       <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end">
         <div>
           <div class="section-title">最新文章</div>
-          <div class="section-sub" style="margin-bottom:0">持續更新的貓咪照護知識</div>
+          <div class="section-sub" style="margin-bottom:0">持續更新的哥吉拉知識與收藏內容</div>
         </div>
         <button onclick="goPage('articles')" style="font-size:0.82rem;color:var(--teal);background:none;border:none;cursor:pointer;font-family:inherit">查看全部 →</button>
       </div>
@@ -1034,7 +1034,7 @@ function optimizeCloudinaryUrl(url) {
 }
 
 function articleCardHTML(a) {
-  const url = a.slug ? 'articles/'+a.slug+'.html' : '#';
+  const url = a.slug ? `articles/${a.slug}.html` : '#';
   const optimizedCover = optimizeCloudinaryUrl(a.cover);
   const thumb = optimizedCover
     ? `<img src="${optimizedCover}" style="width:100%;height:100%;object-fit:cover;" alt="${a.coverAlt || a.title}" loading="lazy">`
@@ -1110,7 +1110,7 @@ function renderArticlesPage() {
 function openArticle(id) {
   const a = articles.find(x => x.id === id);
   if (!a || !a.slug) return;
-  window.location.href = 'articles/' + a.slug + '.html';
+  window.location.href = `articles/${a.slug}.html`;
 }
 
 // ══════════════════════════════
