@@ -780,12 +780,12 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const CLOUD = { name:'dajib0ylm', preset:'godzilla-archive' };
+const CLOUD = { name:'dajib0ylm', preset:'kaijuzine' };
 let cfg = { token:'', owner:'', repo:'', branch:'main' };
 let articles=[], faqs=[], photos=[], authorTitles=[], pickerTarget=null, deleteTargetId=null, editingId=null;
 const ARTICLES_PATH='articles.json', FAQS_PATH='faqs.json', PHOTOS_PATH='photos.json', AUTHOR_CONFIG_PATH='author-config.json';
 const ARTICLES_INDEX_PATH='articles-index.json';
-const INDEX_FIELDS=['id','slug','title','excerpt','cover','coverAlt','emoji','tag','type','date','hideDate','draft','authorName','authorTitle','authorAvatar'];
+const INDEX_FIELDS=['id','slug','title','excerpt','coverImage','coverAlt','emoji','category','type','date','hideDate','draft','authorName','authorTitle','authorAvatar'];
 
 // ── BASE64 ──
 function encodeBase64(str){
@@ -1227,7 +1227,7 @@ function parseAndFill(){
     document.getElementById('aExcerpt').value=parsed.excerpt||'';
     document.getElementById('aBody').value=parsed.body||'';
     document.getElementById('aEmoji').value=parsed.emoji||'📝';
-    if(parsed.tag)document.getElementById('aTag').value=parsed.tag;
+    if(parsed.category)document.getElementById('aTag').value=parsed.category;
     if(parsed.tags&&Array.isArray(parsed.tags))document.getElementById('aTags').value=parsed.tags.join(', ');
     if(parsed.faq&&Array.isArray(parsed.faq)){
       document.getElementById('aFaq').value=parsed.faq.map(f=>`${f.q}::${f.a}`).join('\n');
@@ -1334,7 +1334,7 @@ async function buildArticleHtml(article, allArticles){
   const tocHtml = buildTocHtml(article.body||'');
 
   // Optimize cover URL once for all uses (Cloudinary auto-format/quality)
-  const optimizedCover = article.cover ? optimizeCloudinaryUrl(article.cover) : '';
+  const optimizedCover = article.coverImage ? optimizeCloudinaryUrl(article.coverImage) : '';
 
   // Cover
   const coverHtml = optimizedCover
@@ -1359,7 +1359,7 @@ async function buildArticleHtml(article, allArticles){
   // Related articles
   const related = allArticles.filter(a=>a.id!==article.id&&a.slug!==article.slug).slice(0,3);
   const relatedHtml = related.length
-    ? `<div class="related-articles"><div class="related-title">延伸閱讀</div><div class="related-list">${related.map(r=>`<a class="related-item" href="${r.slug}.html"><div class="related-thumb">${r.emoji||'📝'}</div><div class="related-info"><div class="related-cat">${r.tag}</div><div class="related-title-text">${r.title}</div></div></a>`).join('')}</div></div>`
+    ? `<div class="related-articles"><div class="related-title">延伸閱讀</div><div class="related-list">${related.map(r=>`<a class="related-item" href="${r.slug}.html"><div class="related-thumb">${r.emoji||'📝'}</div><div class="related-info"><div class="related-cat">${r.category}</div><div class="related-title-text">${r.title}</div></div></a>`).join('')}</div></div>`
     : '';
 
   // Date display (respects hideDate flag)
@@ -1394,7 +1394,7 @@ async function buildArticleHtml(article, allArticles){
   tmpl = tmpl
     .replace(/\{\{TITLE\}\}/g, article.title||'')
     .replace(/\{\{EXCERPT\}\}/g, article.excerpt||'')
-    .replace(/\{\{TAG\}\}/g, article.tag||'')
+    .replace(/\{\{TAG\}\}/g, article.category||'')
     .replace(/\{\{TYPE\}\}/g, article.type||'')
     .replace(/\{\{DATE\}\}/g, article.date||'')
     .replace('{{DATE_SPAN_HTML}}', dateSpanHtml)
@@ -1447,11 +1447,11 @@ async function publishArticle(){
   const existingSlug=existingArticle?existingArticle.slug:null;
   const articleData={
     id:isEditing?editingId:Date.now(),
-    tag:document.getElementById('aTag').value,
+    category: document.getElementById('aTag').value,
     type:document.getElementById('aType').value,
     title,
     excerpt:document.getElementById('aExcerpt').value.trim(),
-    cover:document.getElementById('aCover').value.trim(),
+    coverImage: document.getElementById('aCover').value.trim(),
     coverAlt:document.getElementById('aCoverAlt').value.trim(),
     emoji:document.getElementById('aEmoji').value.trim()||'📝',
     body,faq:faqParsed,
@@ -1589,11 +1589,11 @@ async function saveDraft() {
     console.log('[saveDraft] 走 localStorage 路徑（編輯已發布文章）');
     const draftData = {
       editingId,
-      tag: document.getElementById('aTag').value,
+      category: document.getElementById('aTag').value,
       type: document.getElementById('aType').value,
       title,
       excerpt: document.getElementById('aExcerpt').value.trim(),
-      cover: document.getElementById('aCover').value.trim(),
+      coverImage: document.getElementById('aCover').value.trim(),
       coverAlt: document.getElementById('aCoverAlt').value.trim(),
       emoji: document.getElementById('aEmoji').value.trim() || '📝',
       body: document.getElementById('aBody').value.trim(),
@@ -1630,11 +1630,11 @@ async function saveDraftToGitHub() {
   console.log('[saveDraftToGitHub] title:', title, '| slug:', slug, '| isEditing:', isEditing);
   const draftArticle = {
     id: isEditing ? editingId : Date.now(),
-    tag: document.getElementById('aTag').value,
+    category: document.getElementById('aTag').value,
     type: document.getElementById('aType').value,
     title,
     excerpt: document.getElementById('aExcerpt').value.trim(),
-    cover: document.getElementById('aCover').value.trim(),
+    coverImage: document.getElementById('aCover').value.trim(),
     coverAlt: document.getElementById('aCoverAlt').value.trim(),
     emoji: document.getElementById('aEmoji').value.trim() || '📝',
     body, faq: faqParsed,
@@ -1708,7 +1708,7 @@ function resolveDraftConflict(choice) {
     if (pendingDraft.body !== undefined) document.getElementById('aBody').value = pendingDraft.body;
     if (pendingDraft.excerpt !== undefined) document.getElementById('aExcerpt').value = pendingDraft.excerpt;
     if (pendingDraft.tags) document.getElementById('aTags').value = pendingDraft.tags.join(', ');
-    if (pendingDraft.cover !== undefined) document.getElementById('aCover').value = pendingDraft.cover;
+    if (pendingDraft.coverImage !== undefined) document.getElementById('aCover').value = pendingDraft.coverImage;
     if (pendingDraft.coverAlt !== undefined) document.getElementById('aCoverAlt').value = pendingDraft.coverAlt;
     if (pendingDraft.date) document.getElementById('aDate').value = pendingDraft.date;
     if (pendingDraft.hideDate !== undefined){ document.getElementById('aHideDate').checked=pendingDraft.hideDate; toggleHideDate(); }
@@ -1729,14 +1729,14 @@ function editArticle(id){
   if(!a)return;
   editingId=id;
   // Fill all form fields
-  document.getElementById('aTag').value=a.tag||'怪獸圖鑑';
+  document.getElementById('aTag').value=a.category||'怪獸圖鑑';
   document.getElementById('aType').value=a.type||'知識型';
   document.getElementById('aTopic').value='';
   document.getElementById('aTitle').value=a.title||'';
   document.getElementById('aSlug').value=a.slug||'';
   document.getElementById('aTags').value=(a.tags||[]).join(', ');
   document.getElementById('aExcerpt').value=a.excerpt||'';
-  document.getElementById('aCover').value=a.cover||'';
+  document.getElementById('aCover').value=a.coverImage||'';
   document.getElementById('aCoverAlt').value=a.coverAlt||'';
   document.getElementById('aEmoji').value=a.emoji||'📝';
   document.getElementById('aDate').value=a.date||new Date().toISOString().slice(0,10);
@@ -1783,7 +1783,7 @@ function renderArticleList(){
       ondragleave="onDragLeave(event)" ondrop="onDrop(event)" ondragend="onDragEnd(event)">
       <div class="drag-handle" title="拖曳排序">☰</div>
       <div class="item-info">
-        <span class="item-cat">${a.tag}</span>${a.draft?'<span class="item-draft-badge">草稿</span>':''}
+        <span class="item-cat">${a.category}</span>${a.draft?'<span class="item-draft-badge">草稿</span>':''}
         <div class="item-title">${a.title}</div>
         <div class="item-meta">${a.date} ・ ${a.type}</div>
       </div>
