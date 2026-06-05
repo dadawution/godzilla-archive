@@ -675,6 +675,21 @@
       .form-row-2 { grid-template-columns: 1fr; }
     }
 
+
+    /* ══════════════════════════════
+       TOPIC STRIP (底部分類)
+    ══════════════════════════════ */
+    .topic-strip-section { background: #1c1a17; padding: 40px 24px; }
+    .topic-strip-wrap { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .topic-strip-card { display: flex; flex-direction: column; gap: 6px; padding: 20px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; text-decoration: none; transition: all 0.2s; }
+    .topic-strip-card:hover { background: rgba(255,255,255,0.09); border-color: var(--color-accent); }
+    .topic-strip-icon { font-size: 1.4rem; }
+    .topic-strip-name { color: #fff; font-family: 'Noto Sans TC', sans-serif; font-weight: 700; font-size: 0.95rem; }
+    .topic-strip-desc { color: rgba(255,255,255,0.5); font-size: 0.78rem; line-height: 1.4; }
+    @media (max-width: 768px) {
+      .topic-strip-wrap { grid-template-columns: repeat(2, 1fr); }
+    }
+
     /* ══════════════════════════════
        HERO ARTICLE (大圖精選)
     ══════════════════════════════ */
@@ -788,44 +803,8 @@
     </div>
   </nav>
 
-  <!-- 主題分類 -->
-  <div class="section" style="background:white;">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-title">知識主題分類</div>
-        <div class="section-sub">按照你關心的主題，找到最相關的內容</div>
-      </div>
-      <div class="topic-grid">
-        <div class="topic-card" onclick="filterAndGo('怪獸圖鑑')">
-          <div class="topic-icon">🦖</div>
-          <div class="topic-name">怪獸圖鑑</div>
-          <div class="topic-desc">哥吉拉與各怪獸的起源、能力與文化意義</div>
-          <div class="topic-count">→ 瀏覽文章</div>
-        </div>
-        <div class="topic-card" onclick="filterAndGo('系列脈絡')">
-          <div class="topic-icon">📽️</div>
-          <div class="topic-name">系列脈絡</div>
-          <div class="topic-desc">昭和到令和，各時代的世界觀與主題解析</div>
-          <div class="topic-count">→ 瀏覽文章</div>
-        </div>
-        <div class="topic-card" onclick="filterAndGo('收藏術語')">
-          <div class="topic-icon">📖</div>
-          <div class="topic-name">收藏術語</div>
-          <div class="topic-desc">比例、材質、版本差異，收藏圈必懂詞彙</div>
-          <div class="topic-count">→ 瀏覽文章</div>
-        </div>
-        <div class="topic-card" onclick="filterAndGo('開箱評測')">
-          <div class="topic-icon">📦</div>
-          <div class="topic-name">開箱評測</div>
-          <div class="topic-desc">S.H.MonsterArts、X-Plus 等品牌的實物評測</div>
-          <div class="topic-count">→ 瀏覽文章</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- 最新文章 -->
-  <div class="section" style="background:white;">
+  <div class="section">
     <div class="container">
       <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end">
         <div>
@@ -867,6 +846,38 @@
       </div>
     </div>
   </div>
+
+
+  <!-- 分類主題 Strip -->
+  <section class="topic-strip-section">
+    <div class="topic-strip-wrap">
+      <a class="topic-strip-card" href="#" onclick="filterAndGo('怪獸圖鑑');return false;">
+        <span class="topic-strip-icon">🦕</span>
+        <span class="topic-strip-name">怪獸圖鑑</span>
+        <span class="topic-strip-desc">起源、能力與文化意義</span>
+      </a>
+      <a class="topic-strip-card" href="#" onclick="filterAndGo('系列脈絡');return false;">
+        <span class="topic-strip-icon">🎬</span>
+        <span class="topic-strip-name">系列脈絡</span>
+        <span class="topic-strip-desc">昭和到令和的世界觀解析</span>
+      </a>
+      <a class="topic-strip-card" href="#" onclick="filterAndGo('收藏術語');return false;">
+        <span class="topic-strip-icon">📖</span>
+        <span class="topic-strip-name">收藏術語</span>
+        <span class="topic-strip-desc">比例、材質、版本差異</span>
+      </a>
+      <a class="topic-strip-card" href="#" onclick="filterAndGo('開箱評測');return false;">
+        <span class="topic-strip-icon">📦</span>
+        <span class="topic-strip-name">開箱評測</span>
+        <span class="topic-strip-desc">S.H.M.、X-Plus 等品牌實測</span>
+      </a>
+      <a class="topic-strip-card" href="#" onclick="filterAndGo('新聞速報');return false;">
+        <span class="topic-strip-icon">📡</span>
+        <span class="topic-strip-name">新聞速報</span>
+        <span class="topic-strip-desc">最新電影與商品情報</span>
+      </a>
+    </div>
+  </section>
 
   <!-- Footer -->
   <div id="homeFooter"></div>
@@ -1085,7 +1096,7 @@ function articleCardHTML(a) {
 function renderHome() {
   const publishedArticles = articles.filter(a => !a.draft);
   const lg = document.getElementById('latestGrid');
-  if (lg) lg.innerHTML = publishedArticles.slice(0, 6).map(a => articleCardHTML(a)).join('');
+  if (lg) lg.innerHTML = publishedArticles.map(a => articleCardHTML(a)).join('');
   const fl = document.getElementById('homeFaqList');
   if (fl) fl.innerHTML = faqs.slice(0, 5).map((f, i) => `
     <div class="faq-item" id="hfaq${i}">
