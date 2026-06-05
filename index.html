@@ -33,6 +33,7 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap"></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
       /* Brand design tokens */
@@ -103,10 +104,10 @@
       display: flex; align-items: baseline; gap: 8px; cursor: pointer;
     }
     .nav-logo-en {
-      font-family: 'Noto Serif TC', serif;
-      font-size: 1.1rem; font-weight: 900;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem; font-weight: 400;
       color: #ffffff;
-      letter-spacing: 1px;
+      letter-spacing: 0.05em;
     }
     .nav-logo-zh {
       font-size: 0.78rem; color: rgba(255,255,255,0.5);
@@ -673,6 +674,35 @@
       }
       .form-row-2 { grid-template-columns: 1fr; }
     }
+
+    /* ══════════════════════════════
+       HERO ARTICLE (大圖精選)
+    ══════════════════════════════ */
+    .hero-article { position: relative; width: 100%; height: 520px; overflow: hidden; background: #1c1a17; }
+    .hero-article-inner { position: relative; width: 100%; height: 100%; }
+    .hero-article-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+    .hero-article-overlay { position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,8,0.88) 40%, rgba(10,10,8,0.2)); }
+    .hero-article-content { position: relative; z-index: 2; max-width: 600px; padding: 80px 60px; color: #fff; }
+    .hero-article-category { display: inline-block; background: var(--color-accent); color: #fff; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 10px; border-radius: 3px; margin-bottom: 16px; font-family: 'Noto Sans TC', sans-serif; font-weight: 700; }
+    .hero-article-title { font-size: 2.4rem; font-weight: 900; line-height: 1.2; margin-bottom: 16px; letter-spacing: -0.02em; font-family: 'Noto Serif TC', serif; }
+    .hero-article-excerpt { font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.75); margin-bottom: 24px; max-width: 480px; }
+    .hero-article-link { display: inline-flex; align-items: center; gap: 8px; color: var(--color-accent-light); font-size: 0.9rem; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; text-decoration: none; letter-spacing: 0.05em; }
+    .hero-article-link:hover { color: #fff; }
+    @media (max-width: 768px) {
+      .hero-article { height: 380px; }
+      .hero-article-content { padding: 40px 24px; }
+      .hero-article-title { font-size: 1.6rem; }
+    }
+
+    /* ══════════════════════════════
+       CATEGORY STRIP
+    ══════════════════════════════ */
+    .category-strip { background: #1c1a17; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .category-strip-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
+    .category-strip-inner::-webkit-scrollbar { display: none; }
+    .category-strip-item { display: block; padding: 14px 20px; color: rgba(255,255,255,0.6); font-size: 0.82rem; font-family: 'Noto Sans TC', sans-serif; font-weight: 500; letter-spacing: 0.05em; text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.2s; }
+    .category-strip-item:hover, .category-strip-item.active { color: #fff; border-bottom-color: var(--color-accent-light); }
+
   </style>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-P2ND0D0QMF"></script>
@@ -732,42 +762,31 @@
      PAGE: HOME
 ════════════════════════════════════ -->
 <div class="page active" id="page-home">
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-inner container">
-      <div>
-        <div class="hero-eyebrow">台灣最專注的哥吉拉媒體</div>
-        <h1>怪獸的<em>知識與收藏</em><br>從這裡開始</h1>
-        <p class="hero-desc">每一篇文章，都是為了讓你更了解哥吉拉。</p>
-        <div class="hero-btns">
-          <button class="btn-hero-primary" onclick="goPage('articles')">瀏覽知識文章</button>
-          <button class="btn-hero-secondary" onclick="goPage('faq')">查看常見問答</button>
-        </div>
-      </div>
-      <div class="hero-right">
-        <div class="hero-stat" onclick="filterAndGo('怪獸圖鑑')">
-          <div class="hero-stat-num">怪獸圖鑑</div>
-          <div class="hero-stat-label">哥吉拉與各怪獸的起源、能力與登場歷史</div>
-          <span class="hero-stat-arrow">→ 查看文章</span>
-        </div>
-        <div class="hero-stat" onclick="filterAndGo('系列脈絡')">
-          <div class="hero-stat-num">系列脈絡</div>
-          <div class="hero-stat-label">昭和到令和，各時代世界觀與主題解析</div>
-          <span class="hero-stat-arrow">→ 查看文章</span>
-        </div>
-        <div class="hero-stat" onclick="filterAndGo('收藏術語')">
-          <div class="hero-stat-num">收藏術語</div>
-          <div class="hero-stat-label">比例、材質、版本差異，收藏圈必懂詞彙</div>
-          <span class="hero-stat-arrow">→ 查看文章</span>
-        </div>
-        <div class="hero-stat" onclick="filterAndGo('開箱評測')">
-          <div class="hero-stat-num">玩具評測</div>
-          <div class="hero-stat-label">S.H.MonsterArts、X-Plus 等品牌實物評測</div>
-          <span class="hero-stat-arrow">→ 查看文章</span>
-        </div>
+  <!-- HERO ARTICLE — 大圖精選 -->
+  <section class="hero-article">
+    <div class="hero-article-inner">
+      <div class="hero-article-overlay"></div>
+      <img class="hero-article-bg" src="" alt="" id="heroArticleBg">
+      <div class="hero-article-content">
+        <span class="hero-article-category" id="heroArticleCategory"></span>
+        <h1 class="hero-article-title" id="heroArticleTitle"></h1>
+        <p class="hero-article-excerpt" id="heroArticleExcerpt"></p>
+        <a class="hero-article-link" id="heroArticleLink" href="#">閱讀全文 →</a>
       </div>
     </div>
-  </div>
+  </section>
+
+  <!-- CATEGORY STRIP -->
+  <nav class="category-strip">
+    <div class="category-strip-inner">
+      <a href="#" class="category-strip-item active" onclick="filterAndGo('全部');return false;">全部</a>
+      <a href="#" class="category-strip-item" onclick="filterAndGo('怪獸圖鑑');return false;">怪獸圖鑑</a>
+      <a href="#" class="category-strip-item" onclick="filterAndGo('系列脈絡');return false;">系列脈絡</a>
+      <a href="#" class="category-strip-item" onclick="filterAndGo('收藏術語');return false;">收藏術語</a>
+      <a href="#" class="category-strip-item" onclick="filterAndGo('開箱評測');return false;">開箱評測</a>
+      <a href="#" class="category-strip-item" onclick="filterAndGo('新聞速報');return false;">新聞速報</a>
+    </div>
+  </nav>
 
   <!-- 主題分類 -->
   <div class="section" style="background:white;">
@@ -805,18 +824,6 @@
     </div>
   </div>
 
-  <!-- 精選文章 -->
-  <div class="section">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-title">精選深度文章</div>
-        <div class="section-sub">深入了解哥吉拉的知識與收藏世界</div>
-      </div>
-      <div class="featured-grid" id="featuredGrid"></div>
-      <div class="article-grid article-grid-2" id="subFeaturedGrid" style="margin-top:0"></div>
-    </div>
-  </div>
-
   <!-- 最新文章 -->
   <div class="section" style="background:white;">
     <div class="container">
@@ -837,7 +844,7 @@
       <div class="section-header" style="display:flex;justify-content:space-between;align-items:flex-end">
         <div>
           <div class="section-title">熱門問答</div>
-          <div class="section-sub" style="margin-bottom:0">飼主最常問的問題，快速找到答案</div>
+          <div class="section-sub" style="margin-bottom:0">收藏家最常問的問題，快速找到答案</div>
         </div>
         <button onclick="goPage('faq')" style="font-size:0.82rem;color:var(--teal);background:none;border:none;cursor:pointer;font-family:inherit">查看完整 FAQ →</button>
       </div>
@@ -1076,29 +1083,11 @@ function articleCardHTML(a) {
 // HOME
 // ══════════════════════════════
 function renderHome() {
-  const fg = document.getElementById('featuredGrid');
-  const sfg = document.getElementById('subFeaturedGrid');
   const publishedArticles = articles.filter(a => !a.draft);
-  if (publishedArticles.length > 0) {
-    if(!publishedArticles[0]){fg.innerHTML='';return;}
-    fg.innerHTML = `<a class="featured-card" href="${publishedArticles[0].slug?'articles/'+publishedArticles[0].slug+'.html':'#'}" style="text-decoration:none">
-      <div class="featured-card-content">
-        <div class="featured-card-cat">${publishedArticles[0].category.toUpperCase()}</div>
-        <div class="featured-card-title">${publishedArticles[0].title}</div>
-        <div class="featured-card-excerpt">${publishedArticles[0].excerpt}</div>
-        <div class="featured-card-arrow">→</div>
-      </div>
-    </a>` + (publishedArticles[1] ? `<a class="featured-card" href="${publishedArticles[1].slug?'articles/'+publishedArticles[1].slug+'.html':'#'}" style="background:var(--amber);text-decoration:none"><div class="featured-card-content" style="position:relative"><div class="featured-card-cat" style="color:rgba(255,255,255,0.7)">${publishedArticles[1].category.toUpperCase()}</div><div class="featured-card-title">${publishedArticles[1].title}</div><div class="featured-card-excerpt">${publishedArticles[1].excerpt}</div><div class="featured-card-arrow">→</div></div></a>` : '');
-  }
-  if (publishedArticles.length > 2) {
-    sfg.innerHTML = publishedArticles.slice(2, 4).map(a => articleCardHTML(a)).join('');
-  } else {
-    sfg.innerHTML = '';
-  }
   const lg = document.getElementById('latestGrid');
-  lg.innerHTML = publishedArticles.slice(0, 3).map(a => articleCardHTML(a)).join('');
+  if (lg) lg.innerHTML = publishedArticles.slice(0, 6).map(a => articleCardHTML(a)).join('');
   const fl = document.getElementById('homeFaqList');
-  fl.innerHTML = faqs.slice(0, 5).map((f, i) => `
+  if (fl) fl.innerHTML = faqs.slice(0, 5).map((f, i) => `
     <div class="faq-item" id="hfaq${i}">
       <div class="faq-q" onclick="toggleFaq('hfaq${i}')">
         <span>${f.q}</span><span class="faq-q-icon">▼</span>
@@ -1204,6 +1193,20 @@ function showToast(msg) {
 }
 
 // ══════════════════════════════
+// HERO ARTICLE
+// ══════════════════════════════
+function renderHeroArticle(articleList) {
+  if (!articleList || articleList.length === 0) return;
+  const a = articleList[0];
+  const el = id => document.getElementById(id);
+  if (a.coverImage) el('heroArticleBg').src = a.coverImage;
+  el('heroArticleCategory').textContent = a.category || '';
+  el('heroArticleTitle').textContent = a.title || '';
+  el('heroArticleExcerpt').textContent = a.excerpt || '';
+  el('heroArticleLink').href = a.slug ? 'articles/' + a.slug + '.html' : '#';
+}
+
+// ══════════════════════════════
 // INIT — fetch JSON
 // ══════════════════════════════
 async function init() {
@@ -1218,6 +1221,7 @@ async function init() {
   } catch(e) {
     console.error('載入資料失敗', e);
   }
+  renderHeroArticle(articles);
   renderHome();
   renderFooter('home');
 }
