@@ -65,9 +65,17 @@
     "slug": "showa-godzilla-1954-1975-fear-symbol-to-hero",
     "title": "昭和哥吉拉（1954–1975）：從恐懼象徵到英雄怪獸",
     "excerpt": "昭和系列橫跨二十年，哥吉拉的形象從令人恐懼的核武象徵，逐漸轉變為孩子們喜愛的英雄怪獸。這段演變過程，是理解整個哥吉拉宇宙的關鍵。",
-    "coverImage": "images/cover-06.jpg",
+    "coverImage": "https://res.cloudinary.com/dajib0ylm/image/upload/v1785316873/godzilla-archive/ypvvdb8qxy1yjlzebmf8.png",
+    "coverAlt": "",
+    "emoji": "📝",
     "category": "系列脈絡",
-    "date": "2026-04-04"
+    "type": "",
+    "date": "2026-04-04",
+    "hideDate": false,
+    "draft": false,
+    "authorName": "",
+    "authorTitle": "",
+    "authorAvatar": ""
   },
   {
     "id": "article-07",
