@@ -48,9 +48,17 @@
     "slug": "king-ghidorah-complete-guide-origin-evolution",
     "title": "王者基多拉完整介紹：哥吉拉最強宿敵的起源與演變",
     "excerpt": "三頭金龍、重力光線、宇宙怪獸——王者基多拉是哥吉拉系列中最具代表性的反派怪獸。完整追溯牠從1964年到今日的演變歷程。",
-    "coverImage": "images/cover-05.jpg",
+    "coverImage": "https://res.cloudinary.com/dajib0ylm/image/upload/v1785316967/godzilla-archive/thjjhjklnxj2ex5cxur7.png",
+    "coverAlt": "",
+    "emoji": "📝",
     "category": "怪獸圖鑑",
-    "date": "2026-04-05"
+    "type": "",
+    "date": "2026-04-05",
+    "hideDate": false,
+    "draft": false,
+    "authorName": "",
+    "authorTitle": "",
+    "authorAvatar": ""
   },
   {
     "id": "article-06",
