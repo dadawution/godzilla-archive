@@ -4,9 +4,17 @@
     "slug": "godzilla-size-evolution-original-to-modern",
     "title": "哥吉拉的體型有多大？從初代到現代的尺寸演變",
     "excerpt": "初代哥吉拉身高僅50公尺，到了《哥吉拉：怪獸之王》已達119公尺。追蹤七十年來哥吉拉體型的驚人演變，以及背後的設計邏輯。",
-    "coverImage": "images/cover-03.jpg",
+    "coverImage": "https://res.cloudinary.com/dajib0ylm/image/upload/v1785316918/godzilla-archive/rtzml6oaaplj6flqiids.png",
+    "coverAlt": "",
+    "emoji": "📝",
     "category": "怪獸圖鑑",
-    "date": "2026-04-07"
+    "type": "",
+    "date": "2026-04-07",
+    "hideDate": false,
+    "draft": false,
+    "authorName": "",
+    "authorTitle": "",
+    "authorAvatar": ""
   },
   {
     "id": "article-01",
