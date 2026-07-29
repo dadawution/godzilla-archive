@@ -151,8 +151,16 @@
     "slug": "godzilla-toy-buying-guide-official-proxy-secondhand",
     "title": "哥吉拉玩具購買管道完整攻略：官網、代拍、二手市場",
     "excerpt": "在哪裡買、如何買、如何確認真偽？完整整理哥吉拉玩具的各種購買管道，讓你以最好的價格買到最想要的收藏。",
-    "coverImage": "images/cover-12.jpg",
+    "coverImage": "https://res.cloudinary.com/dajib0ylm/image/upload/v1785318603/godzilla-archive/jiubvhwjdgvfjo49fgj1.png",
+    "coverAlt": "",
+    "emoji": "📝",
     "category": "收藏術語",
-    "date": "2026-03-29"
+    "type": "",
+    "date": "2026-03-29",
+    "hideDate": false,
+    "draft": false,
+    "authorName": "",
+    "authorTitle": "",
+    "authorAvatar": ""
   }
 ]
