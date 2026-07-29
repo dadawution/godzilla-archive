@@ -22,17 +22,9 @@
     "slug": "godzilla-size-evolution-original-to-modern",
     "title": "哥吉拉的體型有多大？從初代到現代的尺寸演變",
     "excerpt": "初代哥吉拉身高僅50公尺，到了《哥吉拉：怪獸之王》已達119公尺。追蹤七十年來哥吉拉體型的驚人演變，以及背後的設計邏輯。",
-    "coverImage": "https://res.cloudinary.com/dajib0ylm/image/upload/v1785312146/godzilla-archive/yuvjephpv7xatffxen56.png",
-    "coverAlt": "",
-    "emoji": "📝",
+    "coverImage": "images/cover-03.jpg",
     "category": "怪獸圖鑑",
-    "type": "",
-    "date": "2026-04-07",
-    "hideDate": false,
-    "draft": false,
-    "authorName": "",
-    "authorTitle": "",
-    "authorAvatar": ""
+    "date": "2026-04-07"
   },
   {
     "id": "article-04",
@@ -48,17 +40,9 @@
     "slug": "king-ghidorah-complete-guide-origin-evolution",
     "title": "王者基多拉完整介紹：哥吉拉最強宿敵的起源與演變",
     "excerpt": "三頭金龍、重力光線、宇宙怪獸——王者基多拉是哥吉拉系列中最具代表性的反派怪獸。完整追溯牠從1964年到今日的演變歷程。",
-    "coverImage": "https://res.cloudinary.com/dajib0ylm/image/upload/v1785311710/godzilla-archive/wqoraxyblhu1ur0n1sk7.png",
-    "coverAlt": "",
-    "emoji": "📝",
+    "coverImage": "images/cover-05.jpg",
     "category": "怪獸圖鑑",
-    "type": "",
-    "date": "2026-04-05",
-    "hideDate": false,
-    "draft": false,
-    "authorName": "",
-    "authorTitle": "",
-    "authorAvatar": ""
+    "date": "2026-04-05"
   },
   {
     "id": "article-06",
@@ -74,9 +58,17 @@
     "slug": "heisei-godzilla-1984-1995-dark-return-worldbuilding",
     "title": "平成哥吉拉（1984–1995）：黑暗回歸與世界觀重建",
     "excerpt": "沉寂近十年後，哥吉拉以更黑暗、更具威脅性的形象回歸。平成系列建立了連貫的世界觀與劇情線，是系列中敘事最完整的時代。",
-    "coverImage": "images/cover-07.jpg",
+    "coverImage": "https://res.cloudinary.com/dajib0ylm/image/upload/v1785312957/godzilla-archive/hpy8ci6m84hfcvikzdie.png",
+    "coverAlt": "",
+    "emoji": "📝",
     "category": "系列脈絡",
-    "date": "2026-04-03"
+    "type": "",
+    "date": "2026-04-03",
+    "hideDate": false,
+    "draft": false,
+    "authorName": "",
+    "authorTitle": "",
+    "authorAvatar": ""
   },
   {
     "id": "article-08",
@@ -110,17 +102,9 @@
     "slug": "godzilla-toy-preservation-guide-fade-deform-display",
     "title": "哥吉拉玩具保存完整指南：防褪色、防變形、展示規劃",
     "excerpt": "花了心思建立的收藏，值得用對的方式保存。涵蓋軟膠、硬質塑膠、樹脂等不同材質的保存要點，以及如何規劃理想的展示空間。",
-    "coverImage": "https://res.cloudinary.com/dajib0ylm/image/upload/v1785312440/godzilla-archive/gkgwqkwocldzb6poo2qn.png",
-    "coverAlt": "",
-    "emoji": "📝",
+    "coverImage": "images/cover-11.jpg",
     "category": "收藏術語",
-    "type": "",
-    "date": "2026-03-30",
-    "hideDate": false,
-    "draft": false,
-    "authorName": "",
-    "authorTitle": "",
-    "authorAvatar": ""
+    "date": "2026-03-30"
   },
   {
     "id": "article-12",
