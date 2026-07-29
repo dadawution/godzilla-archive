@@ -99,9 +99,17 @@
     "slug": "godzilla-minus-one-deep-analysis-postwar-japan",
     "title": "《哥吉拉 -1.0》深度解析：戰後日本的傷痛與救贖",
     "excerpt": "2023年的《哥吉拉 -1.0》奪下奧斯卡視覺效果獎，它把哥吉拉帶回了最純粹的起點——戰後日本的集體傷痛。深度解析這部作品的敘事層次。",
-    "coverImage": "images/cover-08.jpg",
+    "coverImage": "https://res.cloudinary.com/dajib0ylm/image/upload/v1785318146/godzilla-archive/xbx9fcrh1ng3ozfg90du.png",
+    "coverAlt": "",
+    "emoji": "📝",
     "category": "系列脈絡",
-    "date": "2026-04-02"
+    "type": "",
+    "date": "2026-04-02",
+    "hideDate": false,
+    "draft": false,
+    "authorName": "",
+    "authorTitle": "",
+    "authorAvatar": ""
   },
   {
     "id": "article-09",
