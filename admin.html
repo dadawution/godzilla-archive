@@ -822,7 +822,7 @@ async function putFile(path,content,sha,message){
   const encoded=encodeBase64(jsonStr);
   const body={message,content:encoded,sha,branch:cfg.branch};
   const res=await ghFetch(path,{method:'PUT',body:JSON.stringify(body)});
-  if(!res.ok){const err=await res.json();throw new Error(err.message||'putFile failed');}
+  if(!res.ok){const err=await res.json();const e=new Error(err.message||'putFile failed');e.status=res.status;throw e;}
   return res.json();
 }
 async function initSyncIndex(){
@@ -841,21 +841,54 @@ async function syncIndexFile(articlesList){
     INDEX_FIELDS.forEach(f=>{if(a[f]!==undefined)obj[f]=a[f];});
     return obj;
   });
-  let sha=null;
-  try{sha=await getFileSha(ARTICLES_INDEX_PATH);}catch(e){}
-  if(sha){
-    await putFile(ARTICLES_INDEX_PATH,lightweight,sha,'更新文章索引');
-  }else{
-    await createFile(ARTICLES_INDEX_PATH,lightweight,'建立文章索引');
+  // 衍生檔（由文章清單重算）：撞衝突時重抓 SHA 覆蓋即可，加重試避免偶發報錯。
+  const MAX_ATTEMPTS=4;let lastErr=null;
+  for(let attempt=0;attempt<MAX_ATTEMPTS;attempt++){
+    let sha=null;
+    try{sha=await getFileSha(ARTICLES_INDEX_PATH);}catch(e){}
+    try{
+      if(sha)return await putFile(ARTICLES_INDEX_PATH,lightweight,sha,'更新文章索引');
+      return await createFile(ARTICLES_INDEX_PATH,lightweight,'建立文章索引');
+    }catch(e){
+      lastErr=e;
+      const conflict=e.status===409||e.status===422||/sha|does not match|already exists/i.test(e.message||'');
+      if(conflict&&attempt<MAX_ATTEMPTS-1)continue;
+      throw e;
+    }
   }
+  throw lastErr||new Error('syncIndexFile：超過重試上限');
 }
 async function createFile(path,content,message){
   const jsonStr=JSON.stringify(content,null,2);
   const encoded=encodeBase64(jsonStr);
   const body={message,content:encoded,branch:cfg.branch};
   const res=await ghFetch(path,{method:'PUT',body:JSON.stringify(body)});
-  if(!res.ok){const err=await res.json();throw new Error(err.message||'createFile failed');}
+  if(!res.ok){const err=await res.json();const e=new Error(err.message||'createFile failed');e.status=res.status;throw e;}
   return res.json();
+}
+// ── SAFE READ-MODIFY-WRITE ──
+// 每次寫入前先抓遠端最新內容，把變更套在「最新版」上再寫回，避免多分頁/多裝置互相覆蓋。
+// 若寫入當下遠端剛被別人改動（SHA 過期，409），自動重抓最新內容再試一次，最多重試數次。
+// mutate(current) 會拿到遠端最新內容（不存在時為 null），必須回傳要寫回的新內容。
+async function saveJsonSafely(path,mutate,message){
+  const MAX_ATTEMPTS=4;
+  let lastErr=null;
+  for(let attempt=0;attempt<MAX_ATTEMPTS;attempt++){
+    let current=null,sha=null,exists=true;
+    try{const d=await getFile(path);current=d.content;sha=d.sha;}
+    catch(e){exists=false;current=null;sha=null;}
+    const next=mutate(current);
+    try{
+      if(exists&&sha)return await putFile(path,next,sha,message);
+      return await createFile(path,next,message);
+    }catch(e){
+      lastErr=e;
+      const conflict=e.status===409||e.status===422||/sha|does not match|already exists/i.test(e.message||'');
+      if(conflict&&attempt<MAX_ATTEMPTS-1)continue; // 遠端剛被改動，重抓最新再試
+      throw e;
+    }
+  }
+  throw lastErr||new Error('saveJsonSafely：超過重試上限');
 }
 
 // ── SETUP ──
@@ -947,10 +980,17 @@ async function uploadPhotos(files){
 
 async function savePhotos(){
   try{
-    let sha=null;
-    try{const d=await getFile(PHOTOS_PATH);sha=d.sha;}catch(e){}
-    if(sha){await putFile(PHOTOS_PATH,photos,sha,'更新圖庫');}
-    else{await createFile(PHOTOS_PATH,photos,'建立圖庫');}
+    await saveJsonSafely(PHOTOS_PATH,(remote)=>{
+      const remoteList=Array.isArray(remote)?remote:[];
+      // 本機 photos 為「本分頁已知圖片」的來源（新上傳 / 改過標籤），同 publicId 以本機為準；
+      // 遠端有、但本機沒有的（別分頁剛上傳的），一律保留，避免互相覆蓋。
+      const keyOf=p=>p.publicId||p.url;
+      const localKeys=new Set(photos.map(keyOf));
+      const merged=[...photos];
+      for(const p of remoteList){if(!localKeys.has(keyOf(p)))merged.push(p);}
+      photos=merged; // 同步更新記憶體，讓畫面與寫回一致
+      return merged;
+    },'更新圖庫');
   }catch(e){console.error('savePhotos failed',e);}
 }
 
@@ -1501,14 +1541,16 @@ async function publishArticle(){
 
     // 3. Update articles.json
     setSaveStatus('pubStatus','saving','⏳ 更新文章索引...');
-    const{sha}=await getFile(ARTICLES_PATH);
-    if(isEditing){
-      const idx=articles.findIndex(a=>a.id===editingId);
-      if(idx>=0)articles[idx]=articleData;else articles.unshift(articleData);
-    }else{
-      articles.unshift(articleData);
-    }
-    await putFile(ARTICLES_PATH,articles,sha,isEditing?`更新文章：${title}`:`新增文章：${title}`);
+    await saveJsonSafely(ARTICLES_PATH,(remote)=>{
+      articles=Array.isArray(remote)?remote:[];
+      if(isEditing){
+        const idx=articles.findIndex(a=>a.id===editingId);
+        if(idx>=0)articles[idx]=articleData;else articles.unshift(articleData);
+      }else{
+        articles.unshift(articleData);
+      }
+      return articles;
+    },isEditing?`更新文章：${title}`:`新增文章：${title}`);
     await syncIndexFile(articles);
 
     // 4. Auto-update sitemap.xml
@@ -1648,17 +1690,17 @@ async function saveDraftToGitHub() {
   };
   document.getElementById('draftBtn').disabled = true;
   try {
-    console.log('[saveDraftToGitHub] 步驟1: 取得 articles.json SHA...');
-    const { sha } = await getFile(ARTICLES_PATH);
-    console.log('[saveDraftToGitHub] 步驟1 完成, sha:', sha);
-    if (isEditing) {
-      const idx = articles.findIndex(a => a.id === editingId);
-      if (idx >= 0) articles[idx] = draftArticle; else articles.unshift(draftArticle);
-    } else {
-      articles.unshift(draftArticle);
-    }
-    console.log('[saveDraftToGitHub] 步驟2: 寫入 articles.json...');
-    await putFile(ARTICLES_PATH, articles, sha, `儲存草稿：${title}`);
+    console.log('[saveDraftToGitHub] 步驟1+2: 讀取最新 articles.json 並合併寫入...');
+    await saveJsonSafely(ARTICLES_PATH,(remote)=>{
+      articles=Array.isArray(remote)?remote:[];
+      if (isEditing) {
+        const idx = articles.findIndex(a => a.id === editingId);
+        if (idx >= 0) articles[idx] = draftArticle; else articles.unshift(draftArticle);
+      } else {
+        articles.unshift(draftArticle);
+      }
+      return articles;
+    }, `儲存草稿：${title}`);
     console.log('[saveDraftToGitHub] 步驟2 完成');
     console.log('[saveDraftToGitHub] 步驟3: 同步 index...');
     await syncIndexFile(articles);
@@ -1828,9 +1870,10 @@ async function executeDelete(){
     // 找到要刪除的文章 slug，準備一起刪 HTML
     const target=articles.find(a=>a.id===id);
     const slug=target?.slug;
-    const{sha}=await getFile(ARTICLES_PATH);
-    articles=articles.filter(a=>a.id!==id);
-    await putFile(ARTICLES_PATH,articles,sha,'刪除文章：'+(target?.title||id));
+    await saveJsonSafely(ARTICLES_PATH,(remote)=>{
+      articles=(Array.isArray(remote)?remote:[]).filter(a=>a.id!==id);
+      return articles;
+    },'刪除文章：'+(target?.title||id));
     await syncIndexFile(articles);
     // 同步刪除 GitHub 上的 HTML 檔
     if(slug){
@@ -1978,9 +2021,12 @@ async function addFaq(){
   if(!q||!a){alert('請填寫問題和回答');return;}
   setSaveStatus('faqPubStatus','saving','⏳ 儲存中...');document.getElementById('faqPubBtn').disabled=true;
   try{
-    const{sha}=await getFile(FAQS_PATH);
-    faqs.unshift({id:Date.now(),cat,q,a});
-    await putFile(FAQS_PATH,faqs,sha,`新增FAQ：${q}`);
+    const newFaq={id:Date.now(),cat,q,a};
+    await saveJsonSafely(FAQS_PATH,(remote)=>{
+      faqs=Array.isArray(remote)?remote:[];
+      faqs.unshift(newFaq);
+      return faqs;
+    },`新增FAQ：${q}`);
     document.getElementById('faqQ').value='';document.getElementById('faqA').value='';
     renderFaqList();setSaveStatus('faqPubStatus','ok','✅ 問答已新增！');showToast('✅ 問答已新增！');
     setTimeout(()=>hideSaveStatus('faqPubStatus'),3000);
@@ -1990,9 +2036,10 @@ async function addFaq(){
 async function deleteFaq(id){
   if(!confirm('確定刪除？'))return;
   try{
-    const{sha}=await getFile(FAQS_PATH);
-    faqs=faqs.filter(f=>f.id!==id);
-    await putFile(FAQS_PATH,faqs,sha,'刪除FAQ');
+    await saveJsonSafely(FAQS_PATH,(remote)=>{
+      faqs=(Array.isArray(remote)?remote:[]).filter(f=>f.id!==id);
+      return faqs;
+    },'刪除FAQ');
     renderFaqList();showToast('已刪除');
   }catch(e){alert('刪除失敗：'+e.message);}
 }
@@ -2424,8 +2471,17 @@ async function onDrop(e) {
   renderArticleList();
   setSaveStatus('delStatus', 'saving', '⏳ 儲存排序到 GitHub...');
   try {
-    const { sha } = await getFile(ARTICLES_PATH);
-    await putFile(ARTICLES_PATH, articles, sha, '更新文章排序');
+    await saveJsonSafely(ARTICLES_PATH,(remote)=>{
+      const remoteList=Array.isArray(remote)?remote:[];
+      const remoteById=new Map(remoteList.map(a=>[a.id,a]));
+      // 依本機拖曳後的順序重建，但每篇都用遠端最新資料（不覆蓋別分頁的內容修改）
+      const result=[];const used=new Set();
+      for(const a of articles){if(remoteById.has(a.id)){result.push(remoteById.get(a.id));used.add(a.id);}}
+      // 別分頁剛新增、本機還沒有的文章，補在後面，避免遺漏
+      for(const a of remoteList){if(!used.has(a.id))result.push(a);}
+      articles=result;
+      return result;
+    }, '更新文章排序');
     await syncIndexFile(articles);
     setSaveStatus('delStatus', 'ok', '✅ 排序已儲存');
     setTimeout(() => hideSaveStatus('delStatus'), 3000);
